@@ -1,4 +1,4 @@
-package cs.ycp.edu.cs482.modelclasses;
+package com.rateMyDrink.modelClasses;
 
 /**
  * Created by shanembonner on 12/27/14.
@@ -8,6 +8,7 @@ public class User implements Cloneable {
     private String password;
     private String passwordHash;
     private int id;
+    private boolean adminStatus;
 
     public User() {
         this.userName = "";
@@ -45,12 +46,24 @@ public class User implements Cloneable {
         return id;
         /*public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
-        }
+	}
 
-        public String getPasswordHash() {
-            return passwordHash;
-        }
-        */
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+	*/
+    }
+
+    public void setAdminStatusTrue(){
+        this.adminStatus = true;
+    }
+
+    public boolean getAdminStatus(User user){
+        return user.adminStatus;
+    }
+
+    public boolean isAdmin(boolean adminStatus){
+        return this.adminStatus;
     }
 
     @Override
@@ -62,5 +75,6 @@ public class User implements Cloneable {
             throw new IllegalStateException("This can't happen", e);
         }
     }
+
 
 }

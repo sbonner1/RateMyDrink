@@ -1,4 +1,4 @@
-package cs.ycp.edu.cs482.modelclasses;
+package com.rateMyDrink.modelClasses;
 
 import java.util.ArrayList;
 

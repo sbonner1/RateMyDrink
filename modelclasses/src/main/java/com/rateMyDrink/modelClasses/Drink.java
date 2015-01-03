@@ -1,4 +1,4 @@
-package cs.ycp.edu.cs482.modelclasses;
+package com.rateMyDrink.modelClasses;
 
 /**
  * Created by shanembonner on 12/28/14.
