@@ -33,6 +33,10 @@ public class User implements Cloneable {
         return userName;
     }
 
+    public void setUserPassword(String password){
+        this.password = password;
+    }
+
     public String getUserPassword(){
         return password;
     }
@@ -75,6 +79,7 @@ public class User implements Cloneable {
             throw new IllegalStateException("This can't happen", e);
         }
     }
+
 
 
 }

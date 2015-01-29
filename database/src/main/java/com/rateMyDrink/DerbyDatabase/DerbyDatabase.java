@@ -4,6 +4,8 @@ import com.rateMyDrink.modelClasses.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -74,10 +76,14 @@ public class DerbyDatabase implements IDatabase {
 
     public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) throws SQLException {
 
-
+    try{
         return doExecuteTransaction(txn);
+    } catch(SQLException e){
+        throw new PersistenceException("Transaction failed", e);
+    }
 
-        //get try/catch loop to work
+
+
     }
 
     private <ResultType> ResultType doExecuteTransaction(Transaction<ResultType> txn) throws SQLException {
@@ -123,7 +129,78 @@ public class DerbyDatabase implements IDatabase {
         return conn;
     }
 
-    public void createTables(){
-        //executeTransaction((con) ->)
+    //this is the main part of the database. the "tables" store the information
+    //that the client side needs
+    public void createTables() throws SQLException {
+        executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+
+                try{
+                    stmt = conn.prepareStatement(
+                            "create table " + DB_TABLENAME + " (" +
+                            " id integer primary key not null generated always as identity," +
+                            " userName varchar(80) unique," +
+                            " password varchar(80)," +
+                            ")"
+                            //TODO: add other fields to the database as necessary
+                    );
+                    stmt.executeUpdate();
+
+                    return true;
+
+                }finally {
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        } );
+
+    }
+
+    protected void storeUserNoId(User user, PreparedStatement stmt, int index) throws SQLException {
+        //method assumes that the User doesn't have a valid id, so we are not attempting
+        //to store the invalid id.
+        stmt.setString(index++, user.getUserName());
+        stmt.setString(index++, user.getUserPassword());
+
+    }
+
+    public void loadInitialData() throws SQLException {
+        executeTransaction(new Transaction<Boolean>() {
+
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+
+                try{
+                    stmt = conn.prepareStatement("insert into " + DB_TABLENAME + " (userName, password) values (?,?)");
+                    storeUserNoId(new User("testUser", "password"), stmt, 1);
+                    stmt.addBatch();
+
+                    stmt.executeBatch();
+
+                    return true;
+                }finally{
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        });
+    }
+
+    protected void loadUser(User user, ResultSet resultSet, int index) throws SQLException {
+        user.setId(resultSet.getInt(index++));
+        user.setUserName(resultSet.getString(index++));
+        //user.setUserPassword(resultSet.getString(index++));
+    }
+
+    public static void main(String[] args) throws SQLException {
+        DerbyDatabase db = new DerbyDatabase();
+        System.out.println("Creating tables...");
+        db.createTables();
+        System.out.println("Loading intial data...");
+        db.loadInitialData();
+        System.out.println("Done!");
+
     }
 }
