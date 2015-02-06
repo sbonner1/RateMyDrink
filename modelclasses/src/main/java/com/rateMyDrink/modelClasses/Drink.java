@@ -6,18 +6,21 @@ package com.rateMyDrink.modelClasses;
 
 public class Drink {
     private String drinkName;
+    private float rating;
 
     public Drink(){
 
     }
 
-    protected void setDrinkName(String name){
+    public void setDrinkName(String name){
         this.drinkName = name;
     }
 
-    protected String getDrinkName(){
+    public String getDrinkName(){
         return this.drinkName;
     }
 
 
 }
+
+

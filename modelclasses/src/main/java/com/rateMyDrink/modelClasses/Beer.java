@@ -8,17 +8,20 @@ public class Beer extends Drink {
     private int calories;
     //TODO: add more fields
 
-    protected void setABV (int abv){
+    public void setABV (int abv){
         this.ABV = abv;
     }
 
-    protected double getABV(){
+    public double getABV(){
         return this.ABV;
     }
 
-    protected void setCalories(int calories){
+    public void setCalories(int calories){
         this.calories = calories;
     }
 
+    public int getCalories() { return this.calories; }
+
+    //TODO: getters/setters for enum BeerType
 
 }
