@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Created by shanembonner on 1/8/15.
+ * Created by shanembonner on 1/20/15.
  */
 public abstract class DBUtil {
     /**

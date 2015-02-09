@@ -5,7 +5,7 @@ import com.rateMyDrink.modelClasses.User;
 import java.util.List;
 
 /**
- * Created by shanembonner on 1/3/15.
+ * Created by shanembonner on 1/20/15.
  */
 public interface IDatabase {
 

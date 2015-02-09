@@ -3,7 +3,7 @@ package com.rateMyDrink.modelClasses;
 import java.util.ArrayList;
 
 /**
- * Created by shanembonner on 12/28/14.
+ * Created by shanembonner on 15/28/15.
  */
 public class MixedDrink extends Drink {
     private ArrayList<String> ingredients;

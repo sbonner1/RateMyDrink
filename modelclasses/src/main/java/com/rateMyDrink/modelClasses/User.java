@@ -1,7 +1,7 @@
 package com.rateMyDrink.modelClasses;
 
 /**
- * Created by shanembonner on 12/27/14.
+ * Created by shanembonner on 1/27/15.
  */
 public class User implements Cloneable {
     private String userName;
