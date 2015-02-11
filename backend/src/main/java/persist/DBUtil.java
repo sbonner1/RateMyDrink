@@ -1,4 +1,4 @@
-package com.rateMyDrink.DerbyDatabase;
+package persist;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

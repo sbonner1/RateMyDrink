@@ -3,7 +3,16 @@
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
-        <option name="GRADLE_PROJECT_PATH" value=":database" />
+        <option name="GRADLE_PROJECT_PATH" value=":backend" />
+      </configuration>
+    </facet>
+    <facet type="app-engine-gradle" name="App Engine Gradle">
+      <configuration>
+        <option name="HTTP_ADDRESS" value="localhost" />
+        <option name="HTTP_PORT" value="8080" />
+        <option name="WAR_DIR" value="$MODULE_DIR$/build/exploded-app" />
+        <option name="WEB_APP_DIR" value="$MODULE_DIR$/src/main/webapp" />
+        <option name="APPENGINE_SDKROOT" value="$USER_HOME$/.gradle/appengine-sdk/appengine-java-sdk-1.9.14" />
       </configuration>
     </facet>
     <facet type="java-gradle" name="Java-Gradle">
@@ -26,6 +35,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="servlet-api-2.5" level="project" />
+    <orderEntry type="library" exported="" name="jackson-databind-2.5.1" level="project" />
+    <orderEntry type="library" exported="" name="jackson-core-2.5.1" level="project" />
+    <orderEntry type="library" exported="" name="jackson-annotations-2.5.0" level="project" />
+    <orderEntry type="library" exported="" name="jackson-mapper-asl-1.0.0" level="project" />
     <orderEntry type="module" module-name="modelclasses" />
   </component>
 </module>

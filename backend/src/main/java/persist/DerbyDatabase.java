@@ -1,4 +1,4 @@
-package com.rateMyDrink.DerbyDatabase;
+package persist;
 
 import com.rateMyDrink.modelClasses.User;
 
@@ -26,6 +26,71 @@ public class DerbyDatabase implements IDatabase {
     private static final String DB_TABLENAME = "userList";
 
     @Override
+    public boolean addNewUser(final User user, String hashedPassword) throws SQLException {
+        return executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet generatedKeys = null;
+
+                try{
+                    stmt = conn.prepareStatement(
+                            "insert into " + DB_TABLENAME + " (userName, password) values (?, ?)",
+                            PreparedStatement.RETURN_GENERATED_KEYS
+                    );
+
+                    storeUserNoId(user, stmt, 1);
+
+                    //attempt to insert the user
+                    stmt.executeUpdate();
+
+                    //determine auto-generated id
+                    generatedKeys = stmt.getGeneratedKeys();
+                    if(generatedKeys.next()){
+                        throw new SQLException("Could not get auto-generated key for inserted User");
+
+                    }
+                    return true;
+                }finally{
+                    DBUtil.closeQuietly(generatedKeys);
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        });
+    }
+
+    @Override
+    public User getUser(final String userName, final String password) throws SQLException {
+        return executeTransaction(new Transaction<User>() {
+            @Override
+            public User execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet resultSet = null;
+
+                try{
+                    stmt = conn.prepareStatement("select * from " + DB_TABLENAME + " where userName = ?");
+                    stmt.setString(1, userName);
+                    stmt.setString(2, password);
+
+                    resultSet = stmt.executeQuery();
+
+                    if(!resultSet.next()){
+                        //no such user
+                        return null;
+                    }
+
+                    User user = new User(userName, password);
+                    loadUser(user, resultSet, 1);
+                    return user;
+                }finally{
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        });
+    }
+
+    @Override
     public void replaceUser(String oldUserName, User newUser) {
 
     }
@@ -50,10 +115,6 @@ public class DerbyDatabase implements IDatabase {
 
     }
 
-    @Override
-    public boolean addNewUser(User user, String hashedPassword) {
-        return false;
-    }
 
     @Override
     public User findUser(String userName) {
@@ -65,10 +126,6 @@ public class DerbyDatabase implements IDatabase {
         return null;
     }
 
-    @Override
-    public User getUser(String userName, String password) {
-        return null;
-    }
 
     private interface Transaction<ResultType> {
         public ResultType execute(Connection conn) throws SQLException;

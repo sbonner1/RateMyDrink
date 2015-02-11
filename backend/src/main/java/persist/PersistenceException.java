@@ -1,4 +1,4 @@
-package com.rateMyDrink.DerbyDatabase;
+package persist;
 
 /**
  * Created by shanembonner on 1/20/15.
