@@ -12,11 +12,11 @@ public interface IDatabase {
 
     void replaceUser(String oldUserName, User newUser);
 
-    void deleteUserList();
+    void deleteUserList() throws SQLException;
 
-    void deleteUser(String userName);
+    void deleteUser(String userName) throws SQLException;
 
-    List<User> getUserList();
+    List<User> getUserList() throws SQLException;
 
     void replaceUserList(List<User> newUserList);
 

@@ -4,7 +4,7 @@ package com.example.shanembonner.RateMyDrink.Servlets;
  * Created by shanembonner on 2/10/15.
  */
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Class to provide access to a singleton {@link ObjectMapper} instance,

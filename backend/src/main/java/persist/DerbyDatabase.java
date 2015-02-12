@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,39 +91,80 @@ public class DerbyDatabase implements IDatabase {
         });
     }
 
+
+    @Override
+    public void deleteUserList() throws SQLException {
+        executeTransaction(new Transaction<Boolean>(){
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = conn.prepareStatement("delete from " + DB_TABLENAME);
+                stmt.executeUpdate();
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void deleteUser(final String userName) throws SQLException {
+        executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = conn.prepareStatement("delete from " + DB_TABLENAME + " where userName = ?");
+                stmt.setString(1, userName);
+                stmt.executeUpdate();
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public List<User> getUserList() throws SQLException {
+        return executeTransaction(new Transaction<List<User>>() {
+
+            @Override
+            public List<User> execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet resultSet = null;
+
+                try{
+                    stmt = conn.prepareStatement("select * from " + DB_TABLENAME);
+                    resultSet = stmt.executeQuery();
+
+                    List<User> result = new ArrayList<User>();
+                    while(resultSet.next()){
+                        User user = new User();
+                        loadUser(user, resultSet, 1);
+                        result.add(user);
+                    }
+                    return result;
+                }finally{
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        });
+    }
+
     @Override
     public void replaceUser(String oldUserName, User newUser) {
-
-    }
-
-    @Override
-    public void deleteUserList() {
-
-    }
-
-    @Override
-    public void deleteUser(String userName) {
-
-    }
-
-    @Override
-    public List<User> getUserList() {
-        return null;
+        //TODO: replace user
     }
 
     @Override
     public void replaceUserList(List<User> newUserList) {
-
+        //TODO: replace user list
     }
 
 
     @Override
     public User findUser(String userName) {
+        //TODO: find user
         return null;
     }
 
     @Override
     public User loginUser(String userName, String password) {
+        //TODO: Login User
         return null;
     }
 
@@ -138,8 +180,6 @@ public class DerbyDatabase implements IDatabase {
     } catch(SQLException e){
         throw new PersistenceException("Transaction failed", e);
     }
-
-
 
     }
 
@@ -171,7 +211,7 @@ public class DerbyDatabase implements IDatabase {
 
             return result;
         }finally{
-            DBUtil.closeQuietly((java.sql.Statement) conn); //TODO: FIX THIS TYPE CAST
+            DBUtil.closeQuietly(conn);
         }
 
     }

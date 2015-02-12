@@ -25,13 +25,13 @@ dependencies {
     appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.14'
     compile 'javax.servlet:servlet-api:2.5'
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile files('jackson-mapper-asl-1.0.0.jar')
     appengine {
         downloadSdk = true
         appcfg {
             oauth2 = true
         }
     }
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
-    compile 'com.fasterxml.jackson.core:jackson-core:2.5.1'
+    compile files('/Users/shanembonner/AndroidStudioProjects/RateMyDrink/libs/jackson-annotations-2.2.3.jar')
+    compile files('/Users/shanembonner/AndroidStudioProjects/RateMyDrink/libs/jackson-core-2.2.3.jar')
+    compile files('/Users/shanembonner/AndroidStudioProjects/RateMyDrink/libs/jackson-databind-2.2.3.jar')
 }
