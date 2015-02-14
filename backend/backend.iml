@@ -10,9 +10,9 @@
       <configuration>
         <option name="HTTP_ADDRESS" value="localhost" />
         <option name="HTTP_PORT" value="8080" />
-        <option name="WAR_DIR" value="C:\Users\user\Documents\GitHub\RateMyDrink\backend\build\exploded-app" />
-        <option name="WEB_APP_DIR" value="C:\Users\user\Documents\GitHub\RateMyDrink\backend\src\main\webapp" />
-        <option name="APPENGINE_SDKROOT" value="C:\Users\user\.gradle\appengine-sdk\appengine-java-sdk-1.9.14" />
+        <option name="WAR_DIR" value="C:\Users\Josh\Documents\GitHub\RateMyDrink\backend\build\exploded-app" />
+        <option name="WEB_APP_DIR" value="C:\Users\Josh\Documents\GitHub\RateMyDrink\backend\src\main\webapp" />
+        <option name="APPENGINE_SDKROOT" value="C:\Users\Josh\.gradle\appengine-sdk\appengine-java-sdk-1.9.14" />
       </configuration>
     </facet>
     <facet type="java-gradle" name="Java-Gradle">
@@ -36,9 +36,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="servlet-api-2.5" level="project" />
-    <orderEntry type="library" exported="" name="C__Users_user_Documents_GitHub_RateMyDrink_backend_Users_shanembonner_AndroidStudioProjects_RateMyDrink_libs_jackson_annotations_2_2_3_jar" level="project" />
-    <orderEntry type="library" exported="" name="C__Users_user_Documents_GitHub_RateMyDrink_backend_Users_shanembonner_AndroidStudioProjects_RateMyDrink_libs_jackson_core_2_2_3_jar" level="project" />
-    <orderEntry type="library" exported="" name="C__Users_user_Documents_GitHub_RateMyDrink_backend_Users_shanembonner_AndroidStudioProjects_RateMyDrink_libs_jackson_databind_2_2_3_jar" level="project" />
+    <orderEntry type="library" exported="" name="C__Users_Josh_Documents_GitHub_RateMyDrink_backend_Users_shanembonner_AndroidStudioProjects_RateMyDrink_libs_jackson_annotations_2_2_3_jar" level="project" />
+    <orderEntry type="library" exported="" name="C__Users_Josh_Documents_GitHub_RateMyDrink_backend_Users_shanembonner_AndroidStudioProjects_RateMyDrink_libs_jackson_core_2_2_3_jar" level="project" />
+    <orderEntry type="library" exported="" name="C__Users_Josh_Documents_GitHub_RateMyDrink_backend_Users_shanembonner_AndroidStudioProjects_RateMyDrink_libs_jackson_databind_2_2_3_jar" level="project" />
   </component>
 </module>
 
