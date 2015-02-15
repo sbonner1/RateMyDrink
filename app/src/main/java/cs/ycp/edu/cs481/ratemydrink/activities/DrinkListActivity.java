@@ -2,11 +2,11 @@ package cs.ycp.edu.cs481.ratemydrink.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 
+import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.fragements.DrinkDetailFragment;
 import cs.ycp.edu.cs481.ratemydrink.fragements.DrinkListFragment;
-import cs.ycp.edu.cs481.ratemydrink.R;
 
 
 /**
@@ -25,8 +25,7 @@ import cs.ycp.edu.cs481.ratemydrink.R;
  * {@link cs.ycp.edu.cs481.ratemydrink.fragements.DrinkListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class DrinkListActivity extends FragmentActivity
-        implements DrinkListFragment.Callbacks {
+public class DrinkListActivity extends ActionBarActivity implements DrinkListFragment.Callbacks {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
