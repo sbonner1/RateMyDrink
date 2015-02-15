@@ -1,4 +1,4 @@
-package cs.ycp.edu.cs481.ratemydrink.fragements.dummy;
+package cs.ycp.edu.cs481.ratemydrink.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
