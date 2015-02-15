@@ -1,4 +1,4 @@
-package cs.ycp.edu.cs481.ratemydrink;
+package cs.ycp.edu.cs481.ratemydrink.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+
+import cs.ycp.edu.cs481.ratemydrink.R;
 
 
 public class MainActivity extends ActionBarActivity {

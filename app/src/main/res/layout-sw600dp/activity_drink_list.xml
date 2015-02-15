@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp" android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal" android:orientation="horizontal"
+    android:showDividers="middle" tools:context="cs.ycp.edu.cs481.ratemydrink.activities.DrinkListActivity">
+
+    <!--
+    This layout is a two-pane layout for the Drinks
+    master/detail flow.
+    
+    -->
+
+    <fragment android:id="@+id/drink_list"
+        android:name="cs.ycp.edu.cs481.ratemydrink.fragements.DrinkListFragment" android:layout_width="0dp"
+        android:layout_height="match_parent" android:layout_weight="1"
+        tools:layout="@android:layout/list_content" />
+
+    <FrameLayout android:id="@+id/drink_detail_container" android:layout_width="0dp"
+        android:layout_height="match_parent" android:layout_weight="3" />
+
+</LinearLayout>
