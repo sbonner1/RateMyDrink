@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cs.ycp.edu.cs481.ratemydrink" >
 
+    <!-- sdk requirements-->
+    <uses-sdk android:minSdkVersion="13" android:targetSdkVersion="21"/>
+
     <!-- permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
 

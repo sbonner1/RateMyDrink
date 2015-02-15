@@ -55,7 +55,8 @@ public class DrinkDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.drink_detail)).setText(mItem.content);
+            ((TextView) rootView.findViewById(R.id.drink_name)).setText(mItem.name);
+            ((TextView) rootView.findViewById(R.id.drink_description)).setText(mItem.description);
         }
 
         return rootView;
