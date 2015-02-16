@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IDatabase {
 
-    void replaceUser(String oldUserName, User newUser);
+    void replaceUser(String oldUserName, User newUser) throws SQLException;
 
     void deleteUserList() throws SQLException;
 
@@ -24,7 +24,7 @@ public interface IDatabase {
 
     public User findUser(String userName);
 
-    public User loginUser(String userName, String password);
+    public User loginUser(String userName, String password) throws SQLException;
 
     User getUser(String userName, String password) throws SQLException;
 }
