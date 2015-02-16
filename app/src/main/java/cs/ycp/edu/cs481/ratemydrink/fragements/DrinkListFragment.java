@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
 
 /**
