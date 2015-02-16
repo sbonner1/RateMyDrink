@@ -146,8 +146,17 @@ public class DerbyDatabase implements IDatabase {
     }
 
     @Override
-    public void replaceUser(String oldUserName, User newUser) {
-        //TODO: replace user
+    public void replaceUser(final String oldUserName, final User newUser) throws SQLException {
+        executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = conn.prepareStatement("update " + DB_TABLENAME + " set userName = ? where userName = ?");
+                stmt.setString(1, newUser.getUserName());
+                stmt.setString(2, oldUserName);
+                stmt.executeUpdate();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -163,9 +172,34 @@ public class DerbyDatabase implements IDatabase {
     }
 
     @Override
-    public User loginUser(String userName, String password) {
-        //TODO: Login User
-        return null;
+    public User loginUser(final String userName, final String password) throws SQLException {
+        return executeTransaction(new Transaction<User>(){
+
+            @Override
+            public User execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet resultSet = null;
+
+                try{
+                    stmt = conn.prepareStatement("select * from " + DB_TABLENAME + " where userName = ?");
+                    stmt.setString(1, userName);
+
+                    resultSet = stmt.executeQuery();
+
+                    if(!resultSet.next()){
+                        //no such user
+                        return null;
+                    }
+
+                    User user = new User(userName, password);
+                    loadUser(user, resultSet, 1);
+                    return user;
+                }finally{
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        });
     }
 
 
