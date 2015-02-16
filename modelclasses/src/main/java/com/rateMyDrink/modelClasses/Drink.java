@@ -5,21 +5,33 @@ package com.rateMyDrink.modelClasses;
  */
 
 public class Drink {
-    private String drinkName;
-    private float rating;
+    protected String drinkName;
+    protected float rating;
 
+    //constructor
     public Drink(){
 
     }
 
+    //setter for drink name
     public void setDrinkName(String name){
         this.drinkName = name;
     }
 
+    //getter for drink name
     public String getDrinkName(){
         return this.drinkName;
     }
 
+    //setter for drink rating
+    public void setRating(float rating){
+        this.rating = rating;
+    }
+
+    //getter for drink rating
+    public float getRating(){
+        return this.rating;
+    }
 
 }
 

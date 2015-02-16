@@ -2,11 +2,19 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/app/src/androidTest/androidTest.iml" filepath="$PROJECT_DIR$/app/src/androidTest/androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/tests/src/main/main.iml" filepath="$PROJECT_DIR$/tests/src/main/main.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/src/main/main.iml" filepath="$PROJECT_DIR$/app/src/main/main.iml" />
       <module fileurl="file://$PROJECT_DIR$/database/src/main/main1.iml" filepath="$PROJECT_DIR$/database/src/main/main1.iml" />
       <module fileurl="file://$PROJECT_DIR$/modelclasses/src/main/main2.iml" filepath="$PROJECT_DIR$/modelclasses/src/main/main2.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/RateMyDrink.iml" filepath="$PROJECT_DIR$/RateMyDrink.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backend/backend.iml" filepath="$PROJECT_DIR$/backend/backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modelclasses/modelclasses.iml" filepath="$PROJECT_DIR$/modelclasses/modelclasses.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tests/tests.iml" filepath="$PROJECT_DIR$/tests/tests.iml" />
+>>>>>>> upstream/master
     </modules>
   </component>
 </project>

@@ -141,6 +141,9 @@ public class MyServlet extends HttpServlet {
             JSON.getObjectMapper().writeValue(resp.getWriter(), userNameList);
         }
 
+        if(action.equals("loginUser")){
+
+        }
 
 
     }

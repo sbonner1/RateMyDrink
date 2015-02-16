@@ -13,9 +13,12 @@ public class MixedDrink extends Drink {
     }
 
     public void setIngredients(ArrayList<String> ingrList){
+        /*
         for(int i = 0; i < ingrList.size(); i++){
             this.ingredients.set(i, ingrList.get(i));
         }
+        */
+        this.ingredients.addAll(ingrList);
     }
 
 
