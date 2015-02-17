@@ -7,9 +7,8 @@ import java.util.ArrayList;
  */
 public class MixedDrink extends Drink {
 
+    private int id;
     private ArrayList<String> ingredients;
-
-    //ingrAmount will be used to store the volume of a specific ingredient
     private ArrayList<String> ingrAmount;
 
     public MixedDrink(){
