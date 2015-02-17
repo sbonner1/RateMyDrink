@@ -1,9 +1,11 @@
 package com.rateMyDrink.modelClasses;
 
+import java.io.Serializable;
+
 /**
  * Created by shanembonner on 2/5/15.
  */
-public enum BeerType {
+public enum BeerType implements Serializable {
     LAGER,
     IPA,
     SAISON,

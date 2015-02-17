@@ -271,7 +271,10 @@ public class DerbyDatabase implements IDatabase {
             @Override
             public Boolean execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                PreparedStatement stmt3 = null;
 
+                //TODO: link all subclass databases to main database
                 try{
                     stmt = conn.prepareStatement(
                             "create table " + DB_USER_TABLENAME + " (" +
@@ -279,18 +282,38 @@ public class DerbyDatabase implements IDatabase {
                             " userName varchar(80) unique," +
                             " password varchar(80)," +
                             ")"
+                    );
 
-                            +
+                    stmt2 = conn.prepareStatement(
+                            "create table " + DB_MAIN_DRINK_TABLENAME + " (" +
+                            " id integer primary key not null generated always as identity," +
+                            " drinkName varchar(200) unique," +
+                            " rating float(1)," +
+                             ")"
+                     );
 
-                            "create table "
-                            //TODO: add other fields to the database as necessary
+
+
+                    stmt3 = conn.prepareStatement(
+                            "create table " + DB_BEER_TABLENAME + " (" +
+                            " id integer primary key not null generated always as identity," +
+                            " cals integer," +
+                            ""
+
+                            //TODO: array of strings? enum?
+
+
+
                     );
                     stmt.executeUpdate();
-
+                    stmt2.executeUpdate();
+                    stmt3.executeUpdate();
                     return true;
 
                 }finally {
                     DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                    DBUtil.closeQuietly(stmt3);
                 }
             }
         } );

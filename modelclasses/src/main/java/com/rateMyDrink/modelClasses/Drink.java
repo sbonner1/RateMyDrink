@@ -7,7 +7,7 @@ package com.rateMyDrink.modelClasses;
 public class Drink {
     protected String drinkName;
     protected float rating;
-
+    protected int id;
     //constructor
     public Drink(){
 

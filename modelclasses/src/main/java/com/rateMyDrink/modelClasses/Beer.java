@@ -6,6 +6,7 @@ package com.rateMyDrink.modelClasses;
 public class Beer extends Drink {
     private double ABV;
     private int calories;
+    protected int id;
     //TODO: add more fields
 
     public void setABV (int abv){
