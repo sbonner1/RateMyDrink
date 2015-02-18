@@ -18,12 +18,6 @@ public class DrinkArrayAdapter<T> extends ArrayAdapter<T> {
 
     private LayoutInflater inflater = null;
 
-    //constructor
-    public DrinkArrayAdapter(Context context, int resource, T[] drinkArray) {
-        super(context, resource, drinkArray);
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
     //another constructor
     public DrinkArrayAdapter(Context context, int resource, int textViewResourceId, T[] drinkArray){
         super(context, resource, textViewResourceId, drinkArray);
