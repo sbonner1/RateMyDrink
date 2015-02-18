@@ -22,9 +22,6 @@ public enum BeerType implements Serializable {
     MARZEN,
     PORTER,
     MALT,
-    WHITBIER,
-    CIDER,
-    OTHER;
-
-
+    WEISBIER,
+    CIDER;
 }

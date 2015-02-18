@@ -11,6 +11,7 @@ public class MixedDrink extends Drink {
     private String instructions;
     private ArrayList<String> ingredients;
     private ArrayList<String> ingrAmount;
+    private LiquorType maxIng;
 
     public MixedDrink(){
 
@@ -46,5 +47,26 @@ public class MixedDrink extends Drink {
         this.ingrAmount.addAll(ingrAmountList);
     }
 
+    //Set the max ingredient
+    public void setMaxIngredient(LiquorType setMaxIng) { this.maxIng = setMaxIng; }
 
+    //Get max ingredient to be displayed
+    public String getMaxIngredient()
+    {
+        switch(this.maxIng)
+        {
+            case RUM:               return "Rum";
+            case WHISKEY:           return "Whiskey";
+            case VODKA:             return "Vodka";
+            case CHOCOLATELIQUOR:   return "Chocolate Liquor";
+            case ABSINTHE:          return "Absinthe";
+            case BRANDY:            return "Brandy";
+            case GIN:               return "Gin";
+            case TEQUILA:           return "Tequila";
+            case BOURBON:           return "Bourbon";
+            case SCOTCH:            return "Scotch";
+            case COGNAC:            return "Cognac";
+            default:                return null;
+        }
+    }
 }
