@@ -11,6 +11,8 @@ import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkArrayAdapter;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
 
+import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent.*;
+
 /**
  * A list fragment representing a list of Drinks. This fragment
  * also supports tablet devices by allowing list items to be given an
@@ -72,10 +74,11 @@ public class DrinkListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DrinkArrayAdapter<DummyContent.DummyItem> adapter = new DrinkArrayAdapter<>(
+        DrinkArrayAdapter<DummyContent.DummyItem> adapter = new DrinkArrayAdapter<DummyContent.DummyItem>(
                 getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
-                (DummyContent.DummyItem[]) DummyContent.ITEMS.toArray());
-                setListAdapter(adapter);
+                ITEMS.toArray(new DummyItem[ITEMS.size()])); //TODO: fix me
+
+        setListAdapter(adapter);
         /*
         setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
                 getActivity(),
@@ -122,7 +125,7 @@ public class DrinkListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(ITEMS.get(position).id);
     }
 
     @Override

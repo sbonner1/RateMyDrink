@@ -28,19 +28,19 @@ public class DrinkArrayAdapter<T> extends ArrayAdapter<T> {
     public View getView(int position, View convertView, ViewGroup parent){
 
         if(convertView == null){
-            convertView = inflater.inflate(R.layout.list_item_layout, false);
+            convertView = inflater.inflate(R.layout.list_item_layout, null);
         }
 
         ImageView imageView = (ImageView)convertView.findViewById(R.id.image);
         TextView textView1 = (TextView)convertView.findViewById(R.id.textView1);
         TextView textView2 = (TextView)convertView.findViewById(R.id.textView2);
 
-        T drink = (T)getItem(position);
+        DummyContent.DummyItem drink = (DummyContent.DummyItem)getItem(position);
 
         textView1.setText(drink.name);
         textView2.setText(drink.description);
-        imageView.setPadding(8, 8, 8, 8);
-        imageView.setImageResource(R.drawable.ic_launcher);
+        //imageView.setPadding(8, 8, 8, 8);
+        //imageView.setImageResource(R.drawable.ic_launcher);
 
         return convertView;
     }
