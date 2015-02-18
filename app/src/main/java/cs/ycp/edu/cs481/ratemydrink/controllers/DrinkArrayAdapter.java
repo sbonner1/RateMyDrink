@@ -11,18 +11,22 @@ import android.widget.TextView;
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
 
-import com.rateMyDrink.modelClasses.Drink;
-
 /**
  * An extended adapter so that the drink list can be populated with custom item views
  */
-public class DrinkArrayAdapter extends ArrayAdapter {
+public class DrinkArrayAdapter<T> extends ArrayAdapter<T> {
 
     private LayoutInflater inflater = null;
 
     //constructor
-    public DrinkArrayAdapter(Context context, int resource, DummyContent.DummyItem[] drinkArray) {
+    public DrinkArrayAdapter(Context context, int resource, T[] drinkArray) {
         super(context, resource, drinkArray);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    //another constructor
+    public DrinkArrayAdapter(Context context, int resource, int textViewResourceId, T[] drinkArray){
+        super(context, resource, textViewResourceId, drinkArray);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -30,14 +34,14 @@ public class DrinkArrayAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent){
 
         if(convertView == null){
-            convertView = inflater.inflate(R.layout.list_item_layout, null);
+            convertView = inflater.inflate(R.layout.list_item_layout, false);
         }
 
         ImageView imageView = (ImageView)convertView.findViewById(R.id.image);
         TextView textView1 = (TextView)convertView.findViewById(R.id.textView1);
         TextView textView2 = (TextView)convertView.findViewById(R.id.textView2);
 
-        DummyContent.DummyItem drink = (DummyContent.DummyItem)getItem(position);
+        T drink = (T)getItem(position);
 
         textView1.setText(drink.name);
         textView2.setText(drink.description);
@@ -46,6 +50,5 @@ public class DrinkArrayAdapter extends ArrayAdapter {
 
         return convertView;
     }
-
 
 }
