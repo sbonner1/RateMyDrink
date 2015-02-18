@@ -10,9 +10,9 @@
       <configuration>
         <option name="HTTP_ADDRESS" value="localhost" />
         <option name="HTTP_PORT" value="8080" />
-        <option name="WAR_DIR" value="C:\Users\Aaron\AndroidStudioProjects\RateMyDrink2\backend\build\exploded-app" />
-        <option name="WEB_APP_DIR" value="C:\Users\Aaron\AndroidStudioProjects\RateMyDrink2\backend\src\main\webapp" />
-        <option name="APPENGINE_SDKROOT" value="C:\Users\Aaron\.gradle\appengine-sdk\appengine-java-sdk-1.9.14" />
+        <option name="WAR_DIR" value="$MODULE_DIR$/build/exploded-app" />
+        <option name="WEB_APP_DIR" value="$MODULE_DIR$/src/main/webapp" />
+        <option name="APPENGINE_SDKROOT" value="$USER_HOME$/.gradle/appengine-sdk/appengine-java-sdk-1.9.14" />
       </configuration>
     </facet>
     <facet type="java-gradle" name="Java-Gradle">
@@ -36,9 +36,10 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="servlet-api-2.5" level="project" />
-    <orderEntry type="library" exported="" name="C__Users_Aaron_AndroidStudioProjects_RateMyDrink2_backend_Users_shanembonner_AndroidStudioProjects_RateMyDrink_libs_jackson_annotations_2_2_3_jar" level="project" />
-    <orderEntry type="library" exported="" name="C__Users_Aaron_AndroidStudioProjects_RateMyDrink2_backend_Users_shanembonner_AndroidStudioProjects_RateMyDrink_libs_jackson_core_2_2_3_jar" level="project" />
-    <orderEntry type="library" exported="" name="C__Users_Aaron_AndroidStudioProjects_RateMyDrink2_backend_Users_shanembonner_AndroidStudioProjects_RateMyDrink_libs_jackson_databind_2_2_3_jar" level="project" />
+    <orderEntry type="library" exported="" name="jackson-annotations-2.2.3" level="project" />
+    <orderEntry type="library" exported="" name="jackson-core-2.2.3" level="project" />
+    <orderEntry type="library" exported="" name="jackson-databind-2.2.3" level="project" />
+    <orderEntry type="module" module-name="modelclasses" />
   </component>
 </module>
 
