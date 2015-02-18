@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class MixedDrink extends Drink {
 
     private int id;
+    private String instructions;
     private ArrayList<String> ingredients;
     private ArrayList<String> ingrAmount;
 
@@ -17,12 +18,23 @@ public class MixedDrink extends Drink {
         ingrAmount = new ArrayList<String>();
     }
 
+    public void setId(int value){
+        this.id = value;
+    }
+
+    public int getId(){
+        return this.id;
+    }
+
+    public void setInstructions(String instr){
+        this.instructions = instr;
+    }
+
+    public String getInstructions(){
+        return this.instructions;
+    }
+
     public void setIngredients(ArrayList<String> ingrList){
-        /*
-        for(int i = 0; i < ingrList.size(); i++){
-            this.ingredients.set(i, ingrList.get(i));
-        }
-        */
         this.ingredients.addAll(ingrList);
     }
 

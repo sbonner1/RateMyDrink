@@ -280,7 +280,7 @@ public class DerbyDatabase implements IDatabase {
                             "create table " + DB_USER_TABLENAME + " (" +
                             " id integer primary key not null generated always as identity," +
                             " userName varchar(80) unique," +
-                            " password varchar(80)," +
+                            " password varchar(80)," + //TODO: How many characters is this?
                             ")"
                     );
 
@@ -300,7 +300,7 @@ public class DerbyDatabase implements IDatabase {
                             " cals integer," +
                             ""
 
-                            //TODO: array of strings? enum?
+                            //TODO: array of strings?
 
 
 
@@ -353,7 +353,7 @@ public class DerbyDatabase implements IDatabase {
     protected void loadUser(User user, ResultSet resultSet, int index) throws SQLException {
         user.setId(resultSet.getInt(index++));
         user.setUserName(resultSet.getString(index++));
-        //user.setUserPassword(resultSet.getString(index++));
+        user.setUserPassword(resultSet.getString(index++));
     }
 
     public static void main(String[] args) throws SQLException {
