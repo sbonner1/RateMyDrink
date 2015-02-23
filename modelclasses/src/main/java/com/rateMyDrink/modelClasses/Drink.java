@@ -6,7 +6,9 @@ package com.rateMyDrink.modelClasses;
 
 public class Drink {
     protected String drinkName;
+    protected String description;
     protected float rating;
+    protected int id;
 
     //constructor
     public Drink(){
@@ -21,6 +23,16 @@ public class Drink {
     //getter for drink name
     public String getDrinkName(){
         return this.drinkName;
+    }
+
+    //setter for the description of the drink
+    public void setDescription(String descr){
+        this.description = descr;
+    }
+
+    //getter for the description of the drink
+    public String getDescription(){
+        return this.description;
     }
 
     //setter for drink rating

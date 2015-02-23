@@ -24,7 +24,11 @@ public class DerbyDatabase implements IDatabase {
 
     private static final int MAX_ATTEMPTS = 10;
     private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
-    private static final String DB_TABLENAME = "userList";
+    private static final String DB_USER_TABLENAME = "userList";
+    private static final String DB_MAIN_DRINK_TABLENAME = "mainDrinkTable";
+    private static final String DB_BEER_TABLENAME = "beerTable";
+    private static final String DB_MIXED_DRINK_TABLENAME = "mixedDrinkTable";
+    private static final String DB_LIQUOR_TABLENAME = "liquorTable";
 
     @Override
     public boolean addNewUser(final User user, String hashedPassword) throws SQLException {
@@ -36,7 +40,7 @@ public class DerbyDatabase implements IDatabase {
 
                 try{
                     stmt = conn.prepareStatement(
-                            "insert into " + DB_TABLENAME + " (userName, password) values (?, ?)",
+                            "insert into " + DB_USER_TABLENAME + " (userName, password) values (?, ?)",
                             PreparedStatement.RETURN_GENERATED_KEYS
                     );
 
@@ -69,7 +73,7 @@ public class DerbyDatabase implements IDatabase {
                 ResultSet resultSet = null;
 
                 try{
-                    stmt = conn.prepareStatement("select * from " + DB_TABLENAME + " where userName = ?");
+                    stmt = conn.prepareStatement("select * from " + DB_USER_TABLENAME + " where userName = ?");
                     stmt.setString(1, userName);
                     stmt.setString(2, password);
 
@@ -97,7 +101,7 @@ public class DerbyDatabase implements IDatabase {
         executeTransaction(new Transaction<Boolean>(){
             @Override
             public Boolean execute(Connection conn) throws SQLException {
-                PreparedStatement stmt = conn.prepareStatement("delete from " + DB_TABLENAME);
+                PreparedStatement stmt = conn.prepareStatement("delete from " + DB_USER_TABLENAME);
                 stmt.executeUpdate();
                 return true;
             }
@@ -109,7 +113,7 @@ public class DerbyDatabase implements IDatabase {
         executeTransaction(new Transaction<Boolean>() {
             @Override
             public Boolean execute(Connection conn) throws SQLException {
-                PreparedStatement stmt = conn.prepareStatement("delete from " + DB_TABLENAME + " where userName = ?");
+                PreparedStatement stmt = conn.prepareStatement("delete from " + DB_USER_TABLENAME + " where userName = ?");
                 stmt.setString(1, userName);
                 stmt.executeUpdate();
                 return true;
@@ -127,7 +131,7 @@ public class DerbyDatabase implements IDatabase {
                 ResultSet resultSet = null;
 
                 try{
-                    stmt = conn.prepareStatement("select * from " + DB_TABLENAME);
+                    stmt = conn.prepareStatement("select * from " + DB_USER_TABLENAME);
                     resultSet = stmt.executeQuery();
 
                     List<User> result = new ArrayList<User>();
@@ -150,7 +154,7 @@ public class DerbyDatabase implements IDatabase {
         executeTransaction(new Transaction<Boolean>() {
             @Override
             public Boolean execute(Connection conn) throws SQLException {
-                PreparedStatement stmt = conn.prepareStatement("update " + DB_TABLENAME + " set userName = ? where userName = ?");
+                PreparedStatement stmt = conn.prepareStatement("update " + DB_USER_TABLENAME + " set userName = ? where userName = ?");
                 stmt.setString(1, newUser.getUserName());
                 stmt.setString(2, oldUserName);
                 stmt.executeUpdate();
@@ -181,7 +185,7 @@ public class DerbyDatabase implements IDatabase {
                 ResultSet resultSet = null;
 
                 try{
-                    stmt = conn.prepareStatement("select * from " + DB_TABLENAME + " where userName = ?");
+                    stmt = conn.prepareStatement("select * from " + DB_USER_TABLENAME + " where userName = ?");
                     stmt.setString(1, userName);
 
                     resultSet = stmt.executeQuery();
@@ -267,22 +271,49 @@ public class DerbyDatabase implements IDatabase {
             @Override
             public Boolean execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                PreparedStatement stmt3 = null;
 
+                //TODO: link all subclass databases to main database
                 try{
                     stmt = conn.prepareStatement(
-                            "create table " + DB_TABLENAME + " (" +
+                            "create table " + DB_USER_TABLENAME + " (" +
                             " id integer primary key not null generated always as identity," +
                             " userName varchar(80) unique," +
-                            " password varchar(80)," +
+                            " password varchar(80)," + //TODO: How many characters is this?
                             ")"
-                            //TODO: add other fields to the database as necessary
+                    );
+
+                    stmt2 = conn.prepareStatement(
+                            "create table " + DB_MAIN_DRINK_TABLENAME + " (" +
+                            " id integer primary key not null generated always as identity," +
+                            " drinkName varchar(200) unique," +
+                            " rating float(1)," +
+                             ")"
+                     );
+
+
+
+                    stmt3 = conn.prepareStatement(
+                            "create table " + DB_BEER_TABLENAME + " (" +
+                            " id integer primary key not null generated always as identity," +
+                            " cals integer," +
+                            ""
+
+                            //TODO: array of strings?
+
+
+
                     );
                     stmt.executeUpdate();
-
+                    stmt2.executeUpdate();
+                    stmt3.executeUpdate();
                     return true;
 
                 }finally {
                     DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                    DBUtil.closeQuietly(stmt3);
                 }
             }
         } );
@@ -305,7 +336,7 @@ public class DerbyDatabase implements IDatabase {
                 PreparedStatement stmt = null;
 
                 try{
-                    stmt = conn.prepareStatement("insert into " + DB_TABLENAME + " (userName, password) values (?,?)");
+                    stmt = conn.prepareStatement("insert into " + DB_USER_TABLENAME + " (userName, password) values (?,?)");
                     storeUserNoId(new User("testUser", "password"), stmt, 1);
                     stmt.addBatch();
 
@@ -322,7 +353,7 @@ public class DerbyDatabase implements IDatabase {
     protected void loadUser(User user, ResultSet resultSet, int index) throws SQLException {
         user.setId(resultSet.getInt(index++));
         user.setUserName(resultSet.getString(index++));
-        //user.setUserPassword(resultSet.getString(index++));
+        user.setUserPassword(resultSet.getString(index++));
     }
 
     public static void main(String[] args) throws SQLException {
