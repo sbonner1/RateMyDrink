@@ -32,7 +32,8 @@ dependencies {
             oauth2 = true
         }
     }
-    compile files('/Users/shanembonner/AndroidStudioProjects/RateMyDrink/libs/jackson-annotations-2.2.3.jar')
-    compile files('/Users/shanembonner/AndroidStudioProjects/RateMyDrink/libs/jackson-core-2.2.3.jar')
-    compile files('/Users/shanembonner/AndroidStudioProjects/RateMyDrink/libs/jackson-databind-2.2.3.jar')
+
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.5.1'
 }

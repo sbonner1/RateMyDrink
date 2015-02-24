@@ -7,8 +7,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-
+import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkArrayAdapter;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
+
+import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent.*;
 
 /**
  * A list fragment representing a list of Drinks. This fragment
@@ -71,12 +74,18 @@ public class DrinkListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: replace with a real list adapter.
+        DrinkArrayAdapter<DummyContent.DummyItem> adapter = new DrinkArrayAdapter<DummyContent.DummyItem>(
+                getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
+                ITEMS.toArray(new DummyItem[ITEMS.size()])); //TODO: fix me
+
+        setListAdapter(adapter);
+        /*
         setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 DummyContent.ITEMS));
+        */
     }
 
     @Override
@@ -116,7 +125,7 @@ public class DrinkListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(ITEMS.get(position).id);
     }
 
     @Override
