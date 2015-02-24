@@ -6,10 +6,18 @@ package com.rateMyDrink.modelClasses;
 public class Beer extends Drink {
     private int id;
     private double ABV;
-    private int calories;
+    private int Calories;
     private BeerType beerType;
 
     //TODO: add more fields
+
+    public void setId(int value){
+        this.id = value;
+    }
+
+    public int getId(){
+        return this.id;
+    }
 
     public void setABV (int abv){
         this.ABV = abv;
@@ -20,12 +28,12 @@ public class Beer extends Drink {
     }
 
     public void setCalories(int calories){
-        this.calories = calories;
+        this.Calories = calories;
     }
 
-    public int getCalories() { return this.calories; }
+    public int getCalories() { return this.Calories; }
 
-    //TODO: getters/setters for enum BeerType
+
     /**
      * @return the specified beer type
      */
