@@ -7,6 +7,7 @@
 package com.example.shanembonner.RateMyDrink.Servlets;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.User;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controllers.AddDrink;
 import controllers.AddUser;
 import controllers.DeleteUser;
 import controllers.DeleteUserList;
@@ -85,6 +87,32 @@ public class MyServlet extends HttpServlet {
                 resp.getWriter().println("User " + pathInfo + "already exists");
             }
 
+        }
+
+        if(action.equals("addDrink")){
+            Drink newDrink = null;
+
+            newDrink = JSON.getObjectMapper().readValue(req.getReader(), Drink.class);
+
+            AddDrink controller = new AddDrink();
+            boolean success = false;
+
+            try{
+                success = controller.addNewDrink(newDrink);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if (success) {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("application/json");
+                JSON.getObjectMapper().writeValue(resp.getWriter(), newDrink);
+
+            }else{
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("User " + pathInfo + "already exists");
+            }
         }
 
         if(action.equals("getUser")){
