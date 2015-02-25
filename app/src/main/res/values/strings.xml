@@ -8,5 +8,8 @@
     <string name="title_activity_drink_list">DrinkListActivity</string>
     <string name="title_drink_list">Drinks</string>
     <string name="title_drink_detail">Drink Detail</string>
+    <string name="TypeComments">Type Comments Here</string>
+    <string name="DrinkComments">Drink Comments</string>
+    <string name="ratingValue">0.0</string>
 
 </resources>
