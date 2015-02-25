@@ -15,7 +15,15 @@ public class Drink {
 
     }
 
+    //setter for the id, which corresponds to its id in the main Drink database table
+    public void setId(int value){
+        this.id = value;
+    }
 
+    //getter for the database id
+    public int getId(){
+        return this.id;
+    }
 
     //setter for drink name
     public void setDrinkName(String name){

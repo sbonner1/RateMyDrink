@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Aaron on 2/17/2015.
  */
-public enum LiquorType implements Serializable{
+public enum LiquorType implements Serializable {
 
     RUM,
     WHISKEY,
