@@ -31,5 +31,5 @@ public interface IDatabase {
 
     boolean addNewDrink(Drink drink) throws SQLException;
 
-
+    List<Drink> getDrinkList() throws SQLException;
 }

@@ -23,6 +23,7 @@ import controllers.AddDrink;
 import controllers.AddUser;
 import controllers.DeleteUser;
 import controllers.DeleteUserList;
+import controllers.GetDrinkList;
 import controllers.GetUser;
 import controllers.GetUserList;
 
@@ -167,6 +168,21 @@ public class MyServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), userNameList);
+        }
+
+        if(action.equals("getDrinkList")){
+            GetDrinkList getController = new GetDrinkList();
+            List<Drink> drinkList = null;
+
+            try {
+                drinkList = getController.getDrinkList();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+           resp.setStatus(HttpServletResponse.SC_OK);
+           resp.setContentType("application/json");
+           JSON.getObjectMapper().writeValue(resp.getWriter(), drinkList);
         }
 
         if(action.equals("loginUser")){

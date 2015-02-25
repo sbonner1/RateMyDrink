@@ -60,6 +60,7 @@ public class DerbyDatabase implements IDatabase {
 
                     }
                     int userId = generatedKeys.getInt(1);
+
                     user.setId(userId);
 
                     return true;
@@ -136,21 +137,33 @@ public class DerbyDatabase implements IDatabase {
                     //Determine which of the subclasses the new drink is, and store it in the correct
                     //sub-table with the corresponding variables and storeNoId function call
                     if(drink instanceof Beer){
+                        Beer tempBeer = (Beer) drink;
+                        stmt2 = conn.prepareStatement(
+                                "insert into " + DB_BEER_TABLENAME + "(drink_id, cals, beerType values (?,?,?)"
 
+                        );
+                        storeBeerNoId(tempBeer, stmt, 1);
+                        stmt2.executeUpdate();
                     }
 
                     if(drink instanceof MixedDrink){
-
+                        //TODO:implement MixedDrink
                     }
 
                     if(drink instanceof Liquor){
+                        Liquor tempLiquor = (Liquor) drink;
+                        stmt2 = conn.prepareStatement(
+                            "insert into " + DB_LIQUOR_TABLENAME + "(drink_id, mainIng values (?,?)"
 
+                        );
+                        storeLiquorNoId(tempLiquor, stmt, 1);
                     }
 
                     return true;
                 }finally{
                     DBUtil.closeQuietly(generatedKeys);
                     DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
                 }
             }
         });
@@ -200,6 +213,33 @@ public class DerbyDatabase implements IDatabase {
                         User user = new User();
                         loadUser(user, resultSet, 1);
                         result.add(user);
+                    }
+                    return result;
+                }finally{
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        });
+    }
+
+    @Override
+    public List<Drink> getDrinkList() throws SQLException {
+        return executeTransaction(new Transaction<List<Drink>>() {
+            @Override
+            public List<Drink> execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet resultSet = null;
+
+                try{
+                    stmt = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME);
+                    resultSet = stmt.executeQuery();
+
+                    List<Drink> result = new ArrayList<Drink>();
+                    while(resultSet.next()){
+                        Drink drink = new Drink();
+                        loadDrink(drink, resultSet, 1);
+                        result.add(drink);
                     }
                     return result;
                 }finally{
@@ -366,6 +406,7 @@ public class DerbyDatabase implements IDatabase {
                             //" id integer primary key not null generated always as identity," +
                             " drink_id integer unique," +
                             " cals integer," +
+                            " abv double" +
                             " type BeerType," +
                             ")"
                     );
@@ -389,6 +430,8 @@ public class DerbyDatabase implements IDatabase {
                     stmt2.executeUpdate();
                     stmt3.executeUpdate();
                     stmt4.executeUpdate();
+                    stmt5.executeUpdate();
+
                     return true;
 
                 }finally {
@@ -396,6 +439,7 @@ public class DerbyDatabase implements IDatabase {
                     DBUtil.closeQuietly(stmt2);
                     DBUtil.closeQuietly(stmt3);
                     DBUtil.closeQuietly(stmt4);
+                    DBUtil.closeQuietly(stmt5);
                 }
             }
         } );
@@ -419,15 +463,20 @@ public class DerbyDatabase implements IDatabase {
     }
 
     protected void storeBeerNoId(Beer beer, PreparedStatement stmt, int index) throws SQLException {
-
+        stmt.setInt(index++, beer.getId());
+        stmt.setInt(index++, beer.getCalories());
+        stmt.setDouble(index++, beer.getABV());
+        stmt.setString(index++, beer.getBeerType());
     }
 
-    protected void storeMixedDrinkNoId(MixedDrink drink, PreparedStatement stmt, int index) throws SQLException {
-
+    protected void storeMixedDrinkNoId(Drink drink, PreparedStatement stmt, int index) throws SQLException {
+        //TODO:
     }
 
     protected void storeLiquorNoId(Liquor liquor, PreparedStatement stmt, int index) throws SQLException {
-
+        stmt.setInt(index++, liquor.getId());
+        stmt.setFloat(index++, liquor.getAlcoholContent());
+        stmt.setString(index++, liquor.getLiquorType());
     }
 
 
@@ -464,6 +513,13 @@ public class DerbyDatabase implements IDatabase {
         drink.setDrinkName(resultSet.getString(index++));
         drink.setDescription(resultSet.getString(index++));
         drink.setRating(resultSet.getFloat(index++));
+    }
+
+    protected void loadBeer(Beer beer, ResultSet resultSet, int index) throws SQLException {
+        beer.setId(resultSet.getInt(index++));
+        beer.setCalories(resultSet.getInt(index++));
+        beer.setABV(resultSet.getInt(index++));
+        //beer.setBeerType(resultSet.ge; //TODO: FIXME:
     }
 
     public static void main(String[] args) throws SQLException {
