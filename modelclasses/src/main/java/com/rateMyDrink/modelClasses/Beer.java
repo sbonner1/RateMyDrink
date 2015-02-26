@@ -23,11 +23,15 @@ public class Beer extends Drink {
 
     public int getCalories() { return this.calories; }
 
+    public BeerType getBeerType()
+    {
+        return beerType;
+    }
 
     /**
      * @return the specified beer type
      */
-    public String getBeerType()
+    public String getBeerTypeReadableName()
     {
         switch(this.beerType)
         {

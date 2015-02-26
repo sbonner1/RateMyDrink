@@ -20,10 +20,14 @@ public class Liquor extends Drink {
         return this.content;
     }
 
+    public LiquorType getLiquorType()
+    {
+        return liquorType;
+    }
     /**
      * @return the specified liquor type
      */
-    public String getLiquorType() {
+    public String getLiquorTypeReadableType() {
         switch(this.liquorType)
         {
             case RUM:               return "Rum";
