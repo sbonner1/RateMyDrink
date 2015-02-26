@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
 
@@ -23,6 +22,7 @@ public class DrinkDetailFragment extends Fragment {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
+
 
     /**
      * The dummy content this fragment is presenting.
@@ -46,6 +46,12 @@ public class DrinkDetailFragment extends Fragment {
             // to load content from a content provider.
             mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
         }
+
+        //Next, populate list based on what type of drink the user selected to look up
+        if(mItem.name == "Beer"){
+
+        }
+
     }
 
     @Override

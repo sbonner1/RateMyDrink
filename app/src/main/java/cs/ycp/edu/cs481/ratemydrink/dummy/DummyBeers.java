@@ -14,21 +14,21 @@ public class DummyBeers {
     /**
      * An array of sample (dummy) items.
      */
-    public static List<DummyBeers> BEERS = new ArrayList<DummyBeers>();
+    public static List<DummyBeer> BEERS = new ArrayList<DummyBeer>();
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static Map<String, DummyBeers> BEER_MAP = new HashMap<String, DummyBeers>();
+    public static Map<String, DummyBeer> BEER_MAP = new HashMap<String, DummyBeer>();
 
     static {
         // Add 3 sample items.
-        addItem(new DummyBeers("1", "Budweiser", "Ale", "ABV: 4.5%", 300, "An american classic, wheat ale", 2.0f));
-        addItem(new DummyBeers("2", "Yuengling", "Lager", "ABV: 5.0%", 350, "An american lager, a wunnabe craft brew", 3.0f));
-        addItem(new DummyBeers("3", "Natural Ice", "Ale", "ABV: 3.0", 250, "The choice of frats, this cheap ale is a water alternative", 2.0f));
+        addItem(new DummyBeer("1", "Budweiser", "Ale", "ABV: 4.5%", 300, "An american classic, wheat ale", 2.0f));
+        addItem(new DummyBeer("2", "Yuengling", "Lager", "ABV: 5.0%", 350, "An american lager, a wunnabe craft brew", 3.0f));
+        addItem(new DummyBeer("3", "Natural Ice", "Ale", "ABV: 3.0", 250, "The choice of frats, this cheap ale is a water alternative", 2.0f));
     }
 
-    private static void addItem(DummyBeers item) {
+    private static void addItem(DummyBeer item) {
         BEERS.add(item);
         BEER_MAP.put(item.id, item);
     }
@@ -36,7 +36,7 @@ public class DummyBeers {
     /**
      * A dummy item representing a piece of content.
      */
-    public static class DummyBeers {
+    public static class DummyBeer {
         public String id;
         public String name;
         public String ABV;
@@ -45,7 +45,7 @@ public class DummyBeers {
         public String description;
         public float rating;
 
-        public DummyBeers(String id, String content, String type, String abv, float calories, String description, float rating) {
+        public DummyBeer(String id, String content, String type, String abv, float calories, String description, float rating) {
             this.id = id;
             this.name = content;
             this.type = type;

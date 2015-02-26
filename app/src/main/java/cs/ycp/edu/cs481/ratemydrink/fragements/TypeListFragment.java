@@ -1,12 +1,10 @@
 package cs.ycp.edu.cs481.ratemydrink.fragements;
 
-import android.app.ListFragment;
-
+import android.app.Activity;
 import android.os.Bundle;
 
 import android.view.View;
-
-import android.app.Activity;
+import android.support.v4.app.ListFragment;
 import android.widget.ListView;
 
 import cs.ycp.edu.cs481.ratemydrink.R;

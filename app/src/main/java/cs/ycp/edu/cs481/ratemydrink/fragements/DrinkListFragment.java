@@ -4,14 +4,16 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkArrayAdapter;
+import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkListArrayAdapter;
+import cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
 
 import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent.*;
+import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers.*;
 
 /**
  * A list fragment representing a list of Drinks. This fragment
@@ -74,11 +76,16 @@ public class DrinkListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DrinkArrayAdapter<DummyContent.DummyItem> adapter = new DrinkArrayAdapter<DummyContent.DummyItem>(
-                getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
-                ITEMS.toArray(new DummyItem[ITEMS.size()])); //TODO: fix me
+//        DrinkArrayAdapter<DummyContent.DummyItem> adapter = new DrinkArrayAdapter<DummyContent.DummyItem>(
+//                getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
+//                ITEMS.toArray(new DummyItem[ITEMS.size()])); //TODO: fix me
 
-        setListAdapter(adapter);
+        DrinkListArrayAdapter<DummyBeers.DummyBeer> adapter2 = new DrinkListArrayAdapter<DummyBeers.DummyBeer>(
+                getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
+                BEERS.toArray(new DummyBeer[BEERS.size()])); //TODO: fix me
+
+        //setListAdapter(adapter);
+        setListAdapter(adapter2);
         /*
         setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
                 getActivity(),

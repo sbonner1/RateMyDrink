@@ -2,4 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
     android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context="cs.ycp.edu.cs481.ratemydrink.activities.TypeActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame" >
+
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="cs.ycp.edu.cs481.ratemydrink.fragements.TypeListFragment"
+        android:id="@+id/type_list"
+        android:layout_gravity="left|top"
+        tools:layout="@android:layout/list_content" />
+</FrameLayout>
