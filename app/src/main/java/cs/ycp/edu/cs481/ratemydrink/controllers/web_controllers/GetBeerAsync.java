@@ -8,8 +8,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
 import com.rateMyDrink.modelClasses.Drink;
 
+import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;
-import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
@@ -24,12 +24,12 @@ public class GetBeerAsync extends AsyncTask<Integer, Void, Drink> {
                 .registerTypeAdapter(Drink.class, new DateTypeAdapter())
                 .create();
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(URLInfo.DOMAIN_URL)
-                .setConverter(new GsonConverter(gson))
-                .build();
+        IGetBeer getDrinkService = RETROFIT.getRestAdapterBuilder()
+                                              .setEndpoint(URLInfo.DOMAIN_URL)
+                                              .setConverter(new GsonConverter(gson))
+                                              .build()
+                                              .create(IGetBeer.class);
 
-        IGetBeer getDrinkService = restAdapter.create(IGetBeer.class);
         getDrinkService.get(params[0]);
 
         return null;
