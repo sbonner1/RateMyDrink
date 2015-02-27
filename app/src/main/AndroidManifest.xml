@@ -23,12 +23,11 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.DrinkListActivity"
-            android:label="@string/title_drink_list" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/title_drink_list"
+            android:parentActivityName=".activities.TypeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.TypeActivity" />
         </activity>
         <activity
             android:name=".activities.DrinkDetailActivity"
@@ -44,7 +43,6 @@
             android:label="@string/title_activity_type" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

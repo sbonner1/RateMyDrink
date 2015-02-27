@@ -23,9 +23,9 @@ public class DummyBeers {
 
     static {
         // Add 3 sample items.
-        addItem(new DummyBeer("1", "Budweiser", "Ale", "ABV: 4.5%", 300, "An american classic, wheat ale", 2.0f));
-        addItem(new DummyBeer("2", "Yuengling", "Lager", "ABV: 5.0%", 350, "An american lager, a wunnabe craft brew", 3.0f));
-        addItem(new DummyBeer("3", "Natural Ice", "Ale", "ABV: 3.0", 250, "The choice of frats, this cheap ale is a water alternative", 2.0f));
+        addItem(new DummyBeer("1", "Budweiser", "Ale", "4.5%", 300, "An american classic, wheat ale", 2.5f));
+        addItem(new DummyBeer("2", "Yuengling", "Lager", "5.0%", 350, "An american lager, a wunnabe craft brew", 3.0f));
+        addItem(new DummyBeer("3", "Natural Ice", "Ale", "3.0", 250, "The choice of frats, this cheap ale is a water alternative", 2.2f));
     }
 
     private static void addItem(DummyBeer item) {

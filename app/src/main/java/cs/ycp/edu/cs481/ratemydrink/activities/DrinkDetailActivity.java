@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import cs.ycp.edu.cs481.ratemydrink.fragements.DrinkDetailFragment;
 import cs.ycp.edu.cs481.ratemydrink.R;
@@ -21,12 +23,15 @@ import cs.ycp.edu.cs481.ratemydrink.R;
  */
 public class DrinkDetailActivity extends ActionBarActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //If Beer initially was chosen, do this, liquor, do option two, etc.
+       // if()
         setContentView(R.layout.activity_drink_detail);
 
-        // Show the Up button in the action bar.
+        // Show the Up button in the action bar, rating bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // savedInstanceState is non-null when there is fragment state
@@ -51,6 +56,8 @@ public class DrinkDetailActivity extends ActionBarActivity {
                     .commit();
         }
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
