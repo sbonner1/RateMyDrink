@@ -1,36 +1,33 @@
 package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 
-
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
-import com.rateMyDrink.modelClasses.Beer;
+import com.rateMyDrink.modelClasses.Liquor;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;
 import retrofit.converter.GsonConverter;
 
 /**
- * A controller to asynchronously make a GET request to the database for a single Beer object.
+ * A controller to asynchronously make a GET request to the database for a single Liquor object.
  */
-public class GetBeerAsync extends AsyncTask<Integer, Void, Beer> {
-
+public class getLiquorAsync extends AsyncTask<Integer, Void, Liquor> {
     @Override
-    protected Beer doInBackground(Integer... params) {
+    protected Liquor doInBackground(Integer... params) {
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Beer.class, new DateTypeAdapter())
+                .registerTypeAdapter(Liquor.class, new DateTypeAdapter())
                 .create();
 
-        IGetBeer getBeerService = RETROFIT.getRestAdapterBuilder()
+        IGetLiquor getLiquorService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
                 .setConverter(new GsonConverter(gson))
                 .build()
-                .create(IGetBeer.class);
+                .create(IGetLiquor.class);
 
-        return getBeerService.get(params[0]);
+        return getLiquorService.get(params[0]);
     }
-
 }

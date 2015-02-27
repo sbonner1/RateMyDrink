@@ -1,6 +1,6 @@
 package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 
-import com.rateMyDrink.modelClasses.Drink;
+import com.rateMyDrink.modelClasses.Beer;
 
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -11,6 +11,6 @@ import retrofit.http.Query;
 public interface IGetBeer {
 
     @GET("/getDrink")
-    Drink get(@Query("id") int id);
+    Beer get(@Query("id") int id);
 
 }
