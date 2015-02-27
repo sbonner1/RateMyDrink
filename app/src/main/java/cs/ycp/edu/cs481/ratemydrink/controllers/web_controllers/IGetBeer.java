@@ -6,7 +6,7 @@ import retrofit.http.GET;
 import retrofit.http.Query;
 
 /**
- * A simple interface using the Retrofit api to make RESTful requests to get a drink from server-sides' database
+ * A simple interface using the Retrofit api to make RESTful requests to get a Beer object from server-sides' database
  */
 public interface IGetBeer {
 
