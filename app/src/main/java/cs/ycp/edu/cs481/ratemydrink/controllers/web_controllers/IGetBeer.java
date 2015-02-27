@@ -8,9 +8,9 @@ import retrofit.http.Query;
 /**
  * A simple interface using the Retrofit api to make RESTful requests to get a drink from server-sides' database
  */
-public interface IGetDrink {
+public interface IGetBeer {
 
     @GET("/getDrink")
-    Drink getDrink(@Query("id") int id);
+    Drink get(@Query("id") int id);
 
 }
