@@ -49,9 +49,11 @@ public class MixedDrink extends Drink {
 
     //Set the max ingredient
     public void setMaxIngredient(LiquorType setMaxIng) { this.maxIng = setMaxIng; }
-
+    public LiquorType getMaxIngedient(){
+        return this.maxIng;
+    }
     //Get max ingredient to be displayed
-    public String getMaxIngredient()
+    public String getMaxIngredientReadableType()
     {
         switch(this.maxIng)
         {

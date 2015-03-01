@@ -1,5 +1,6 @@
 package persist;
 
+import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.User;
 
@@ -31,5 +32,7 @@ public interface IDatabase {
 
     boolean addNewDrink(Drink drink) throws SQLException;
 
+    List<Drink> getDrinkList() throws SQLException;
 
+    Beer getBeer(int id) throws SQLException;
 }

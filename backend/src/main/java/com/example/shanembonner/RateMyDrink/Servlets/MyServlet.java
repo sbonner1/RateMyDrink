@@ -7,6 +7,7 @@
 package com.example.shanembonner.RateMyDrink.Servlets;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.User;
 
@@ -23,6 +24,8 @@ import controllers.AddDrink;
 import controllers.AddUser;
 import controllers.DeleteUser;
 import controllers.DeleteUserList;
+import controllers.GetBeer;
+import controllers.GetDrinkList;
 import controllers.GetUser;
 import controllers.GetUserList;
 
@@ -31,12 +34,112 @@ public class MyServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         String action = req.getParameter("action");
-        if(action != null){
+        String pathInfo = req.getPathInfo(); //path
+      /*  if(action != null){
             req.setAttribute("action", action);
         }
         resp.setContentType("text/plain");
         resp.getWriter().println("Please use the form to POST to this url");
+        */
+
+        if(action.equals("getUser")){
+            //get the user name
+            if(pathInfo.startsWith("/")) {
+                pathInfo = pathInfo.substring(1);
+            }
+
+            String password = JSON.getObjectMapper().readValue(req.getReader(), String.class);
+            User user = null;
+            GetUser controller = new GetUser();
+            try {
+                user = controller.getUser(pathInfo,password);
+                System.out.println("accessed database");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            if(user == null){
+                //no such item, so return a NOT FOUND response
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("No such user: " + pathInfo);
+                return;
+            }
+            System.out.println(user.getUserName());
+
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            JSON.getObjectMapper().writeValue(resp.getWriter(), user);
+
+        }
+
+        if(action.equals("getBeer")){
+            if(pathInfo.startsWith("/")) {
+                pathInfo = pathInfo.substring(1);
+            }
+
+            Beer beer = null;
+            GetBeer controller = new GetBeer();
+            int id = Integer.parseInt(pathInfo, 10); //TODO: WILL THIS WORK?? WHICH IS CORRECT?
+            //int id = Integer.valueOf(pathInfo);
+            try{
+                beer = controller.getBeer(id);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+
+            if(beer == null){
+                //no such item
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("No such beer");
+            }
+            System.out.println(beer.getDrinkName());
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            JSON.getObjectMapper().writeValue(resp.getWriter(), beer);
+        }
+
+        if(action.equals("getUserList")){
+            //retrieve inventory from database
+            GetUserList getController = new GetUserList();
+            List<User> userList = null;
+            try {
+                userList = getController.getUserList();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            //print userList to user's terminal
+            String[] userNameList = new String[userList.size()]; //return the list of usernames for the scoreboard
+            //as an array of strings to be displayed
+            int count = 0;
+            for(User user: userList){
+                String userName = user.getUserName();
+                userNameList[count] = userName;
+                count++;
+            }
+
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            JSON.getObjectMapper().writeValue(resp.getWriter(), userNameList);
+        }
+
+        if(action.equals("getDrinkList")){
+            GetDrinkList getController = new GetDrinkList();
+            List<Drink> drinkList = null;
+
+            try {
+                drinkList = getController.getDrinkList();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            JSON.getObjectMapper().writeValue(resp.getWriter(), drinkList);
+        }
     }
+
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -115,59 +218,6 @@ public class MyServlet extends HttpServlet {
             }
         }
 
-        if(action.equals("getUser")){
-            //get the user name
-            if(pathInfo.startsWith("/")) {
-                pathInfo = pathInfo.substring(1);
-            }
-            String password = JSON.getObjectMapper().readValue(req.getReader(), String.class);
-            User user = null;
-            GetUser controller = new GetUser();
-            try {
-                user = controller.getUser(pathInfo,password);
-                System.out.println("accessed database");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            if(user == null){
-                //no such item, so return a NOT FOUND response
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                resp.setContentType("text/plain");
-                resp.getWriter().println("No such user: " + pathInfo);
-                return;
-            }
-            System.out.println(user.getUserName());
-
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.setContentType("application/json");
-            JSON.getObjectMapper().writeValue(resp.getWriter(), user);
-
-        }
-
-        if(action.equals("getUserList")){
-            //retrieve inventory from database
-            GetUserList getController = new GetUserList();
-            List<User> userList = null;
-            try {
-                userList = getController.getUserList();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            //print userList to user's terminal
-            String[] userNameList = new String[userList.size()]; //return the list of usernames for the scoreboard
-                                                                 //as an array of strings to be displayed
-            int count = 0;
-            for(User user: userList){
-                String userName = user.getUserName();
-                userNameList[count] = userName;
-                count++;
-            }
-
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.setContentType("application/json");
-            JSON.getObjectMapper().writeValue(resp.getWriter(), userNameList);
-        }
 
         if(action.equals("loginUser")){
 
