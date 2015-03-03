@@ -432,8 +432,6 @@ public class DerbyDatabase implements IDatabase {
                              ")"
                      );
 
-
-
                     stmt3 = conn.prepareStatement(
                             "create table " + DB_BEER_TABLENAME + " (" +
                                     //" id integer primary key not null generated always as identity," +
