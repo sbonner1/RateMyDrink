@@ -438,8 +438,8 @@ public class DerbyDatabase implements IDatabase {
                             //" id integer primary key not null generated always as identity," +
                             " drink_id integer unique," +
                             " cals integer non-unique," +
-                            " abv double non-unique," +
-                            " beer_Type integer" +
+                            " abv double," +
+                            " beer_Type integer non-unique" +
                             ")"
                     );
 
