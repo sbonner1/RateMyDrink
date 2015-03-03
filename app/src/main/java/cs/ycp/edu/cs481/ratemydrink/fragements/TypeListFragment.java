@@ -2,29 +2,17 @@ package cs.ycp.edu.cs481.ratemydrink.fragements;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+
 import android.view.View;
+import android.support.v4.app.ListFragment;
 import android.widget.ListView;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkArrayAdapter;
-import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkListArrayAdapter;
-import cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
-
+import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkArrayAdapter;
 import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent.*;
-import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers.*;
 
-/**
- * A list fragment representing a list of Drinks. This fragment
- * also supports tablet devices by allowing list items to be given an
- * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link cs.ycp.edu.cs481.ratemydrink.fragements.DrinkDetailFragment}.
- * <p/>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
- */
-public class DrinkListFragment extends ListFragment {
+public class TypeListFragment extends ListFragment {
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -65,37 +53,17 @@ public class DrinkListFragment extends ListFragment {
         }
     };
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public DrinkListFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        DrinkArrayAdapter<DummyContent.DummyItem> adapter = new DrinkArrayAdapter<DummyContent.DummyItem>(
-//                getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
-//                ITEMS.toArray(new DummyItem[ITEMS.size()])); //TODO: fix me
-
-        DrinkListArrayAdapter<DummyBeers.DummyBeer> adapter2 = new DrinkListArrayAdapter<DummyBeers.DummyBeer>(
+                DrinkArrayAdapter<DummyContent.DummyItem> adapter = new DrinkArrayAdapter<DummyContent.DummyItem>(
                 getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
-                BEERS.toArray(new DummyBeer[BEERS.size()])); //TODO: fix me
+                ITEMS.toArray(new DummyItem[ITEMS.size()])); //TODO: fix me
 
-        //setListAdapter(adapter);
-
-        //setListAdapter(adapter);
-        setListAdapter(adapter2);
-        /*
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
-        */
+        setListAdapter(adapter);
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
