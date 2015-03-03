@@ -44,6 +44,7 @@
     <orderEntry type="library" exported="" name="jackson-annotations-2.5.1" level="project" />
     <orderEntry type="library" exported="" name="jackson-databind-2.5.1" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.5.1" level="project" />
+    <orderEntry type="library" exported="" name="derby-10.11.1.1" level="project" />
   </component>
 </module>
 
