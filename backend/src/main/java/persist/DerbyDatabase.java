@@ -420,7 +420,7 @@ public class DerbyDatabase implements IDatabase {
                             "create table " + DB_USER_TABLENAME + " (" +
                             " id integer primary key not null generated always as identity," +
                             " userName varchar(80) unique," +
-                            " password varchar(80)," + //TODO: How many characters is this?
+                            " password varchar(80)" + //TODO: How many characters is this?
                             ")"
                     );
 
@@ -428,35 +428,33 @@ public class DerbyDatabase implements IDatabase {
                             "create table " + DB_MAIN_DRINK_TABLENAME + " (" +
                             " id integer primary key not null generated always as identity," +
                             " drinkName varchar(200) unique," +
-                            " description varchar(1500) " +
-                            " rating float(1)," +
+                            " description varchar(1500), " +
+                            " rating float(1)" +
                              ")"
                      );
 
-
-
                     stmt3 = conn.prepareStatement(
                             "create table " + DB_BEER_TABLENAME + " (" +
-                                    //" id integer primary key not null generated always as identity," +
-                                    " drink_id integer unique," +
-                                    " cals integer," +
-                                    " abv double" +
-                                    " beer_Type integer" +
-                                    ")"
+                            //" id integer primary key not null generated always as identity," +
+                            " drink_id integer," +
+                            " cals integer," +
+                            " abv double," +
+                            " beer_Type integer" +
+                            ")"
                     );
 
                     stmt4 = conn.prepareStatement(
                             "create table " + DB_MIXED_DRINK_TABLENAME + " (" +
-                            "drink_id integer unique," +
-                            "main_Ing LiquorType," + //TODO: FIGURE OUT HOW TO ADD STRING ARRAYS TO THE TABLE
+                            "drinkId integer," +
+                            "mainIng integer" + //TODO: FIGURE OUT HOW TO ADD STRING ARRAYS TO THE TABLE
                             ")"
                     );
 
                     stmt5 = conn.prepareStatement(
                             "create table " + DB_LIQUOR_TABLENAME + " (" +
-                            "drink_id integer unique," +
+                            "drinkId integer," +
                             "content float(1)," +
-                            "type LiquorType," +
+                            "liquorType integer" +
                             ")"
                     );
 
