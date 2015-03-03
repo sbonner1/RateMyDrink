@@ -29,7 +29,8 @@ public class DerbyDatabase implements IDatabase {
     }
 
     private static final int MAX_ATTEMPTS = 10;
-    private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
+    //private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
+    private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db";
     private static final String DB_USER_TABLENAME = "userList";
     private static final String DB_MAIN_DRINK_TABLENAME = "mainDrinkTable";
     private static final String DB_BEER_TABLENAME = "beerTable";
@@ -427,19 +428,19 @@ public class DerbyDatabase implements IDatabase {
                             "create table " + DB_MAIN_DRINK_TABLENAME + " (" +
                             " id integer primary key not null generated always as identity," +
                             " drinkName varchar(200) unique," +
-                            " description varchar(1500) " +
+                            " description varchar(1500), " +
                             " rating float(1)," +
                              ")"
                      );
 
                     stmt3 = conn.prepareStatement(
                             "create table " + DB_BEER_TABLENAME + " (" +
-                                    //" id integer primary key not null generated always as identity," +
-                                    " drink_id integer unique," +
-                                    " cals integer," +
-                                    " abv double" +
-                                    " beer_Type integer" +
-                                    ")"
+                            //" id integer primary key not null generated always as identity," +
+                            " drink_id integer unique," +
+                            " cals integer," +
+                            " abv double," +
+                            " beer_Type integer," +
+                            ")"
                     );
 
                     stmt4 = conn.prepareStatement(

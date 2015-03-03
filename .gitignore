@@ -6,3 +6,13 @@
 /build
 app/src/main/gen/
 
+#backend
+/backend/backend.iml
+
+#modelclasses
+/modelclasses/
+
+#database files
+/rateMyDrinkDB
+derby.log
+
