@@ -12,6 +12,14 @@ public class Liquor extends Drink {
 
     }
 
+    public void setId(int value){
+        this.id = value;
+    }
+
+    public int getId(){
+        return this.id;
+    }
+
     public void setAlcoholContent(float content){
         this.content = content;
     }

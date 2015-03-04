@@ -5,4 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cs.ycp.edu.cs481.ratemydrink.activities.DrinkDetailActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame" >
+
+
+</FrameLayout>
