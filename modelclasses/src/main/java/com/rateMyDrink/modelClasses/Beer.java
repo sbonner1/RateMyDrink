@@ -30,6 +30,8 @@ public class Beer extends Drink {
         return beerType;
     }
 
+
+    //TODO: getters/setters for enum BeerType
     /**
      * @return the specified beer type
      */

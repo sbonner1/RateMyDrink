@@ -194,7 +194,7 @@ public class MyServlet extends HttpServlet {
 
         if(action.equals("addDrink")){
             Drink newDrink = null;
-
+            System.out.println("action: addDrink");
             newDrink = JSON.getObjectMapper().readValue(req.getReader(), Drink.class);
 
             AddDrink controller = new AddDrink();
@@ -207,11 +207,13 @@ public class MyServlet extends HttpServlet {
             }
 
             if (success) {
+                System.out.println("success adding drink");
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), newDrink);
 
             }else{
+                System.out.println("failed to add drink");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("User " + pathInfo + "already exists");
