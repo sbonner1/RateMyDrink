@@ -6,8 +6,12 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>MyServlet</servlet-name>
-        <url-pattern>/hello</url-pattern>
+        <url-pattern>/MyServlet/*</url-pattern>
     </servlet-mapping>
+    <!-- Servlet context listeners -->
+    <listener>
+        <listener-class>com.example.shanembonner.RateMyDrink.ServletsDatabaseInitListener</listener-class>
+    </listener>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
