@@ -4,7 +4,7 @@ package com.rateMyDrink.modelClasses;
  * Created by shanembonner on 1/28/15.
  */
 public class Beer extends Drink {
-    private int id;
+    //private int id;
     private double ABV;
     private int calories;
     private BeerType beerType;

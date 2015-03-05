@@ -76,25 +76,14 @@ public class DrinkListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        DrinkArrayAdapter<DummyContent.DummyItem> adapter = new DrinkArrayAdapter<DummyContent.DummyItem>(
-//                getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
-//                ITEMS.toArray(new DummyItem[ITEMS.size()])); //TODO: fix me
+        
 
         DrinkListArrayAdapter<DummyBeers.DummyBeer> adapter2 = new DrinkListArrayAdapter<DummyBeers.DummyBeer>(
                 getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
-                BEERS.toArray(new DummyBeer[BEERS.size()])); //TODO: fix me
+                BEERS.toArray(new DummyBeer[BEERS.size()]));
 
-        //setListAdapter(adapter);
-
-        //setListAdapter(adapter);
         setListAdapter(adapter2);
-        /*
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
-        */
+
     }
 
     @Override
