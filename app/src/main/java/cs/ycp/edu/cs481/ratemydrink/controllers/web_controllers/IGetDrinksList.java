@@ -3,6 +3,7 @@ package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 import com.rateMyDrink.modelClasses.Drink;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.http.GET;
 
@@ -12,6 +13,6 @@ import retrofit.http.GET;
 public interface IGetDrinksList {
 
     @GET("/getDrinkList")
-    ArrayList<Drink> getDrinkList(); //TODO: determine how we decide on which drink type to get
+    List<Drink> getDrinkList(); //TODO: determine how we decide on which drink type to get
 
 }
