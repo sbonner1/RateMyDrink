@@ -9,6 +9,7 @@ import com.rateMyDrink.modelClasses.MixedDrink;
 import com.rateMyDrink.modelClasses.User;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -415,6 +416,9 @@ public class DerbyDatabase implements IDatabase {
                 PreparedStatement stmt5 = null; //liquor database table
 
                 //TODO: link all subclass databases to main database
+                //Connection connection = DriverManager.getConnection(connectionURL);
+                DatabaseMetaData dbmd = conn.getMetaData();
+               // ResultSet rs = dbmd.getTab
                 try{
                     stmt = conn.prepareStatement(
                             "create table " + DB_USER_TABLENAME + " (" +
