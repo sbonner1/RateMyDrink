@@ -6,9 +6,15 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
+import com.rateMyDrink.modelClasses.Drink;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkArrayAdapter;
 import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkListArrayAdapter;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetDrinkListAsync;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
 
@@ -76,13 +82,32 @@ public class DrinkListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        
+        GetDrinkListAsync getDrinkList = new GetDrinkListAsync();
+        getDrinkList.execute();
 
+        ArrayList<Drink> arrListDrinks = null;
+
+        try {
+            arrListDrinks = (ArrayList<Drink>) getDrinkList.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        DrinkListArrayAdapter<Drink> adapter2 = new DrinkListArrayAdapter<Drink>(
+                getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
+                arrListDrinks.toArray(new Drink[arrListDrinks.size()]));
+
+        setListAdapter(adapter2);
+
+        /*
         DrinkListArrayAdapter<DummyBeers.DummyBeer> adapter2 = new DrinkListArrayAdapter<DummyBeers.DummyBeer>(
                 getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
                 BEERS.toArray(new DummyBeer[BEERS.size()]));
 
         setListAdapter(adapter2);
+        */
 
     }
 
