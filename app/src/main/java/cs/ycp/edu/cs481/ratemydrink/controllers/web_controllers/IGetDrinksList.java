@@ -12,7 +12,7 @@ import retrofit.http.GET;
  */
 public interface IGetDrinksList {
 
-    @GET("/getDrinkList")
+    @GET("/MyServlet?action=getDrinkList")
     List<Drink> getDrinkList(); //TODO: determine how we decide on which drink type to get
 
 }
