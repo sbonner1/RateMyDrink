@@ -215,7 +215,7 @@ public class DerbyDatabase implements IDatabase {
                     if(drink instanceof Liquor){
                         Liquor tempLiquor = (Liquor) drink;
                         stmt2 = conn.prepareStatement(
-                            "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, mainIng) values (?,?)"
+                            "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, content, liquorType) values (?,?,?)"
 
                         );
                         storeLiquorNoId(tempLiquor, stmt, 1);
@@ -552,17 +552,44 @@ public class DerbyDatabase implements IDatabase {
             @Override
             public Boolean execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                PreparedStatement stmt3 = null;
+                PreparedStatement stmt4 = null;
 
                 try{
                     stmt = conn.prepareStatement("insert into " + DB_USER_TABLENAME + " (userName, password) values (?,?)");
                     storeUserNoId(new User("testUser", "password"), stmt, 1);
                     stmt.addBatch();
-
                     stmt.executeBatch();
+
+                    stmt2 = conn.prepareStatement("insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, rating) values (?, ?)");
+                    Drink drink = new Drink();
+                    drink.setDrinkName("testDrink");
+                    drink.setRating(5);
+                    storeDrinkNoId(drink, stmt2, 1);
+                    stmt2.addBatch();
+                    stmt2.executeBatch();
+
+                    stmt3 = conn.prepareStatement("insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)");
+                    Beer beer = new Beer();
+                    beer.setCalories(400);
+                    beer.setBeerType(BeerType.LAGER);
+                    stmt3.addBatch();
+                    stmt3.executeBatch();
+
+                    stmt4 = conn.prepareStatement("insert into " + DB_LIQUOR_TABLENAME + "(drinkId, content, liquorType) values (?,?,?)");
+                    Liquor liquor = new Liquor();
+                    liquor.setAlcoholContent(75.50f);
+                    liquor.setLiquorType(LiquorType.RUM);
+                    stmt4.addBatch();
+                    stmt4.executeBatch();
 
                     return true;
                 }finally{
                     DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                    DBUtil.closeQuietly(stmt3);
+                    DBUtil.closeQuietly(stmt4);
                 }
             }
         });
