@@ -130,13 +130,16 @@ public class MyServlet extends HttpServlet {
 
             try {
                 drinkList = getController.getDrinkList();
+
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.setContentType("application/json");
-            JSON.getObjectMapper().writeValue(resp.getWriter(), drinkList);
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("application/json");
+                JSON.getObjectMapper().writeValue(resp.getWriter(), drinkList);
+
         }
     }
 
