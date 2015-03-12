@@ -130,15 +130,23 @@ public class MyServlet extends HttpServlet {
 
             try {
                 drinkList = getController.getDrinkList();
-
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                resp.setContentType("application/json");
-                JSON.getObjectMapper().writeValue(resp.getWriter(), drinkList);
+            //print drinkList to user's terminal
+            String[] drinkNameList = new String[drinkList.size()]; //return the list of usernames for the scoreboard
+            //as an array of strings to be displayed
+            int count = 0;
+            for(Drink drink: drinkList){
+                String drinkName = drink.getDrinkName();
+                drinkNameList[count] = drinkName;
+                count++;
+            }
+
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            JSON.getObjectMapper().writeValue(resp.getWriter(), drinkNameList);
 
         }
     }
