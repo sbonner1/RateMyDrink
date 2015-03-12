@@ -2,6 +2,7 @@ package persist;
 
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Drink;
+import com.rateMyDrink.modelClasses.Liquor;
 import com.rateMyDrink.modelClasses.User;
 
 import java.sql.SQLException;
@@ -29,6 +30,8 @@ public interface IDatabase {
     public User loginUser(String userName, String password) throws SQLException;
 
     User getUser(String userName, String password) throws SQLException;
+
+    Liquor getLiquor(int id) throws SQLException;
 
     boolean addNewDrink(Drink drink) throws SQLException;
 

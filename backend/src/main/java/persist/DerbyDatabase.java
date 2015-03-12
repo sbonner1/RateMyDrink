@@ -116,7 +116,7 @@ public class DerbyDatabase implements IDatabase {
                 ResultSet resultSet = null;
 
                 try{
-                    stmt = conn.prepareStatement("select * from " + DB_BEER_TABLENAME + " where drink_id = ?");
+                    stmt = conn.prepareStatement("select * from " + DB_BEER_TABLENAME + " where drinkId = ?");
                     stmt.setInt(1, id);
 
                     resultSet = stmt.executeQuery();
@@ -129,6 +129,34 @@ public class DerbyDatabase implements IDatabase {
                     Beer beer = new Beer();
                     loadBeer(beer, resultSet, 1);
                     return beer;
+                }finally{
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        });
+    }
+
+    @Override
+    public Liquor getLiquor(final int id) throws SQLException {
+        return executeTransaction(new Transaction<Liquor>() {
+            @Override
+            public Liquor execute(Connection conn) throws SQLException{
+                PreparedStatement stmt = null;
+                ResultSet resultSet = null;
+                try {
+                    stmt = conn.prepareStatement("select * from " + DB_LIQUOR_TABLENAME + " where drinkId = ?");
+                    stmt.setInt(1, id);
+
+                    resultSet = stmt.executeQuery();
+
+                    if(!resultSet.next()){
+                        //no such liquor
+                        return null;
+                    }
+                    Liquor liquor = new Liquor();
+                    loadLiquor(liquor, resultSet, 1);
+                    return liquor;
                 }finally{
                     DBUtil.closeQuietly(resultSet);
                     DBUtil.closeQuietly(stmt);
@@ -173,7 +201,7 @@ public class DerbyDatabase implements IDatabase {
                     if(drink instanceof Beer){
                         Beer tempBeer = (Beer) drink;
                         stmt2 = conn.prepareStatement(
-                                "insert into " + DB_BEER_TABLENAME + "(drink_id, cals, beerType values (?,?,?)"
+                                "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)"
 
                         );
                         storeBeerNoId(tempBeer, stmt, 1);
@@ -187,10 +215,11 @@ public class DerbyDatabase implements IDatabase {
                     if(drink instanceof Liquor){
                         Liquor tempLiquor = (Liquor) drink;
                         stmt2 = conn.prepareStatement(
-                            "insert into " + DB_LIQUOR_TABLENAME + "(drink_id, mainIng values (?,?)"
+                            "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, mainIng) values (?,?)"
 
                         );
                         storeLiquorNoId(tempLiquor, stmt, 1);
+                        stmt2.executeUpdate();
                     }
 
                     return true;
@@ -440,10 +469,10 @@ public class DerbyDatabase implements IDatabase {
                     stmt3 = conn.prepareStatement(
                             "create table " + DB_BEER_TABLENAME + " (" +
                             //" id integer primary key not null generated always as identity," +
-                            " drink_id integer," +
+                            " drinkId integer," +
                             " cals integer," +
                             " abv double," +
-                            " beer_Type integer" +
+                            " beerType integer" +
                             ")"
                     );
 
