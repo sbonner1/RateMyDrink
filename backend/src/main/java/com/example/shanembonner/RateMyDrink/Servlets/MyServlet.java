@@ -35,12 +35,6 @@ public class MyServlet extends HttpServlet {
             throws IOException {
         String action = req.getParameter("action");
         String pathInfo = req.getPathInfo(); //path
-      /*  if(action != null){
-            req.setAttribute("action", action);
-        }
-        resp.setContentType("text/plain");
-        resp.getWriter().println("Please use the form to POST to this url");
-        */
 
         if(action.equals("getUser")){
             //get the user name
@@ -206,6 +200,7 @@ public class MyServlet extends HttpServlet {
         if(action.equals("addDrink")){
             Drink newDrink = null;
             System.out.println("action: addDrink");
+            System.out.println("pathinfo: " + pathInfo);
             newDrink = JSON.getObjectMapper().readValue(req.getReader(), Drink.class);
 
             AddDrink controller = new AddDrink();
@@ -227,7 +222,7 @@ public class MyServlet extends HttpServlet {
                 System.out.println("failed to add drink");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
-                resp.getWriter().println("User " + pathInfo + "already exists");
+                resp.getWriter().println("failed to add drink to database.");
             }
         }
 
