@@ -176,7 +176,8 @@ public class DerbyDatabase implements IDatabase {
 
                 try{
                     stmt = conn.prepareStatement(
-                            "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)"
+                            "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)",
+                            PreparedStatement.RETURN_GENERATED_KEYS
                     );
 
                     storeDrinkNoId(drink, stmt, 1);
