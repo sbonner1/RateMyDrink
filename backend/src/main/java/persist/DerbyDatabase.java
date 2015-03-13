@@ -176,7 +176,7 @@ public class DerbyDatabase implements IDatabase {
 
                 try{
                     stmt = conn.prepareStatement(
-                            "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, rating) values (?, ?)"
+                            "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)"
                     );
 
                     storeDrinkNoId(drink, stmt, 1);
@@ -561,7 +561,7 @@ public class DerbyDatabase implements IDatabase {
                     stmt.addBatch();
                     stmt.executeBatch();
 
-                    stmt2 = conn.prepareStatement("insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, rating) values (?, ?)");
+                    stmt2 = conn.prepareStatement("insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)");
                     Drink drink = new Drink();
                     drink.setDrinkName("testDrink");
                     drink.setRating(5);
