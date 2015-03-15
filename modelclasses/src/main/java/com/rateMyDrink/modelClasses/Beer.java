@@ -9,6 +9,9 @@ public class Beer extends Drink {
     private int calories;
     private BeerType beerType;
 
+    public Beer(){
+
+    }
 
     /**
      * constuctor

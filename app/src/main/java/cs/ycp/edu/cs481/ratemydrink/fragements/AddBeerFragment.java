@@ -17,6 +17,7 @@ import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.BeerType;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewBeerAsync;
 
 public class AddBeerFragment extends Fragment {
 
@@ -53,6 +54,8 @@ public class AddBeerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Beer newBeer = createBeer();
+                PostNewBeerAsync newBeerPost = new PostNewBeerAsync();
+                newBeerPost.execute(newBeer);
             }
         });
 
@@ -81,8 +84,9 @@ public class AddBeerFragment extends Fragment {
     }
 
     /**
+     * creates a new Beer object from the information entered in the AddBeerFragment
      *
-     * @return
+     * @return a new Beer object containing then entered information
      */
     private Beer createBeer(){
         String name = beerName.getText().toString();

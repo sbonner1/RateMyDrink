@@ -10,7 +10,7 @@ import retrofit.http.Query;
  */
 public interface IGetBeer {
 
-    @GET("/getDrink")
+    @GET("/?action=getBeer")
     Beer get(@Query("id") int id);
 
 }
