@@ -35,12 +35,7 @@ public class AddBeerActivity extends ActionBarActivity {
                     .add(R.id.container, new AddBeerFragment())
                     .commit();
         }
-        //listenOnSpinnerSelection();
 
-
-        //I don't know why this isn't working - getting null pointer exception. it SHOULD be getting string values right from ENUM list
-        //Spinner spinner = (Spinner) findViewById(R.id.new_beer_spinner);
-        //spinner.setAdapter(new ArrayAdapter<BeerType>(this, android.R.layout.simple_spinner_item, BeerType.values()));
     }
 
 
@@ -66,27 +61,6 @@ public class AddBeerActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-            Spinner spinner;
-            Button submit;
-        public PlaceholderFragment() {
-
-
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_add_beer, container, false);
-
-            submit = (Button) rootView.findViewById(R.id.add_beer);
-
-            return rootView;
-        }
-    }
 }
 
 

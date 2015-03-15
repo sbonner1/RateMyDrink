@@ -9,6 +9,26 @@ public class Beer extends Drink {
     private int calories;
     private BeerType beerType;
 
+
+    /**
+     * constuctor
+     *
+     * @param name name of the beer
+     * @param desc beer's description
+     * @param abv  beer's alcohol-by-content volume
+     * @param calories beer's calories
+     * @param type the type of beer
+     */
+    public Beer(String name, String desc, double abv, int calories, BeerType type){
+        this.id = 0;
+        this.rating = 0;
+        this.drinkName = name;
+        this.description = desc;
+        this.ABV = abv;
+        this.calories = calories;
+        this.beerType = type;
+    }
+
     //TODO: add more fields
 
     public void setABV (int abv){
@@ -30,8 +50,6 @@ public class Beer extends Drink {
         return beerType;
     }
 
-
-    //TODO: getters/setters for enum BeerType
     /**
      * @return the specified beer type
      */
