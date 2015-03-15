@@ -22,11 +22,9 @@ import com.rateMyDrink.modelClasses.BeerType;
 import java.util.ArrayList;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.fragements.AddBeerFragment;
 
-public class AddBeerActivity extends ActionBarActivity implements OnClickListener {
-        Spinner spinner;
-
-
+public class AddBeerActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +32,11 @@ public class AddBeerActivity extends ActionBarActivity implements OnClickListene
         setContentView(R.layout.activity_add_beer);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new AddBeerFragment())
                     .commit();
         }
         //listenOnSpinnerSelection();
-        spinner = (Spinner) findViewById((R.id.new_beer_spinner));
+
 
         //I don't know why this isn't working - getting null pointer exception. it SHOULD be getting string values right from ENUM list
         //Spinner spinner = (Spinner) findViewById(R.id.new_beer_spinner);
@@ -67,13 +65,6 @@ public class AddBeerActivity extends ActionBarActivity implements OnClickListene
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onClick(View v) {
-        //Insert database calls here, otherwise toast for now
-
-    }
-
 
     /**
      * A placeholder fragment containing a simple view.
