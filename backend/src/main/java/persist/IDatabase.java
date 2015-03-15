@@ -15,6 +15,8 @@ public interface IDatabase {
 
     void replaceUser(String oldUserName, User newUser) throws SQLException;
 
+    void deleteDrink(Drink drink) throws SQLException;
+
     void deleteUserList() throws SQLException;
 
     void deleteUser(String userName) throws SQLException;

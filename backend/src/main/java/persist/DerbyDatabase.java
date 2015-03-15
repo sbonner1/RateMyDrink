@@ -37,133 +37,7 @@ public class DerbyDatabase implements IDatabase {
     private static final String DB_BEER_TABLENAME = "beerTable";
     private static final String DB_MIXED_DRINK_TABLENAME = "mixedDrinkTable";
     private static final String DB_LIQUOR_TABLENAME = "liquorTable";
-
-    @Override
-    public boolean addNewUser(final User user, String hashedPassword) throws SQLException {
-        return executeTransaction(new Transaction<Boolean>() {
-            @Override
-            public Boolean execute(Connection conn) throws SQLException {
-                PreparedStatement stmt = null;
-                ResultSet generatedKeys = null;
-
-                try{
-                    stmt = conn.prepareStatement(
-                            "insert into " + DB_USER_TABLENAME + " (userName, password) values (?, ?)",
-                            PreparedStatement.RETURN_GENERATED_KEYS
-                    );
-
-                    storeUserNoId(user, stmt, 1);
-
-                    //attempt to insert the user
-                    stmt.executeUpdate();
-
-                    //determine auto-generated id
-                    generatedKeys = stmt.getGeneratedKeys();
-                    if(!generatedKeys.next()){
-                        throw new SQLException("Could not get auto-generated key for inserted User");
-
-                    }
-                    int userId = generatedKeys.getInt(1);
-
-                    user.setId(userId);
-
-                    return true;
-                }finally{
-                    DBUtil.closeQuietly(generatedKeys);
-                    DBUtil.closeQuietly(stmt);
-                }
-            }
-        });
-    }
-
-    @Override
-    public User getUser(final String userName, final String password) throws SQLException {
-        return executeTransaction(new Transaction<User>() {
-            @Override
-            public User execute(Connection conn) throws SQLException {
-                PreparedStatement stmt = null;
-                ResultSet resultSet = null;
-
-                try{
-                    stmt = conn.prepareStatement("select * from " + DB_USER_TABLENAME + " where userName = ?");
-                    stmt.setString(1, userName);
-                    stmt.setString(2, password);
-
-                    resultSet = stmt.executeQuery();
-
-                    if(!resultSet.next()){
-                        //no such user
-                        return null;
-                    }
-
-                    User user = new User(userName, password);
-                    loadUser(user, resultSet, 1);
-                    return user;
-                }finally{
-                    DBUtil.closeQuietly(resultSet);
-                    DBUtil.closeQuietly(stmt);
-                }
-            }
-        });
-    }
-
-    @Override
-    public Beer getBeer(final int id) throws SQLException {
-        return executeTransaction(new Transaction<Beer>() {
-            @Override
-            public Beer execute(Connection conn) throws SQLException {
-                PreparedStatement stmt = null;
-                ResultSet resultSet = null;
-
-                try{
-                    stmt = conn.prepareStatement("select * from " + DB_BEER_TABLENAME + " where drinkId = ?");
-                    stmt.setInt(1, id);
-
-                    resultSet = stmt.executeQuery();
-
-                    if(!resultSet.next()){
-                        //no such beer
-                        return null;
-                    }
-
-                    Beer beer = new Beer();
-                    loadBeer(beer, resultSet, 1);
-                    return beer;
-                }finally{
-                    DBUtil.closeQuietly(resultSet);
-                    DBUtil.closeQuietly(stmt);
-                }
-            }
-        });
-    }
-
-    @Override
-    public Liquor getLiquor(final int id) throws SQLException {
-        return executeTransaction(new Transaction<Liquor>() {
-            @Override
-            public Liquor execute(Connection conn) throws SQLException{
-                PreparedStatement stmt = null;
-                ResultSet resultSet = null;
-                try {
-                    stmt = conn.prepareStatement("select * from " + DB_LIQUOR_TABLENAME + " where drinkId = ?");
-                    stmt.setInt(1, id);
-
-                    resultSet = stmt.executeQuery();
-
-                    if(!resultSet.next()){
-                        //no such liquor
-                        return null;
-                    }
-                    Liquor liquor = new Liquor();
-                    loadLiquor(liquor, resultSet, 1);
-                    return liquor;
-                }finally{
-                    DBUtil.closeQuietly(resultSet);
-                    DBUtil.closeQuietly(stmt);
-                }
-            }
-        });
-    }
+    private static final String DB_COMMENT_TABLENAME = "commentTable";
 
     @Override
     public boolean addNewDrink(final Drink drink) throws SQLException {
@@ -215,7 +89,7 @@ public class DerbyDatabase implements IDatabase {
                     if(drink instanceof Liquor){
                         Liquor tempLiquor = (Liquor) drink;
                         stmt2 = conn.prepareStatement(
-                            "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, content, liquorType) values (?,?,?)"
+                                "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, content, liquorType) values (?,?,?)"
 
                         );
                         storeLiquorNoId(tempLiquor, stmt, 1);
@@ -231,7 +105,74 @@ public class DerbyDatabase implements IDatabase {
             }
         });
     }
+    @Override
+    public boolean addNewUser(final User user, String hashedPassword) throws SQLException {
+        return executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet generatedKeys = null;
 
+                try{
+                    stmt = conn.prepareStatement(
+                            "insert into " + DB_USER_TABLENAME + " (userName, password) values (?, ?)",
+                            PreparedStatement.RETURN_GENERATED_KEYS
+                    );
+
+                    storeUserNoId(user, stmt, 1);
+
+                    //attempt to insert the user
+                    stmt.executeUpdate();
+
+                    //determine auto-generated id
+                    generatedKeys = stmt.getGeneratedKeys();
+                    if(!generatedKeys.next()){
+                        throw new SQLException("Could not get auto-generated key for inserted User");
+
+                    }
+                    int userId = generatedKeys.getInt(1);
+
+                    user.setId(userId);
+
+                    return true;
+                }finally{
+                    DBUtil.closeQuietly(generatedKeys);
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void deleteDrink(final Drink drink) throws SQLException {
+        executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = conn.prepareStatement("delete from " + DB_MAIN_DRINK_TABLENAME + " where drinkName = ?");
+                stmt.setString(1, drink.getDrinkName());
+
+
+                if(drink instanceof Beer){
+                    PreparedStatement stmt2 = conn.prepareStatement("delete from " + DB_BEER_TABLENAME + "where drinkId = ?");
+                    stmt2.setInt(1, drink.getId());
+                    stmt2.executeUpdate();
+                }
+
+                if(drink instanceof MixedDrink){
+                    //TODO: delete Mixed DRINKS
+                }
+
+                if(drink instanceof Liquor){
+                    PreparedStatement stmt2 = conn.prepareStatement("delete from " + DB_LIQUOR_TABLENAME + " where drinkId = ?");
+                    stmt2.setInt(1, drink.getId());
+                    stmt2.executeUpdate();
+                }
+                stmt.executeUpdate();
+
+                return true;
+            }
+        });
+    }
 
     @Override
     public void deleteUserList() throws SQLException {
@@ -259,25 +200,27 @@ public class DerbyDatabase implements IDatabase {
     }
 
     @Override
-    public List<User> getUserList() throws SQLException {
-        return executeTransaction(new Transaction<List<User>>() {
-
+    public Beer getBeer(final int id) throws SQLException {
+        return executeTransaction(new Transaction<Beer>() {
             @Override
-            public List<User> execute(Connection conn) throws SQLException {
+            public Beer execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
                 ResultSet resultSet = null;
 
                 try{
-                    stmt = conn.prepareStatement("select * from " + DB_USER_TABLENAME);
+                    stmt = conn.prepareStatement("select * from " + DB_BEER_TABLENAME + " where drinkId = ?");
+                    stmt.setInt(1, id);
+
                     resultSet = stmt.executeQuery();
 
-                    List<User> result = new ArrayList<User>();
-                    while(resultSet.next()){
-                        User user = new User();
-                        loadUser(user, resultSet, 1);
-                        result.add(user);
+                    if(!resultSet.next()){
+                        //no such beer
+                        return null;
                     }
-                    return result;
+
+                    Beer beer = new Beer();
+                    loadBeer(beer, resultSet, 1);
+                    return beer;
                 }finally{
                     DBUtil.closeQuietly(resultSet);
                     DBUtil.closeQuietly(stmt);
@@ -313,31 +256,93 @@ public class DerbyDatabase implements IDatabase {
         });
     }
 
-
     @Override
-    public void replaceUser(final String oldUserName, final User newUser) throws SQLException {
-        executeTransaction(new Transaction<Boolean>() {
+    public Liquor getLiquor(final int id) throws SQLException {
+        return executeTransaction(new Transaction<Liquor>() {
             @Override
-            public Boolean execute(Connection conn) throws SQLException {
-                PreparedStatement stmt = conn.prepareStatement("update " + DB_USER_TABLENAME + " set userName = ? where userName = ?");
-                stmt.setString(1, newUser.getUserName());
-                stmt.setString(2, oldUserName);
-                stmt.executeUpdate();
-                return true;
+            public Liquor execute(Connection conn) throws SQLException{
+                PreparedStatement stmt = null;
+                ResultSet resultSet = null;
+                try {
+                    stmt = conn.prepareStatement("select * from " + DB_LIQUOR_TABLENAME + " where drinkId = ?");
+                    stmt.setInt(1, id);
+
+                    resultSet = stmt.executeQuery();
+
+                    if(!resultSet.next()){
+                        //no such liquor
+                        return null;
+                    }
+                    Liquor liquor = new Liquor();
+                    loadLiquor(liquor, resultSet, 1);
+                    return liquor;
+                }finally{
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(stmt);
+                }
             }
         });
     }
 
+
     @Override
-    public void replaceUserList(List<User> newUserList) {
-        //TODO: replace user list
+    public User getUser(final String userName, final String password) throws SQLException {
+        return executeTransaction(new Transaction<User>() {
+            @Override
+            public User execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet resultSet = null;
+
+                try{
+                    stmt = conn.prepareStatement("select * from " + DB_USER_TABLENAME + " where userName = ?");
+                    stmt.setString(1, userName);
+                    stmt.setString(2, password);
+
+                    resultSet = stmt.executeQuery();
+
+                    if(!resultSet.next()){
+                        //no such user
+                        return null;
+                    }
+
+                    User user = new User(userName, password);
+                    loadUser(user, resultSet, 1);
+                    return user;
+                }finally{
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        });
     }
 
 
     @Override
-    public User findUser(String userName) {
-        //TODO: find user
-        return null;
+    public List<User> getUserList() throws SQLException {
+        return executeTransaction(new Transaction<List<User>>() {
+
+            @Override
+            public List<User> execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet resultSet = null;
+
+                try{
+                    stmt = conn.prepareStatement("select * from " + DB_USER_TABLENAME);
+                    resultSet = stmt.executeQuery();
+
+                    List<User> result = new ArrayList<User>();
+                    while(resultSet.next()){
+                        User user = new User();
+                        loadUser(user, resultSet, 1);
+                        result.add(user);
+                    }
+                    return result;
+                }finally{
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(stmt);
+                }
+            }
+        });
     }
 
     @Override
@@ -369,6 +374,32 @@ public class DerbyDatabase implements IDatabase {
                 }
             }
         });
+    }
+
+    @Override
+    public void replaceUser(final String oldUserName, final User newUser) throws SQLException {
+        executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = conn.prepareStatement("update " + DB_USER_TABLENAME + " set userName = ? where userName = ?");
+                stmt.setString(1, newUser.getUserName());
+                stmt.setString(2, oldUserName);
+                stmt.executeUpdate();
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void replaceUserList(List<User> newUserList) {
+        //TODO: replace user list
+    }
+
+
+    @Override
+    public User findUser(String userName) {
+        //TODO: find user
+        return null;
     }
 
 
@@ -536,7 +567,7 @@ public class DerbyDatabase implements IDatabase {
     }
 
     protected void storeMixedDrinkNoId(Drink drink, PreparedStatement stmt, int index) throws SQLException {
-        //TODO:
+        //TODO: storeMixedDrinkNoId
     }
 
     protected void storeLiquorNoId(Liquor liquor, PreparedStatement stmt, int index) throws SQLException {

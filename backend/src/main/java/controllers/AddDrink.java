@@ -20,7 +20,7 @@ public class AddDrink {
         }catch(PersistenceException e){
             if(e.getCause() instanceof SQLException){
                 SQLException sqlEx = (SQLException) e.getCause();
-                //TODO: check whether it's a uniqueness constraint
+
                 System.out.println("SQLState is " + sqlEx.getSQLState());
                 e.printStackTrace();
                 return false;

@@ -9,7 +9,6 @@ public class Beer extends Drink {
     private int calories;
     private BeerType beerType;
 
-    //TODO: add more fields
 
     public void setABV (int abv){
         this.ABV = abv;
@@ -31,7 +30,6 @@ public class Beer extends Drink {
     }
 
 
-    //TODO: getters/setters for enum BeerType
     /**
      * @return the specified beer type
      */

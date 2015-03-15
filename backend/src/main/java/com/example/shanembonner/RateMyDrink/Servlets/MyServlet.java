@@ -9,6 +9,7 @@ package com.example.shanembonner.RateMyDrink.Servlets;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Drink;
+import com.rateMyDrink.modelClasses.Liquor;
 import com.rateMyDrink.modelClasses.User;
 
 import java.io.IOException;
@@ -22,10 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import controllers.AddDrink;
 import controllers.AddUser;
+import controllers.DeleteDrink;
 import controllers.DeleteUser;
 import controllers.DeleteUserList;
 import controllers.GetBeer;
 import controllers.GetDrinkList;
+import controllers.GetLiquor;
 import controllers.GetUser;
 import controllers.GetUserList;
 
@@ -36,6 +39,58 @@ public class MyServlet extends HttpServlet {
         String action = req.getParameter("action");
         String pathInfo = req.getPathInfo(); //path
 
+        if(action.equals("getBeer")){
+            if(pathInfo.startsWith("/")) {
+                pathInfo = pathInfo.substring(1);
+            }
+
+            Beer beer = null;
+            GetBeer controller = new GetBeer();
+            int id = Integer.parseInt(pathInfo, 10);
+            //int id = Integer.valueOf(pathInfo);
+            try{
+                beer = controller.getBeer(id);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+
+            if(beer == null){
+                //no such item
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("No such beer");
+            }
+            System.out.println(beer.getDrinkName());
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            JSON.getObjectMapper().writeValue(resp.getWriter(), beer);
+        }
+
+        if(action.equals("getLiquor")){
+            if(pathInfo.startsWith("/")){
+                pathInfo = pathInfo.substring(1);
+            }
+            int id = Integer.parseInt(pathInfo, 10);
+            Liquor liquor = null;
+            GetLiquor controller = new GetLiquor();
+
+            try {
+                liquor = controller.getLiquor(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            if(liquor == null){
+                //no such item
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plan");
+                resp.getWriter().println("No such liquor");
+            }
+
+           resp.setStatus(HttpServletResponse.SC_OK);
+           resp.setContentType("application/json");
+           JSON.getObjectMapper().writeValue(resp.getWriter(), liquor);
+        }
         if(action.equals("getUser")){
             //get the user name
             if(pathInfo.startsWith("/")) {
@@ -67,32 +122,6 @@ public class MyServlet extends HttpServlet {
 
         }
 
-        if(action.equals("getBeer")){
-            if(pathInfo.startsWith("/")) {
-                pathInfo = pathInfo.substring(1);
-            }
-
-            Beer beer = null;
-            GetBeer controller = new GetBeer();
-            int id = Integer.parseInt(pathInfo, 10); //TODO: WILL THIS WORK?? WHICH IS CORRECT?
-            //int id = Integer.valueOf(pathInfo);
-            try{
-                beer = controller.getBeer(id);
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-
-            if(beer == null){
-                //no such item
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                resp.setContentType("text/plain");
-                resp.getWriter().println("No such beer");
-            }
-            System.out.println(beer.getDrinkName());
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.setContentType("application/json");
-            JSON.getObjectMapper().writeValue(resp.getWriter(), beer);
-        }
 
         if(action.equals("getUserList")){
             //retrieve inventory from database
@@ -164,6 +193,35 @@ public class MyServlet extends HttpServlet {
             resp.getWriter().println("Post unsuccessful");
         }
 
+        if(action.equals("addDrink")){
+            Drink newDrink = null;
+            System.out.println("action: addDrink");
+            System.out.println("pathinfo: " + pathInfo);
+            newDrink = JSON.getObjectMapper().readValue(req.getReader(), Drink.class);
+
+            AddDrink controller = new AddDrink();
+            boolean success = false;
+
+            try{
+                success = controller.addNewDrink(newDrink);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if (success) {
+                System.out.println("success adding drink");
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("application/json");
+                JSON.getObjectMapper().writeValue(resp.getWriter(), newDrink);
+
+            }else{
+                System.out.println("failed to add drink");
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("failed to add drink to database.");
+            }
+        }
+
         //case to handle adding a new user to the database
         if(action.equals("addUser")) {
             User newUser = null;
@@ -197,35 +255,6 @@ public class MyServlet extends HttpServlet {
 
         }
 
-        if(action.equals("addDrink")){
-            Drink newDrink = null;
-            System.out.println("action: addDrink");
-            System.out.println("pathinfo: " + pathInfo);
-            newDrink = JSON.getObjectMapper().readValue(req.getReader(), Drink.class);
-
-            AddDrink controller = new AddDrink();
-            boolean success = false;
-
-            try{
-                success = controller.addNewDrink(newDrink);
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-
-            if (success) {
-                System.out.println("success adding drink");
-                resp.setStatus(HttpServletResponse.SC_OK);
-                resp.setContentType("application/json");
-                JSON.getObjectMapper().writeValue(resp.getWriter(), newDrink);
-
-            }else{
-                System.out.println("failed to add drink");
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                resp.setContentType("text/plain");
-                resp.getWriter().println("failed to add drink to database.");
-            }
-        }
-
 
         if(action.equals("loginUser")){
 
@@ -240,6 +269,24 @@ public class MyServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         //if there is an item name, delete it. if not, delete whole database
+        if(action.equals("deleteDrink")){
+            if(pathInfo.startsWith("/")){
+                pathInfo = pathInfo.substring(1);
+            }
+
+            Drink drink = JSON.getObjectMapper().readValue(req.getReader(), Drink.class);
+            DeleteDrink controller = new DeleteDrink();
+
+            try {
+                controller.deleteDrink(drink);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            JSON.getObjectMapper().writeValue(resp.getWriter(), drink);
+
+        }
         if(action.equals("deleteUser")){
             //get the item name
             if(pathInfo.startsWith("/")){
