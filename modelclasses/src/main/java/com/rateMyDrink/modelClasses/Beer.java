@@ -9,8 +9,6 @@ public class Beer extends Drink {
     private int calories;
     private BeerType beerType;
 
-<<<<<<< HEAD
-=======
     public Beer(){
 
     }
@@ -34,8 +32,6 @@ public class Beer extends Drink {
         this.beerType = type;
     }
 
-    //TODO: add more fields
->>>>>>> e314e68627a66cf14caab7eb125b099014476144
 
     public void setABV (int abv){
         this.ABV = abv;
@@ -56,10 +52,6 @@ public class Beer extends Drink {
         return beerType;
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e314e68627a66cf14caab7eb125b099014476144
     /**
      * @return the specified beer type
      */

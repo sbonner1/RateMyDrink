@@ -30,14 +30,106 @@ public class DerbyDatabase implements IDatabase {
     }
 
     private static final int MAX_ATTEMPTS = 10;
-    //private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
-    private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
+    private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
+    //private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
     private static final String DB_USER_TABLENAME = "userList";
     private static final String DB_MAIN_DRINK_TABLENAME = "mainDrinkTable";
     private static final String DB_BEER_TABLENAME = "beerTable";
     private static final String DB_MIXED_DRINK_TABLENAME = "mixedDrinkTable";
     private static final String DB_LIQUOR_TABLENAME = "liquorTable";
     private static final String DB_COMMENT_TABLENAME = "commentTable";
+
+
+    @Override
+    public boolean addNewBeer(final Beer beer) throws SQLException {
+        return executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                ResultSet generatedKeys = null;
+
+                try{
+
+                    //type cast the object so that it can be stored in the main database, with a link to the subclass database
+                    Drink tempDrink = (Drink) beer;
+                    stmt = conn.prepareStatement(
+                            "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)",
+                            PreparedStatement.RETURN_GENERATED_KEYS
+                    );
+                    storeDrinkNoId(tempDrink, stmt, 1);
+
+                    //determine auto-generated id
+                    generatedKeys = stmt.getGeneratedKeys();
+                    if(!generatedKeys.next()){
+                        throw new SQLException("Could not get auto-generated key for inserted Drink");
+
+                    }
+
+                    //id is used to link the drink in the main table to an item in the subclass table
+                    int drinkId = generatedKeys.getInt(1);
+                    tempDrink.setId(drinkId);
+
+                    stmt2 = conn.prepareStatement(
+                            "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)"
+
+                    );
+                    storeBeerNoId(beer, stmt, 1);
+                    stmt2.executeUpdate();
+                    return true;
+                }finally{
+                    DBUtil.closeQuietly(generatedKeys);
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean addNewLiquor(final Liquor liquor) throws SQLException {
+        return executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                ResultSet generatedKeys = null;
+
+                try{
+                    //type cast the object so that it can be stored in the main database, with a link to the subclass database
+                    Drink tempDrink = (Drink) liquor;
+                    stmt = conn.prepareStatement(
+                            "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)",
+                            PreparedStatement.RETURN_GENERATED_KEYS
+                    );
+                    storeDrinkNoId(tempDrink, stmt, 1);
+
+                    //determine auto-generated id
+                    generatedKeys = stmt.getGeneratedKeys();
+                    if(!generatedKeys.next()){
+                        throw new SQLException("Could not get auto-generated key for inserted Drink");
+
+                    }
+
+                    //id is used to link the drink in the main table to an item in the subclass table
+                    int drinkId = generatedKeys.getInt(1);
+                    tempDrink.setId(drinkId);
+
+                    stmt2 = conn.prepareStatement(
+                            "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)"
+
+                    );
+                    storeLiquorNoId(liquor, stmt, 1);
+                    stmt2.executeUpdate();
+                    return true;
+                }finally{
+                    DBUtil.closeQuietly(generatedKeys);
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                }
+            }
+        });
+    }
 
     @Override
     public boolean addNewDrink(final Drink drink) throws SQLException {
@@ -62,7 +154,7 @@ public class DerbyDatabase implements IDatabase {
                     //determine auto-generated id
                     generatedKeys = stmt.getGeneratedKeys();
                     if(!generatedKeys.next()){
-                        throw new SQLException("Could not get auto-generated key for inserted User");
+                        throw new SQLException("Could not get auto-generated key for inserted Drink");
 
                     }
 
@@ -74,6 +166,7 @@ public class DerbyDatabase implements IDatabase {
                     //sub-table with the corresponding variables and storeNoId function call
                     if(drink instanceof Beer){
                         Beer tempBeer = (Beer) drink;
+
                         stmt2 = conn.prepareStatement(
                                 "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)"
 
