@@ -1,11 +1,13 @@
 package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
 import com.rateMyDrink.modelClasses.Beer;
+import com.rateMyDrink.modelClasses.Drink;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;
@@ -19,8 +21,10 @@ public class PostNewBeerAsync extends AsyncTask<Beer, Void, Void> {
     protected Void doInBackground(Beer... params) {
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Beer.class, new DateTypeAdapter())
+                .registerTypeAdapter(Drink.class, new DateTypeAdapter())
                 .create();
+
+        Log.d("GSON", gson.toJson(params[0]));
 
         IPostNewBeer newBeerService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)

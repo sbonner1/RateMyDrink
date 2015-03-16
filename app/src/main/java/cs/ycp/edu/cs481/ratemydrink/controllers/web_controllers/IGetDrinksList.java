@@ -13,6 +13,6 @@ import retrofit.http.GET;
 public interface IGetDrinksList {
 
     @GET("/backend/?action=getDrinkList")
-    List<Drink> getDrinkList(); //TODO: determine how we decide on which drink type to get
+    String[] getDrinkList(); //TODO: determine how we decide on which drink type to get
 
 }
