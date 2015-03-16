@@ -11,8 +11,8 @@ import retrofit.http.POST;
  */
 public interface IPostNewBeer {
 
-    //@Headers({"Content-Type: application/json"})
+    @Headers({"Content-Type: application/json"})
     @POST("/backend/?action=addDrink")
-    boolean post(@Body Drink newBeer);
+    boolean post(@Body String newBeer);
 
 }

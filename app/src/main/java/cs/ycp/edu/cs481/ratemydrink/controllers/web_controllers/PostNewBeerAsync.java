@@ -29,7 +29,7 @@ public class PostNewBeerAsync extends AsyncTask<Drink, Void, Boolean> {
 
         IPostNewBeer newBeerService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
-                .setConverter(new GsonConverter(gson))
+                //.setConverter(new GsonConverter(gson))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new RestAdapter.Log() {
                     @Override
@@ -40,7 +40,11 @@ public class PostNewBeerAsync extends AsyncTask<Drink, Void, Boolean> {
                 .build()
                 .create(IPostNewBeer.class);
 
-        return newBeerService.post(params[0]);
+        String body = gson.toJson(params[0]);
+
+        newBeerService.post(body);
+
+        return true;
 
     }
 }
