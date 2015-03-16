@@ -8,10 +8,48 @@
     <string name="title_activity_drink_list">DrinkListActivity</string>
     <string name="title_drink_list">Drinks</string>
     <string name="title_drink_detail">Drink Detail</string>
+
     <string name="TypeComments">Type Comments Here</string>
     <string name="DrinkComments">Drink Comments</string>
     <string name="ratingValue">0.0</string>
+
     <string name="title_activity_type_list">TypeList</string>
     <string name="title_activity_type">TypeActivity</string>
+    <string name="title_activity_add_beer">AddBeerActivity</string>
+
+    <string name="new_beer_desc">Short Beer Description</string>
+    <string name="new_beer_abv">ABV %</string>
+    <string name="new_beer_name">Beer Brand and Name</string>
+    <string name="new_beer_title">Add New Beer</string>
+    <string name="add_beer_btn">ADD BEER</string>
+
+    <string name="beer_name">Beer Name:</string>
+    <string name="beer_desc">Beer Description:</string>
+    <string name="beer_abv">Beer ABV:</string>
+    <string name="beer_type">Beer Type:</string>
+
+    <string-array name="beers">
+        <item>Lager</item>
+        <item>IPA</item>
+        <item>Saison</item>
+        <item>Imperial</item>
+        <item>Stout</item>
+        <item>Ale</item>
+        <item>Pale Ale</item>
+        <item>Lambic</item>
+        <item>Belgian</item>
+        <item>Hefeweizen</item>
+        <item>Pilsner</item>
+        <item>Kristalweizen</item>
+        <item>Helles</item>
+        <item>Marzen</item>
+        <item>Porter</item>
+        <item>Malt</item>
+        <item>Weisbier</item>
+        <item>Cider</item>
+    </string-array>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

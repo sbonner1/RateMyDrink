@@ -85,29 +85,33 @@ public class DrinkListFragment extends ListFragment {
         GetDrinkListAsync getDrinkList = new GetDrinkListAsync();
         getDrinkList.execute();
 
-        ArrayList<Drink> arrListDrinks = null;
+        //ArrayList<Drink> arrListDrinks = null;
+        String[] drinkNames = null;
 
         try {
-            arrListDrinks = (ArrayList<Drink>) getDrinkList.get();
+            //arrListDrinks = (ArrayList<Drink>) getDrinkList.get();
+            drinkNames = (String[]) getDrinkList.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
+        /*
         DrinkListArrayAdapter<Drink> adapter2 = new DrinkListArrayAdapter<Drink>(
                 getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
                 arrListDrinks.toArray(new Drink[arrListDrinks.size()]));
 
         setListAdapter(adapter2);
+        */
 
-        /*
-        DrinkListArrayAdapter<DummyBeers.DummyBeer> adapter2 = new DrinkListArrayAdapter<DummyBeers.DummyBeer>(
+
+        DrinkListArrayAdapter<String> adapter2 = new DrinkListArrayAdapter<String>(
                 getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
-                BEERS.toArray(new DummyBeer[BEERS.size()]));
+                drinkNames);
 
         setListAdapter(adapter2);
-        */
+
 
     }
 

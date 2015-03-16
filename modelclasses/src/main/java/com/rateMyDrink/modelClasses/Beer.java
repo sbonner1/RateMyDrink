@@ -9,6 +9,33 @@ public class Beer extends Drink {
     private int calories;
     private BeerType beerType;
 
+<<<<<<< HEAD
+=======
+    public Beer(){
+
+    }
+
+    /**
+     * constuctor
+     *
+     * @param name name of the beer
+     * @param desc beer's description
+     * @param abv  beer's alcohol-by-content volume
+     * @param calories beer's calories
+     * @param type the type of beer
+     */
+    public Beer(String name, String desc, double abv, int calories, BeerType type){
+        this.id = 0;
+        this.rating = 0;
+        this.drinkName = name;
+        this.description = desc;
+        this.ABV = abv;
+        this.calories = calories;
+        this.beerType = type;
+    }
+
+    //TODO: add more fields
+>>>>>>> e314e68627a66cf14caab7eb125b099014476144
 
     public void setABV (int abv){
         this.ABV = abv;
@@ -29,7 +56,10 @@ public class Beer extends Drink {
         return beerType;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e314e68627a66cf14caab7eb125b099014476144
     /**
      * @return the specified beer type
      */

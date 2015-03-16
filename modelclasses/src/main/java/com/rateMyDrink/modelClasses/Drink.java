@@ -1,5 +1,9 @@
 package com.rateMyDrink.modelClasses;
 
+import com.fasterxml.jackson.core.JsonParseException;
+
+import java.io.IOException;
+
 /**
  * Created by shanembonner on 1/28/15.
  */
@@ -14,6 +18,26 @@ public class Drink {
     public Drink(){
 
     }
+
+    public Drink(String name, String desc){
+        this.drinkName = name;
+        this.description = desc;
+        this.rating = 0;
+        this.id = 0;
+    }
+
+    public Drink(String json) throws JsonParseException, IOException {
+//        this.description = JSON.getObjectMapper().readValue("description", String.class);
+//        this.drinkName = JSON.getObjectMapper().readValue("drinkName", String.class);
+//        this.rating = JSON.getObjectMapper().readValue("rating", Float.class);
+//        this.id = JSON.getObjectMapper().readValue("id", Integer.class);
+        Drink d = JSON.getObjectMapper().readValue(json, Drink.class);
+        this.drinkName = d.getDrinkName();
+        this.description = d.getDescription();
+        this.rating = d.getRating();
+        this.id = d.getId();
+    }
+
 
     //setter for the id, which corresponds to its id in the main Drink database table
     public void setId(int value){

@@ -55,6 +55,7 @@
     android:layout_marginTop="70dp"
     android:progressTint="#fffffb00" />
 
+<!--
 <ListView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -63,6 +64,7 @@
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:layout_marginBottom="35dp" />
+-->
 
 <TextView
     android:layout_width="wrap_content"
