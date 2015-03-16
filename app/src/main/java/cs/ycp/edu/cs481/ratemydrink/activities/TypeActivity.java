@@ -43,6 +43,7 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_type, menu);
+
         return true;
     }
 
@@ -55,6 +56,13 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        //start the activity to add a beer
+        if(id == R.id.newDrink){
+            Intent newDrinkIntent = new Intent(this, AddBeerActivity.class);
+            startActivity(newDrinkIntent);
             return true;
         }
 

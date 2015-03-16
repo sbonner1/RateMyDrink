@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.BeerType;
+import com.rateMyDrink.modelClasses.Drink;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewBeerAsync;
@@ -53,9 +54,10 @@ public class AddBeerFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Beer newBeer = createBeer();
+                //Beer newBeer = createBeer();
+                Drink drink = createDrink();
                 PostNewBeerAsync newBeerPost = new PostNewBeerAsync();
-                newBeerPost.execute(newBeer);
+                newBeerPost.execute(drink);
             }
         });
 
@@ -95,6 +97,13 @@ public class AddBeerFragment extends Fragment {
         BeerType type = (BeerType) spinner.getSelectedItem();
         Toast.makeText(getActivity(), type.toString(), Toast.LENGTH_SHORT).show();
         return new Beer(name, desc, Double.valueOf(abv), 0, type);
+    }
+
+    private Drink createDrink(){
+        String name = beerName.getText().toString();
+        String desc = beerDesc.getText().toString();
+        Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+        return new Drink(name, desc);
     }
 
 }

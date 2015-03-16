@@ -11,29 +11,36 @@ import com.rateMyDrink.modelClasses.Drink;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;
+import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
  * A controller to asynchronously make a POST request add a new Beer object to the database.
  */
-public class PostNewBeerAsync extends AsyncTask<Beer, Void, Void> {
+public class PostNewBeerAsync extends AsyncTask<Drink, Void, Boolean> {
     @Override
-    protected Void doInBackground(Beer... params) {
+    protected Boolean doInBackground(Drink... params) {
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Drink.class, new DateTypeAdapter())
+                //.registerTypeAdapter(Drink.class, new DateTypeAdapter())
                 .create();
 
-        Log.d("GSON", gson.toJson(params[0]));
+        //Log.d("GSON", gson.toJson(params[0]));
 
         IPostNewBeer newBeerService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
                 .setConverter(new GsonConverter(gson))
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(new RestAdapter.Log() {
+                    @Override
+                    public void log(String message) {
+                        Log.d("retrofit", message);
+                    }
+                })
                 .build()
                 .create(IPostNewBeer.class);
 
-        newBeerService.post(params[0]);
+        return newBeerService.post(params[0]);
 
-        return null;
     }
 }
