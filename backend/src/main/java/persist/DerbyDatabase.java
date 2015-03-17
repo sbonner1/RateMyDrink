@@ -30,8 +30,8 @@ public class DerbyDatabase implements IDatabase {
     }
 
     private static final int MAX_ATTEMPTS = 10;
-    private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
-    //private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
+    //private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
+    private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
     private static final String DB_USER_TABLENAME = "userList";
     private static final String DB_MAIN_DRINK_TABLENAME = "mainDrinkTable";
     private static final String DB_BEER_TABLENAME = "beerTable";
@@ -71,10 +71,10 @@ public class DerbyDatabase implements IDatabase {
                     tempDrink.setId(drinkId);
 
                     stmt2 = conn.prepareStatement(
-                            "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)"
+                            "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, abv, beerType) values (?,?,?,?)"
 
                     );
-                    storeBeerNoId(beer, stmt, 1);
+                    storeBeerNoId(beer, stmt2, 1);
                     stmt2.executeUpdate();
                     return true;
                 }finally{
@@ -121,7 +121,7 @@ public class DerbyDatabase implements IDatabase {
                             "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, content, liquorType) values (?,?,?)"
 
                     );
-                    storeLiquorNoId(liquor, stmt, 1);
+                    storeLiquorNoId(liquor, stmt2, 1);
                     stmt2.executeUpdate();
                     return true;
                 }finally{
