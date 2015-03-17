@@ -124,7 +124,6 @@ public class MyServlet extends HttpServlet {
 
         }
 
-
         if(action.equals("getUserList")){
             //retrieve inventory from database
             GetUserList getController = new GetUserList();
@@ -149,7 +148,7 @@ public class MyServlet extends HttpServlet {
             JSON.getObjectMapper().writeValue(resp.getWriter(), userNameList);
         }
 
-        if(action.equals("getDrinkList")){
+        if(action.equals("getDrinkList")){                      //TODO: need to send drink ids with this list <---
             GetDrinkList getController = new GetDrinkList();
             List<Drink> drinkList = null;
 
@@ -190,16 +189,11 @@ public class MyServlet extends HttpServlet {
         String pathInfo = req.getPathInfo(); //path
         String action = req.getParameter("action");
 
-        //check to make sure there is no pathname after
-        if(pathInfo == null){
-            resp.getWriter().println("Post unsuccessful");
-        }
-
         /**
          * to add a new beer object to the database
          */
         if(action.equals("addBeer")){
-            Beer newBeer = null;
+            Beer newBeer = new Beer();
             newBeer = JSON.getObjectMapper().readValue(req.getReader(), Beer.class);
 
             AddBeer controller = new AddBeer();
