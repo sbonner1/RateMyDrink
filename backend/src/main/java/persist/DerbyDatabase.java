@@ -50,7 +50,6 @@ public class DerbyDatabase implements IDatabase {
                 ResultSet generatedKeys = null;
 
                 try{
-
                     //type cast the object so that it can be stored in the main database, with a link to the subclass database
                     Drink tempDrink = (Drink) beer;
                     stmt = conn.prepareStatement(
@@ -63,7 +62,6 @@ public class DerbyDatabase implements IDatabase {
                     generatedKeys = stmt.getGeneratedKeys();
                     if(!generatedKeys.next()){
                         throw new SQLException("Could not get auto-generated key for inserted Drink");
-
                     }
 
                     //id is used to link the drink in the main table to an item in the subclass table
@@ -104,6 +102,8 @@ public class DerbyDatabase implements IDatabase {
                     );
                     storeDrinkNoId(tempDrink, stmt, 1);
 
+                    stmt.executeUpdate();
+
                     //determine auto-generated id
                     generatedKeys = stmt.getGeneratedKeys();
                     if(!generatedKeys.next()){
@@ -116,7 +116,7 @@ public class DerbyDatabase implements IDatabase {
                     tempDrink.setId(drinkId);
 
                     stmt2 = conn.prepareStatement(
-                            "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)"
+                            "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, content, liquorType) values (?,?,?)"
 
                     );
                     storeLiquorNoId(liquor, stmt, 1);
