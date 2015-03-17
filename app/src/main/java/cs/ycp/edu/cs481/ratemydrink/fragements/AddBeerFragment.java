@@ -3,7 +3,6 @@ package cs.ycp.edu.cs481.ratemydrink.fragements;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,10 +53,10 @@ public class AddBeerFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Beer newBeer = createBeer();
-                Drink drink = createDrink();
+                Beer newBeer = createBeer();
+                //Drink drink = createDrink();
                 PostNewBeerAsync newBeerPost = new PostNewBeerAsync();
-                newBeerPost.execute(drink);
+                newBeerPost.execute(newBeer);
             }
         });
 
