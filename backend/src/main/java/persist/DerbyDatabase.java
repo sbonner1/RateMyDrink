@@ -72,7 +72,7 @@ public class DerbyDatabase implements IDatabase {
                             "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)"
 
                     );
-                    storeBeerNoId(beer, stmt, 1);
+                    storeBeerNoId(beer, stmt2, 1);
                     stmt2.executeUpdate();
                     return true;
                 }finally{
@@ -119,7 +119,7 @@ public class DerbyDatabase implements IDatabase {
                             "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, content, liquorType) values (?,?,?)"
 
                     );
-                    storeLiquorNoId(liquor, stmt, 1);
+                    storeLiquorNoId(liquor, stmt2, 1);
                     stmt2.executeUpdate();
                     return true;
                 }finally{
@@ -168,7 +168,7 @@ public class DerbyDatabase implements IDatabase {
                         Beer tempBeer = (Beer) drink;
 
                         stmt2 = conn.prepareStatement(
-                                "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)"
+                                "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, abv, beerType) values (?,?,?,?)"
 
                         );
                         storeBeerNoId(tempBeer, stmt, 1);
