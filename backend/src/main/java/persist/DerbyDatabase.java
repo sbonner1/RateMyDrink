@@ -59,6 +59,8 @@ public class DerbyDatabase implements IDatabase {
                     );
                     storeDrinkNoId(tempDrink, stmt, 1);
 
+                    stmt.executeUpdate();
+
                     //determine auto-generated id
                     generatedKeys = stmt.getGeneratedKeys();
                     if(!generatedKeys.next()){
