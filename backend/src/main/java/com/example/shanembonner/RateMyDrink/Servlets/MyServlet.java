@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controllers.AddBeer;
 import controllers.AddDrink;
+import controllers.AddLiquor;
 import controllers.AddUser;
 import controllers.DeleteDrink;
 import controllers.DeleteUser;
@@ -122,7 +124,6 @@ public class MyServlet extends HttpServlet {
 
         }
 
-
         if(action.equals("getUserList")){
             //retrieve inventory from database
             GetUserList getController = new GetUserList();
@@ -147,7 +148,7 @@ public class MyServlet extends HttpServlet {
             JSON.getObjectMapper().writeValue(resp.getWriter(), userNameList);
         }
 
-        if(action.equals("getDrinkList")){
+        if(action.equals("getDrinkList")){                      //TODO: need to send drink ids with this list <---
             GetDrinkList getController = new GetDrinkList();
             List<Drink> drinkList = null;
 
@@ -169,7 +170,7 @@ public class MyServlet extends HttpServlet {
 
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
-            JSON.getObjectMapper().writeValue(resp.getWriter(), drinkNameList);
+            JSON.getObjectMapper().writeValue(resp.getWriter(), drinkList);
 
         }
     }
@@ -188,11 +189,71 @@ public class MyServlet extends HttpServlet {
         String pathInfo = req.getPathInfo(); //path
         String action = req.getParameter("action");
 
-        //check to make sure there is no pathname after
-        if(pathInfo == null){
-            resp.getWriter().println("Post unsuccessful");
+        /**
+         * to add a new beer object to the database
+         */
+        if(action.equals("addBeer")){
+            Beer newBeer = new Beer();
+            newBeer = JSON.getObjectMapper().readValue(req.getReader(), Beer.class);
+
+            AddBeer controller = new AddBeer();
+            boolean success = false;
+
+            try{
+                success = controller.addBeer(newBeer);
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if (success) {
+                System.out.println("success adding drink");
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("application/json");
+                JSON.getObjectMapper().writeValue(resp.getWriter(), newBeer);
+
+            }else{
+                System.out.println("failed to add drink");
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("failed to add drink to database.");
+            }
         }
 
+        /**
+         * to add a new liquor object to the database
+         */
+        if(action.equals("addLiquor")) {
+            Liquor newLiquor = null;
+            newLiquor = JSON.getObjectMapper().readValue(req.getReader(), Liquor.class);
+
+            AddLiquor controller = new AddLiquor();
+            boolean success = false;
+
+            try {
+                success = controller.addLiquor(newLiquor);
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if (success) {
+                System.out.println("success adding drink");
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("application/json");
+                JSON.getObjectMapper().writeValue(resp.getWriter(), newLiquor);
+
+            }else{
+                System.out.println("failed to add drink");
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("failed to add drink to database.");
+            }
+        }
+
+        /**
+         * to add a drink object to the database
+         */
         if(action.equals("addDrink")){
             Drink newDrink = null;
             System.out.println("action: addDrink");

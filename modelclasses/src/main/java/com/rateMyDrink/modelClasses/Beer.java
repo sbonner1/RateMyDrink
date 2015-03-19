@@ -32,7 +32,6 @@ public class Beer extends Drink {
         this.beerType = type;
     }
 
-    //TODO: add more fields
 
     public void setABV (int abv){
         this.ABV = abv;

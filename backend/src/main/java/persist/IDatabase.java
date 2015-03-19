@@ -13,7 +13,13 @@ import java.util.List;
  */
 public interface IDatabase {
 
-    void replaceUser(String oldUserName, User newUser) throws SQLException;
+    boolean addNewBeer(Beer beer) throws SQLException;
+
+    boolean addNewDrink(Drink drink) throws SQLException;
+
+    boolean addNewLiquor(Liquor liquor) throws SQLException;
+
+    public boolean addNewUser(User user, String hashedPassword) throws SQLException;
 
     void deleteDrink(Drink drink) throws SQLException;
 
@@ -21,23 +27,23 @@ public interface IDatabase {
 
     void deleteUser(String userName) throws SQLException;
 
+    public User findUser(String userName);
+
+    Beer getBeer(int id) throws SQLException;
+
+    Liquor getLiquor(int id) throws SQLException;
+
     List<User> getUserList() throws SQLException;
+
+    List<Drink> getDrinkList() throws SQLException;
 
     void replaceUserList(List<User> newUserList);
 
-    public boolean addNewUser(User user, String hashedPassword) throws SQLException;
-
-    public User findUser(String userName);
+    void replaceUser(String oldUserName, User newUser) throws SQLException;
 
     public User loginUser(String userName, String password) throws SQLException;
 
     User getUser(String userName, String password) throws SQLException;
 
-    Liquor getLiquor(int id) throws SQLException;
 
-    boolean addNewDrink(Drink drink) throws SQLException;
-
-    List<Drink> getDrinkList() throws SQLException;
-
-    Beer getBeer(int id) throws SQLException;
 }
