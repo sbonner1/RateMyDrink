@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.rateMyDrink.modelClasses.Drink;
+
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers;
 
@@ -43,10 +45,10 @@ public class DrinkListArrayAdapter<T> extends ArrayAdapter<T> {
         TextView textView5 = (TextView)convertView.findViewById(R.id.beer_cal);
         TextView textView6 = (TextView)convertView.findViewById(R.id.beerAvgRate);
 
-        DummyBeers.DummyBeer drink = (DummyBeers.DummyBeer)getItem(position);
+        String drink = (String)getItem(position);
 
-        textView1.setText(drink.name);
-        textView2.setText(drink.description);
+        textView1.setText(drink);
+        //textView2.setText(drink.getDescription());
 //        textView3.setText(drink.type);
 //        textView4.setText(drink.ABV);
 //        textView5.setText(Float.toString(drink.calories));
