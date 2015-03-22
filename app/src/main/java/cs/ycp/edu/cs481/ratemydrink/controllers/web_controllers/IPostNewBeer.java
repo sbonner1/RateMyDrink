@@ -13,7 +13,7 @@ import retrofit.http.POST;
 public interface IPostNewBeer {
 
     @Headers({"Content-Type: application/json"})
-    @POST("/backend/?action=addDrink")
+    @POST("/backend/?action=addBeer")
     Drink post(@Body Beer newBeer);
 
 }
