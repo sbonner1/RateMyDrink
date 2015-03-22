@@ -28,6 +28,20 @@
     <string name="beer_abv">Beer ABV:</string>
     <string name="beer_type">Beer Type:</string>
 
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="username">Username: </string>
+    <string name="password">Password: </string>
+    <string name="submit">Submit</string>
+    <string name="notMember">Don\'t have an account? Sign up and drink up!</string>
+    <string name="signup">Sign Up</string>
+    <string name="email">Email: </string>
+    <string name="emailHint">Email Address</string>
+    <string name="retype_password">Retype Password: </string>
+    <string name="username_hint">Type Username</string>
+    <string name="password_hint">Type Password</string>
+    <string name="confirm_password">Confirm Password</string>
+
     <string-array name="beers">
         <item>Lager</item>
         <item>IPA</item>
@@ -51,5 +65,7 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
 
 </resources>

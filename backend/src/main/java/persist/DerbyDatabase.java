@@ -170,7 +170,7 @@ public class DerbyDatabase implements IDatabase {
                         Beer tempBeer = (Beer) drink;
 
                         stmt2 = conn.prepareStatement(
-                                "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)"
+                                "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, abv, beerType) values (?,?,?,?)"
 
                         );
                         storeBeerNoId(tempBeer, stmt, 1);
