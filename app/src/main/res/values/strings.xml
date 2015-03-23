@@ -42,6 +42,9 @@
     <string name="password_hint">Type Password</string>
     <string name="confirm_password">Confirm Password</string>
 
+    <string name="drawer_open">Rate My Drink</string>
+    <string name="drawer_close">Menu</string>
+
     <string-array name="beers">
         <item>Lager</item>
         <item>IPA</item>
@@ -61,6 +64,13 @@
         <item>Malt</item>
         <item>Weisbier</item>
         <item>Cider</item>
+    </string-array>
+
+    <string-array name="navItems">
+        <item>Login</item>
+        <item>Add Beer</item>
+        <item>Add Liquor</item>
+        <item>Add Mixed Drink</item>
     </string-array>
 
 <!-- TODO: Remove or change this placeholder text -->
