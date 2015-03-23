@@ -9,4 +9,7 @@
     <item android:id="@+id/newDrink" android:title="new"
         android:orderInCategory="90" />
 
+    <item android:id="@+id/login" android:title="Login"
+        android:orderInCategory="80" />
+
 </menu>
