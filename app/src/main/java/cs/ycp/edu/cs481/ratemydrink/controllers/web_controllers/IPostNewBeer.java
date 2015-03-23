@@ -1,8 +1,8 @@
 package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 
+import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Drink;
 
-import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.Headers;
 import retrofit.http.POST;
@@ -13,7 +13,7 @@ import retrofit.http.POST;
 public interface IPostNewBeer {
 
     @Headers({"Content-Type: application/json"})
-    @POST("/backend/?action=addDrink")
-    Drink post(@Body String newBeer);
+    @POST("/backend/?action=addBeer")
+    Drink post(@Body Beer newBeer);
 
 }
