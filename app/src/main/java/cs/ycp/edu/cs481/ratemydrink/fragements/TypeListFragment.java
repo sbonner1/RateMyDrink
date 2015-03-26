@@ -65,13 +65,11 @@ public class TypeListFragment extends ListFragment {
                 getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
                 ITEMS.toArray(new DummyItem[ITEMS.size()])); //TODO: fix me
 
-        DrawerNavigation();
+
         setListAdapter(adapter);
 
     }
 
-    private void DrawerNavigation() {
-    }
 
 
     @Override

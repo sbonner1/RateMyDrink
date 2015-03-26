@@ -78,6 +78,8 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
 //        };
 
         // Set the drawer toggle as the DrawerListener
+        mDrawerList.setItemChecked(4, true);
+        setTitle(navTitles[4]);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         // TODO: If exposing deep links into your app, handle intents here.
@@ -117,6 +119,7 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -152,10 +155,24 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
             return true;
         }
         //Open up new drink page
-        if(position == 1){
+        if(position == 1) {
             Intent newDrinkIntent = new Intent(this, AddBeerActivity.class);
             startActivity(newDrinkIntent);
             return true;
+        }
+        //This would go to add a liquor drink
+        if(position == 2) {
+            Toast.makeText(this, "Pretend this goes to liquor", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        //This would go to add a mixed drink
+        if(position == 3) {
+            Toast.makeText(this, "Pretend this goes to mixed drink", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        //Main menu screen, but you are already here
+        if(position == 4) {
+            Toast.makeText(this, "You already are on the main menu", Toast.LENGTH_SHORT).show();
         }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
