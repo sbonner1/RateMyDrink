@@ -45,9 +45,9 @@ public class DrinkListArrayAdapter<T> extends ArrayAdapter<T> {
         TextView textView5 = (TextView)convertView.findViewById(R.id.beer_cal);
         TextView textView6 = (TextView)convertView.findViewById(R.id.beerAvgRate);
 
-        String drink = (String)getItem(position);
+        Drink drink = (Drink)getItem(position);
 
-        textView1.setText(drink);
+        textView1.setText(drink.getDrinkName());
         //textView2.setText(drink.getDescription());
 //        textView3.setText(drink.type);
 //        textView4.setText(drink.ABV);

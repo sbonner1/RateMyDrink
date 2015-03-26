@@ -50,10 +50,7 @@ public class DrinkDetailFragment extends Fragment {
             mItem = DummyBeers.BEER_MAP.get(getArguments().getString(ARG_ITEM_ID));
         }
 
-        //Next, populate list based on what type of drink the user selected to look up
-       // if(mItem.name == "Beer"){
 
-        //}
 
     }
 
