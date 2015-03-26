@@ -1,6 +1,7 @@
 package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,20 +13,29 @@ import java.util.List;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;
+import cs.ycp.edu.cs481.ratemydrink.controllers.StringArrayAdapter;
+import retrofit.RestAdapter;
 
 /**
  * Created by user on 3/6/2015.
  */
-public class GetDrinkListAsync extends AsyncTask<Void, Void, String[]>{
+public class GetDrinkListAsync extends AsyncTask<Void, Void, Drink[]>{
 
     @Override
-    protected String[] doInBackground(Void... params) {
+    protected Drink[] doInBackground(Void... params) {
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Drink.class, new DateTypeAdapter())
+                .registerTypeAdapter(Drink[].class, new StringArrayAdapter())
                 .create();
 
         IGetDrinksList getDrinkListService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(new RestAdapter.Log() {
+                    @Override
+                    public void log(String message) {
+                        Log.d("retrofit", message);
+                    }
+                })
                 .build()
                 .create(IGetDrinksList.class);
 
