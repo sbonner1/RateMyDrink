@@ -38,6 +38,7 @@ public class DerbyDatabase implements IDatabase {
     private static final String DB_MIXED_DRINK_TABLENAME = "mixedDrinkTable";
     private static final String DB_LIQUOR_TABLENAME = "liquorTable";
     private static final String DB_COMMENT_TABLENAME = "commentTable";
+   //private static final String DB_
 
 
     @Override
