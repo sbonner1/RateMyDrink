@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,11 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.fragements.DrinkListFragment;
-
 import cs.ycp.edu.cs481.ratemydrink.fragements.TypeListFragment;
 
 public class TypeActivity extends ActionBarActivity implements TypeListFragment.Callbacks{

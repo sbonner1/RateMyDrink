@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers;
-import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
 
 /**
  * A fragment representing a single Drink detail screen.

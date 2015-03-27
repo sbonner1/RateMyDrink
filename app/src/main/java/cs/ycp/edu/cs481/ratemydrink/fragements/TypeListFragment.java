@@ -2,13 +2,9 @@ package cs.ycp.edu.cs481.ratemydrink.fragements;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.support.v4.app.ListFragment;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
 import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkArrayAdapter;

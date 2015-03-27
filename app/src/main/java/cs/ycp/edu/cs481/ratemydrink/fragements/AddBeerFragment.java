@@ -11,11 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.BeerType;
 import com.rateMyDrink.modelClasses.Drink;
-
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewBeerAsync;
 
