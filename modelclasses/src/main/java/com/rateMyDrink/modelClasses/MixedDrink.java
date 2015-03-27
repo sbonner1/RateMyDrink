@@ -46,9 +46,7 @@ public class MixedDrink extends Drink {
         return this.ingredients;
     }
 
-    public void setIngrAmount(ArrayList<Double> ingrAmountList){
-        this.ingrAmount.addAll(ingrAmountList);
-    }
+    public void setIngrAmount(ArrayList<Double> ingrAmountList){this.ingrAmount.addAll(ingrAmountList); }
 
     public ArrayList<Double> getIngrAmount(){
         return this.ingrAmount;
