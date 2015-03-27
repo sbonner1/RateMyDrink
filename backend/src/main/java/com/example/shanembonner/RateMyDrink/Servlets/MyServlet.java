@@ -41,14 +41,23 @@ public class MyServlet extends HttpServlet {
         String action = req.getParameter("action");
         String pathInfo = req.getPathInfo(); //path
 
+        if(pathInfo == null){
+            System.out.println(action);
+        }
+
         if(action.equals("getBeer")){
-            if(pathInfo.startsWith("/")) {
-                pathInfo = pathInfo.substring(1);
+//            if(pathInfo.startsWith("/")) {
+//                pathInfo = pathInfo.substring(1);
+//            }
+
+            if(req.getParameter("id") == null){
+                System.out.println("id parameter is null");
             }
 
             Beer beer = null;
             GetBeer controller = new GetBeer();
-            int id = Integer.parseInt(pathInfo, 10);
+
+            int id = Integer.parseInt(req.getParameter("id"), 10);
             //int id = Integer.valueOf(pathInfo);
             try{
                 beer = controller.getBeer(id);
@@ -61,8 +70,10 @@ public class MyServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("No such beer");
+                return;
             }
-            System.out.println(beer.getDrinkName());
+//            System.out.println(beer.getDrinkName());
+            System.out.println("beer found");
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), beer);
