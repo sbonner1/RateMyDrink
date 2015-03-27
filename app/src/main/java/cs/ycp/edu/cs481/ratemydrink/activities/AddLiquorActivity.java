@@ -103,7 +103,7 @@ public class AddLiquorActivity extends ActionBarActivity {
         }
         //Open up new drink page
         if(position == 1) {
-            Intent newBeerIntent = new Intent(this, AddLiquorActivity.class);
+            Intent newBeerIntent = new Intent(this, AddBeerActivity.class);
             startActivity(newBeerIntent);
             return true;
         }
