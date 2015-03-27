@@ -66,6 +66,19 @@
         <item>Cider</item>
     </string-array>
 
+    <string-array name="liquors">
+        <item>Rum</item>
+        <item>Whiskey</item>
+        <item>Vodka</item>
+        <item>Absinthe</item>
+        <item>Brandy</item>
+        <item>Gin</item>
+        <item>Tequila</item>
+        <item>Bourbon</item>
+        <item>Scotch</item>
+        <item>Cognac</item>
+    </string-array>
+
     <string-array name="navItems">
         <item>Login</item>
         <item>Add Beer</item>
@@ -78,5 +91,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_add_liquor">AddLiquorActivity</string>
+    <string name="liquor_name">Add New Liquor</string>
+    <string name="liquor_type">Liquor Type:</string>
+    <string name="liquor_desc">Liquor Description:</string>
+    <string name="new_liquor_name">Liquor Brand and Name</string>
+    <string name="new_liq_desc">Liquor Description</string>
+    <string name="liquor_abv">Liquor ABV:</string>
+    <string name="new_liquor_abv">ABV %</string>
+    <string name="add_liq_btn">ADD LIQUOR</string>
+    <string name="new_liquor_title">Add New Liquor</string>
 
 </resources>

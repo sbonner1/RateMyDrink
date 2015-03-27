@@ -122,7 +122,8 @@ public class AddBeerActivity extends ActionBarActivity {
         }
         //This would go to add a liquor drink
         if(position == 2) {
-            Toast.makeText(this, "Pretend this goes to liquor", Toast.LENGTH_SHORT).show();
+            Intent newLiquorIntent = new Intent(this, AddLiquorActivity.class);
+            startActivity(newLiquorIntent);
             return true;
         }
         //This would go to add a mixed drink

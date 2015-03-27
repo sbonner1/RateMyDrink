@@ -1,7 +1,6 @@
 package cs.ycp.edu.cs481.ratemydrink.activities;
 
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -20,10 +19,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.fragements.RegisterFragment;
+import cs.ycp.edu.cs481.ratemydrink.fragements.AddLiquorFragment;
 
-public class RegisterActivity extends ActionBarActivity {
-
+public class AddLiquorActivity extends ActionBarActivity {
     private String[] navTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -31,17 +29,15 @@ public class RegisterActivity extends ActionBarActivity {
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
     private ActionBarDrawerToggle mDrawerToggle;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_add_liquor);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.register_container, new RegisterFragment())
+                    .add(R.id.Lcontainer, new AddLiquorFragment())
                     .commit();
         }
-
         navTitles = getResources().getStringArray(R.array.navItems);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -72,27 +68,31 @@ public class RegisterActivity extends ActionBarActivity {
 //        };
 
         // Set the drawer toggle as the DrawerListener
-        mDrawerList.setItemChecked(0, true);
-        setTitle(navTitles[0]);
+        mDrawerList.setItemChecked(2, true);
+        setTitle(navTitles[2]);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_add_liquor, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //This allows user to go back to drink list page
-        if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. Use NavUtils to allow users
-            // to navigate up one level in the application structure. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
-            NavUtils.navigateUpTo(this, new Intent(this, LoginActivity.class));
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -102,29 +102,31 @@ public class RegisterActivity extends ActionBarActivity {
         //Open up login page
         if(position == 0)
         {
-            Toast.makeText(this, "You already are on login page", Toast.LENGTH_SHORT).show();
+            Intent newLoginIntent = new Intent(this, LoginActivity.class);
+            startActivity(newLoginIntent);
+            return true;
         }
         //Open up new drink page
         if(position == 1) {
-            Intent newDrinkIntent = new Intent(this, AddBeerActivity.class);
-            startActivity(newDrinkIntent);
+            Intent newBeerIntent = new Intent(this, AddLiquorActivity.class);
+            startActivity(newBeerIntent);
             return true;
         }
         //This would go to add a liquor drink
         if(position == 2) {
-            Intent newLiquorIntent = new Intent(this, AddLiquorActivity.class);
-            startActivity(newLiquorIntent);
+            Toast.makeText(this, "You already are on the add beer page", Toast.LENGTH_SHORT).show();
             return true;
         }
         //This would go to add a mixed drink
         if(position == 3) {
-            Intent newMenuIntent = new Intent(this, TypeActivity.class);
-            startActivity(newMenuIntent);
+            Toast.makeText(this, "Pretend this goes to mixed drink", Toast.LENGTH_SHORT).show();
             return true;
         }
         //Main menu screen, but you are already here
         if(position == 4) {
-            Toast.makeText(this, "You already are on the main menu", Toast.LENGTH_SHORT).show();
+            Intent newMenuIntent = new Intent(this, TypeActivity.class);
+            startActivity(newMenuIntent);
+            return true;
         }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
