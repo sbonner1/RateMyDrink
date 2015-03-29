@@ -46,6 +46,8 @@ public interface IDatabase {
 
     public User loginUser(String userName, String password) throws SQLException;
 
+    MixedDrink getMixedDrink(int id) throws SQLException;
+
     User getUser(String userName, String password) throws SQLException;
 
 }

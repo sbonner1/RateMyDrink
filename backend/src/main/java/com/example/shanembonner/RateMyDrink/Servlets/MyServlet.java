@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.Liquor;
+import com.rateMyDrink.modelClasses.MixedDrink;
 import com.rateMyDrink.modelClasses.User;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import controllers.AddBeer;
 import controllers.AddDrink;
 import controllers.AddLiquor;
+import controllers.AddMixedDrink;
 import controllers.AddUser;
 import controllers.DeleteDrink;
 import controllers.DeleteUser;
@@ -31,6 +33,7 @@ import controllers.DeleteUserList;
 import controllers.GetBeer;
 import controllers.GetDrinkList;
 import controllers.GetLiquor;
+import controllers.GetMixedDrink;
 import controllers.GetUser;
 import controllers.GetUserList;
 
@@ -89,9 +92,36 @@ public class MyServlet extends HttpServlet {
                 resp.getWriter().println("No such liquor");
             }
 
-           resp.setStatus(HttpServletResponse.SC_OK);
-           resp.setContentType("application/json");
-           JSON.getObjectMapper().writeValue(resp.getWriter(), liquor);
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            JSON.getObjectMapper().writeValue(resp.getWriter(), liquor);
+        }
+
+        if(action.equals("getMixedDrink")){
+            if(pathInfo.startsWith("/")){
+                pathInfo = pathInfo.substring(1);
+            }
+            int id = Integer.parseInt(pathInfo, 10);
+            MixedDrink mixedDrink = null;
+
+            GetMixedDrink controller = new GetMixedDrink();
+
+            try{
+                mixedDrink = controller.getMixedDrink(id);
+            }catch(SQLException e) {
+                e.printStackTrace();
+            }
+
+            if(mixedDrink == null){
+                //no such mixed drink
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plan");
+                resp.getWriter().println("No such mixed drink");
+            }
+
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            JSON.getObjectMapper().writeValue(resp.getWriter(), mixedDrink);
         }
         if(action.equals("getUser")){
             //get the user name
@@ -201,22 +231,21 @@ public class MyServlet extends HttpServlet {
 
             try{
                 success = controller.addBeer(newBeer);
-
             }catch(SQLException e){
                 e.printStackTrace();
             }
 
             if (success) {
-                System.out.println("success adding drink");
+                System.out.println("success adding beer");
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), newBeer);
 
             }else{
-                System.out.println("failed to add drink");
+                System.out.println("failed to add beer");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
-                resp.getWriter().println("failed to add drink to database.");
+                resp.getWriter().println("failed to add beer to database.");
             }
         }
 
@@ -238,16 +267,16 @@ public class MyServlet extends HttpServlet {
             }
 
             if (success) {
-                System.out.println("success adding drink");
+                System.out.println("success adding liquor");
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), newLiquor);
 
             }else{
-                System.out.println("failed to add drink");
+                System.out.println("failed to add liquor");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
-                resp.getWriter().println("failed to add drink to database.");
+                resp.getWriter().println("failed to add liquor to database.");
             }
         }
 
@@ -280,6 +309,37 @@ public class MyServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("failed to add drink to database.");
+            }
+        }
+
+        /**
+         * to add a mixedDrink object to the database
+         */
+        if(action.equals("addMixedDrink")){
+            MixedDrink mixedDrink = null;
+            mixedDrink = JSON.getObjectMapper().readValue(req.getReader(), MixedDrink.class);
+
+            AddMixedDrink controller = new AddMixedDrink();
+            boolean success = false;
+
+            try {
+                success = controller.addMixedDrink(mixedDrink);
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if (success) {
+                System.out.println("success adding mixed drink");
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("application/json");
+                JSON.getObjectMapper().writeValue(resp.getWriter(), mixedDrink);
+
+            }else{
+                System.out.println("failed to add mixed drink");
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("failed to add mixed drink to database.");
             }
         }
 
