@@ -400,7 +400,7 @@ public class DerbyDatabase implements IDatabase {
                     Beer beer = new Beer();
                     loadBeer(beer, resultSet, 1);
 
-                    stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where drinkId = ?");
+                    stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
                     stmt2.setInt(1, id);
                     resultSet2 = stmt2.executeQuery();
 

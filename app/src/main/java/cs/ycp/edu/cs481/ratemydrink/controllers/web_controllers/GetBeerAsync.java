@@ -40,7 +40,7 @@ public class GetBeerAsync extends AsyncTask<Integer, Void, Beer> {
                 .build()
                 .create(IGetBeer.class);
 
-        return getBeerService.get( "getBeer",params[0]);
+        return getBeerService.get("getBeer" ,params[0]);
     }
 
 }
