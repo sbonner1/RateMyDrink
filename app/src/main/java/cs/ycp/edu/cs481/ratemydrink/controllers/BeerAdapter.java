@@ -60,9 +60,6 @@ public class BeerAdapter extends TypeAdapter<Beer> {
             if(field.equals("abv")){
                 beer.setABV(Integer.valueOf(jsonReader.nextString()));
             }
-            //if(field.equals("beerType")){
-                //beer.setBeerType(type);
-            //}
             if(field.equals("calories")){
                 beer.setCalories(Integer.valueOf(jsonReader.nextString()));
             }else{
