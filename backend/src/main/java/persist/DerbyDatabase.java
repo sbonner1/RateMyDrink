@@ -400,6 +400,7 @@ public class DerbyDatabase implements IDatabase {
                     Beer beer = new Beer();
                     loadBeer(beer, resultSet, 1);
 
+                    //get the drink object to retrieve the drink's name and description
                     stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where drinkId = ?");
                     stmt2.setInt(1, id);
                     resultSet2 = stmt2.executeQuery();
@@ -458,7 +459,9 @@ public class DerbyDatabase implements IDatabase {
             @Override
             public Liquor execute(Connection conn) throws SQLException{
                 PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
                 ResultSet resultSet = null;
+                ResultSet resultSet2 = null;
                 try {
                     stmt = conn.prepareStatement("select * from " + DB_LIQUOR_TABLENAME + " where drinkId = ?");
                     stmt.setInt(1, id);
@@ -471,6 +474,23 @@ public class DerbyDatabase implements IDatabase {
                     }
                     Liquor liquor = new Liquor();
                     loadLiquor(liquor, resultSet, 1);
+
+                    //get the drink object to retrieve the drink's name and description
+                    stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where drinkId = ?");
+                    stmt2.setInt(1, id);
+                    resultSet2 = stmt2.executeQuery();
+
+                    if(!resultSet2.next()){
+                        //no such drink
+                        return null;
+                    }
+
+                    Drink drink = new Drink();
+                    loadDrink(drink, resultSet2, 1);
+
+                    liquor.setDrinkName(drink.getDrinkName());
+                    liquor.setDescription(drink.getDescription());
+
                     return liquor;
                 }finally{
                     DBUtil.closeQuietly(resultSet);
@@ -487,8 +507,10 @@ public class DerbyDatabase implements IDatabase {
             public MixedDrink execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
                 PreparedStatement stmt2 = null;
+                PreparedStatement stmt3 = null;
                 ResultSet resultSet = null;
                 ResultSet resultSet2 = null; //for the ingredients list
+                ResultSet resultSet3 = null;
 
                 try{
                     stmt = conn.prepareStatement("select * from " + DB_MIXED_DRINK_TABLENAME + " where drinkId = ?");
@@ -517,6 +539,22 @@ public class DerbyDatabase implements IDatabase {
                     }
 
                     mixedDrink.setIngredients(result);
+
+                    //get the drink object to retrieve the drink's name and description
+                    stmt3 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where drinkId = ?");
+                    stmt3.setInt(1, id);
+                    resultSet3 = stmt3.executeQuery();
+
+                    if(!resultSet3.next()){
+                        //no such drink
+                        return null;
+                    }
+
+                    Drink drink = new Drink();
+                    loadDrink(drink, resultSet2, 1);
+
+                    mixedDrink.setDrinkName(drink.getDrinkName());
+                    mixedDrink.setDescription(drink.getDescription());
                     return mixedDrink;
                 }finally{
 
