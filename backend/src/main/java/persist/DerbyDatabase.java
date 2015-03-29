@@ -382,7 +382,9 @@ public class DerbyDatabase implements IDatabase {
             @Override
             public Beer execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
                 ResultSet resultSet = null;
+                ResultSet resultSet2 = null;
 
                 try{
                     stmt = conn.prepareStatement("select * from " + DB_BEER_TABLENAME + " where drinkId = ?");
@@ -397,6 +399,23 @@ public class DerbyDatabase implements IDatabase {
 
                     Beer beer = new Beer();
                     loadBeer(beer, resultSet, 1);
+
+                    stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where drinkId = ?");
+                    stmt2.setInt(1, id);
+                    resultSet2 = stmt2.executeQuery();
+
+                    if(!resultSet2.next()){
+                        //no such drink
+                        return null;
+                    }
+
+                    Drink drink = new Drink();
+                    loadDrink(drink, resultSet2, 1);
+
+                    beer.setDrinkName(drink.getDrinkName());
+                    beer.setDescription(drink.getDescription());
+
+
                     return beer;
                 }finally{
                     DBUtil.closeQuietly(resultSet);
