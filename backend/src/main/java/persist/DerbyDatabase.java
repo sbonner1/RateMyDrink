@@ -9,7 +9,6 @@ import com.rateMyDrink.modelClasses.MixedDrink;
 import com.rateMyDrink.modelClasses.User;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,6 +37,8 @@ public class DerbyDatabase implements IDatabase {
     private static final String DB_MIXED_DRINK_TABLENAME = "mixedDrinkTable";
     private static final String DB_LIQUOR_TABLENAME = "liquorTable";
     private static final String DB_COMMENT_TABLENAME = "commentTable";
+    private static final String DB_INGREDIENT_AMOUNTS_TABLENAME = "amountTable";
+    private static final String DB_INGREDIENT_NAMES_TABLENAME = "ingrNameTable";
 
 
     @Override
@@ -56,10 +57,10 @@ public class DerbyDatabase implements IDatabase {
                             "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)",
                             PreparedStatement.RETURN_GENERATED_KEYS
                     );
+
                     storeDrinkNoId(tempDrink, stmt, 1);
-
                     stmt.executeUpdate();
-
+                    
                     //determine auto-generated id
                     generatedKeys = stmt.getGeneratedKeys();
                     if(!generatedKeys.next()){
@@ -74,6 +75,7 @@ public class DerbyDatabase implements IDatabase {
                             "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, abv, beerType) values (?,?,?,?)"
 
                     );
+
                     storeBeerNoId(beer, stmt2, 1);
                     stmt2.executeUpdate();
                     return true;
@@ -102,8 +104,8 @@ public class DerbyDatabase implements IDatabase {
                             "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)",
                             PreparedStatement.RETURN_GENERATED_KEYS
                     );
-                    storeDrinkNoId(tempDrink, stmt, 1);
 
+                    storeDrinkNoId(tempDrink, stmt, 1);
                     stmt.executeUpdate();
 
                     //determine auto-generated id
@@ -117,9 +119,9 @@ public class DerbyDatabase implements IDatabase {
                     int drinkId = generatedKeys.getInt(1);
                     tempDrink.setId(drinkId);
 
+
                     stmt2 = conn.prepareStatement(
                             "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, content, liquorType) values (?,?,?)"
-
                     );
                     storeLiquorNoId(liquor, stmt2, 1);
                     stmt2.executeUpdate();
@@ -131,6 +133,84 @@ public class DerbyDatabase implements IDatabase {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean addNewMixedDrink(final MixedDrink mixedDrink) throws SQLException {
+        return executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                PreparedStatement stmt3 = null;
+                PreparedStatement stmt4 = null;
+                ResultSet generatedKeys = null;
+
+                try{
+                    //type cast the object so that it can be stored in the main database, with a link to the subclass database
+                    Drink tempDrink = (Drink) mixedDrink;
+                    stmt = conn.prepareStatement(
+                            "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)",
+                            PreparedStatement.RETURN_GENERATED_KEYS
+                    );
+
+
+                    storeDrinkNoId(tempDrink, stmt, 1);
+                    stmt.executeUpdate();
+
+                    //determine auto-generated id
+                    generatedKeys = stmt.getGeneratedKeys();
+                    if(!generatedKeys.next()){
+                        throw new SQLException("Could not get auto-generated key for inserted Drink");
+
+                    }
+
+                    //id is used to link the drink in the main table to an item in the subclass table
+                    int drinkId = generatedKeys.getInt(1);
+                    tempDrink.setId(drinkId);
+
+
+                    //extract the ingredients list and their corresponding amounts to be stored in the database
+                    ArrayList<String> ingrList = new ArrayList<String>();
+                    ingrList.addAll(mixedDrink.getIngredients());
+                    ArrayList<Double> ingrAmountList = new ArrayList<Double>();
+                    ingrAmountList.addAll(mixedDrink.getIngrAmount());
+
+
+                    stmt2 = conn.prepareStatement(
+                            "insert into " + DB_MIXED_DRINK_TABLENAME + " (drinkId, mainIng) values (?,?)"
+                    );
+
+                    storeMixedDrinkNoId(mixedDrink, stmt2, 1);
+                    stmt2.executeUpdate();
+
+                    //for each item in the ingredients list, store them in the ingredients table
+//                    for(String item : ingrList){
+//                        stmt3 = conn.prepareStatement(
+//                             "insert into " + DB_INGREDIENT_NAMES_TABLENAME + "(name) values (?)",
+//                             PreparedStatement.RETURN_GENERATED_KEYS
+//                        );
+//                        int ingrId = generatedKeys.getInt(1);
+//                        storeMixedDrinkIngredients();
+//
+//                    }
+                    stmt3 = conn.prepareStatement(
+                            "insert into " + DB_INGREDIENT_NAMES_TABLENAME + "(name) value (?)",
+                            PreparedStatement.RETURN_GENERATED_KEYS
+                    );
+
+                    storeMixedDrinkIngredients(ingrList, stmt, 1);
+
+                    return true;
+                }finally{
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                }
+
+
+            }
+        });
+       // return false;
     }
 
     @Override
@@ -542,7 +622,6 @@ public class DerbyDatabase implements IDatabase {
         }finally{
             DBUtil.closeQuietly(conn);
         }
-
     }
 
     private Connection connect() throws SQLException {
@@ -569,11 +648,9 @@ public class DerbyDatabase implements IDatabase {
                 PreparedStatement stmt3 = null; //beer database table
                 PreparedStatement stmt4 = null; //mixed drink database table
                 PreparedStatement stmt5 = null; //liquor database table
+                PreparedStatement stmt6 = null; //ingredient amount database table
+                PreparedStatement stmt7 = null; //ingredient name table
 
-                //TODO: link all subclass databases to main database
-                //Connection connection = DriverManager.getConnection(connectionURL);
-                DatabaseMetaData dbmd = conn.getMetaData();
-               // ResultSet rs = dbmd.getTab
                 try{
                     stmt = conn.prepareStatement(
                             "create table " + DB_USER_TABLENAME + " (" +
@@ -617,20 +694,38 @@ public class DerbyDatabase implements IDatabase {
                             ")"
                     );
 
+                    stmt6 = conn.prepareStatement(
+                            "create table " + DB_INGREDIENT_AMOUNTS_TABLENAME + " (" +
+                            "drinkId integer," +
+                            "drinkName varchar(200) unique," +
+                            "amt float(2)," +
+                            "ingrId integer" +
+                            ")"
+                    );
+
+                    stmt7 = conn.prepareStatement(
+                            "create table " + DB_INGREDIENT_NAMES_TABLENAME + " (" +
+                            "name varchar(200)" +
+                            ")"
+                    );
+
                     stmt.executeUpdate();
                     stmt2.executeUpdate();
                     stmt3.executeUpdate();
                     stmt4.executeUpdate();
                     stmt5.executeUpdate();
+                    stmt6.executeUpdate();
+                    stmt7.executeUpdate();
 
                     return true;
-
                 }finally {
                     DBUtil.closeQuietly(stmt);
                     DBUtil.closeQuietly(stmt2);
                     DBUtil.closeQuietly(stmt3);
                     DBUtil.closeQuietly(stmt4);
                     DBUtil.closeQuietly(stmt5);
+                    DBUtil.closeQuietly(stmt6);
+                    DBUtil.closeQuietly(stmt7);
                 }
             }
         } );
@@ -642,7 +737,6 @@ public class DerbyDatabase implements IDatabase {
         //to store the invalid id.
         stmt.setString(index++, user.getUserName());
         stmt.setString(index++, user.getUserPassword());
-
     }
 
 
@@ -650,7 +744,6 @@ public class DerbyDatabase implements IDatabase {
         stmt.setString(index++, drink.getDrinkName());
         stmt.setString(index++, drink.getDescription());
         stmt.setFloat(index++, drink.getRating());
-
     }
 
     protected void storeBeerNoId(Beer beer, PreparedStatement stmt, int index) throws SQLException {
@@ -661,8 +754,19 @@ public class DerbyDatabase implements IDatabase {
         stmt.setInt(index++, beer.getBeerType().ordinal());
     }
 
-    protected void storeMixedDrinkNoId(Drink drink, PreparedStatement stmt, int index) throws SQLException {
+    protected void storeMixedDrinkNoId(MixedDrink mixedDrink, PreparedStatement stmt, int index) throws SQLException {
         //TODO: storeMixedDrinkNoId
+
+    }
+
+    protected void storeMixedDrinkIngredients(ArrayList<String> ingredients, PreparedStatement stmt, int index) throws SQLException {
+        //TODO:
+
+        //stmt.setString(index++, name);
+    }
+
+    protected void storeMixedDrinkIngredientAmounts(ArrayList<Double> amounts, PreparedStatement stmt, int index) throws SQLException {
+        //TODO:
     }
 
     protected void storeLiquorNoId(Liquor liquor, PreparedStatement stmt, int index) throws SQLException {

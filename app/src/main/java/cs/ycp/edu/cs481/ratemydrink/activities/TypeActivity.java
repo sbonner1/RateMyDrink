@@ -65,6 +65,12 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
             startActivity(newDrinkIntent);
             return true;
         }
+        //Start the activity to login or register
+        if(id == R.id.login){
+            Intent newLoginIntent = new Intent(this, LoginActivity.class);
+            startActivity(newLoginIntent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
