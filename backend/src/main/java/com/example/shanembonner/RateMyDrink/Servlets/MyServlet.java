@@ -39,26 +39,38 @@ public class MyServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         String action = req.getParameter("action");
+        String id_param = req.getParameter("id");
         String pathInfo = req.getPathInfo(); //path
 
-        if(pathInfo == null){
-            System.out.println(action);
+        System.out.println(req.getQueryString());
+
+        if(id_param == null){
+            System.out.println("no id present");
+        }
+
+        if(action == null){
+            System.out.println("action parameter is null");
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            resp.setContentType("text/plain");
+            resp.getWriter().println("action parameter is null");
+            return;
         }
 
         if(action.equals("getBeer")){
-//            if(pathInfo.startsWith("/")) {
-//                pathInfo = pathInfo.substring(1);
-//            }
 
-            if(req.getParameter("id") == null){
+            if(id_param == null){
                 System.out.println("id parameter is null");
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("id parameter is null");
+                return;
             }
 
             Beer beer = null;
             GetBeer controller = new GetBeer();
 
-            int id = Integer.parseInt(req.getParameter("id"), 10);
-            //int id = Integer.valueOf(pathInfo);
+            int id = Integer.parseInt(id_param, 10);
+
             try{
                 beer = controller.getBeer(id);
             }catch (SQLException e){
@@ -72,8 +84,10 @@ public class MyServlet extends HttpServlet {
                 resp.getWriter().println("No such beer");
                 return;
             }
-//            System.out.println(beer.getDrinkName());
+
             System.out.println("beer found");
+            System.out.println("name: " + beer.getDrinkName());
+
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), beer);
