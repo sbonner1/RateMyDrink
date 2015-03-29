@@ -11,17 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.rateMyDrink.modelClasses.Beer;
-import com.rateMyDrink.modelClasses.BeerType;
+import com.rateMyDrink.modelClasses.Liquor;
+import com.rateMyDrink.modelClasses.LiquorType;
 import com.rateMyDrink.modelClasses.Drink;
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewBeerAsync;
+//import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewLiquorAsync;
 
-public class AddBeerFragment extends Fragment {
-
+/**
+ * Created by Aaron on 3/26/2015.
+ */
+public class AddLiquorFragment extends Fragment{
     String tag = "Null Widget";
 
-    private EditText beerName, beerDesc, beerABV;
+    private EditText liquorName, liquorDesc, liquorABV;
     private Spinner spinner;
     private Button submit;
 
@@ -38,27 +40,30 @@ public class AddBeerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_add_beer, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_add_liquor, container, false);
 
-        beerName = (EditText) rootView.findViewById(R.id.new_beer_field);
-        beerDesc = (EditText) rootView.findViewById(R.id.add_beer_desc_field);
-        beerABV = (EditText) rootView.findViewById(R.id.add_beer_abv_field);
+        liquorName = (EditText) rootView.findViewById(R.id.new_liquor_field);
+        liquorDesc = (EditText) rootView.findViewById(R.id.add_liq_desc_field);
+        liquorABV = (EditText) rootView.findViewById(R.id.add_liq_abv_field);
 
-        spinner = (Spinner) rootView.findViewById((R.id.new_beer_spinner));
-        spinner.setAdapter(new ArrayAdapter<BeerType>(getActivity(), android.R.layout.simple_spinner_item, BeerType.values()));
+        spinner = (Spinner) rootView.findViewById((R.id.new_liquor_spinner));
+        spinner.setAdapter(new ArrayAdapter<LiquorType>(getActivity(), android.R.layout.simple_spinner_item, LiquorType.values()));
 
-        submit = (Button) rootView.findViewById(R.id.add_beer);
+        submit = (Button) rootView.findViewById(R.id.add_liquor);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Check to make sure all fields are filled out so no null values get sent to database
-                if(isEmpty(beerName) == true || isEmpty(beerDesc) == true || isEmpty(beerABV) == true){
+                //Check to make sure all fields are filled out so no null values are sent to database
+                if(isEmpty(liquorName) == true || isEmpty(liquorDesc) == true || isEmpty(liquorABV) == true) {
                     Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
                 }
-                Beer newBeer = createBeer();
-                //Drink drink = createDrink();
-                PostNewBeerAsync newBeerPost = new PostNewBeerAsync();
-                newBeerPost.execute(newBeer);
+                else {
+                    Toast.makeText(getActivity(), "This would post to the database", Toast.LENGTH_SHORT).show();
+                    Liquor newLiquor = createLiquor();
+                    Drink drink = createDrink();
+                    //PostNewBeerAsync newBeerPost = new PostNewBeerAsync();
+                    //newBeerPost.execute(newBeer);
+                }
             }
         });
 
@@ -87,27 +92,27 @@ public class AddBeerFragment extends Fragment {
     }
 
     /**
-     * creates a new Beer object from the information entered in the AddBeerFragment
+     * creates a new Liquor object from the information entered in the AddBeerFragment
      *
-     * @return a new Beer object containing then entered information
+     * @return a new Liquor object containing then entered information
      */
-    private Beer createBeer(){
-        String name = beerName.getText().toString();
-        String desc = beerDesc.getText().toString();
-        String abv = beerABV.getText().toString();
-        BeerType type = (BeerType) spinner.getSelectedItem();
+    private Liquor createLiquor(){
+        String name = liquorName.getText().toString();
+        String desc = liquorDesc.getText().toString();
+        String abv = liquorABV.getText().toString();
+        LiquorType type = (LiquorType) spinner.getSelectedItem();
         Toast.makeText(getActivity(), type.toString(), Toast.LENGTH_SHORT).show();
-        return new Beer(name, desc, Double.valueOf(abv), 0, type);
+        return new Liquor(name, desc, Double.valueOf(abv), type);
     }
 
     private Drink createDrink(){
-        String name = beerName.getText().toString();
-        String desc = beerDesc.getText().toString();
+        String name = liquorName.getText().toString();
+        String desc = liquorDesc.getText().toString();
         Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
         return new Drink(name, desc);
     }
     //Simple method to check if an edit text field is empty
-    private boolean isEmpty(EditText etText) {
-        return etText.getText().toString().trim().length() == 0;
+    private boolean isEmpty(EditText Text) {
+        return Text.getText().toString().trim().length() == 0;
     }
 }

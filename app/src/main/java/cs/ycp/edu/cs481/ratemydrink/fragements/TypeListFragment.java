@@ -2,11 +2,9 @@ package cs.ycp.edu.cs481.ratemydrink.fragements;
 
 import android.app.Activity;
 import android.os.Bundle;
-
 import android.view.View;
 import android.support.v4.app.ListFragment;
 import android.widget.ListView;
-
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
 import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkArrayAdapter;
@@ -42,6 +40,8 @@ public class TypeListFragment extends ListFragment {
          */
         public void onItemSelected(String id);
     }
+    //Init drawer items
+
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does
@@ -61,8 +61,11 @@ public class TypeListFragment extends ListFragment {
                 getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
                 ITEMS.toArray(new DummyItem[ITEMS.size()])); //TODO: fix me
 
+
         setListAdapter(adapter);
+
     }
+
 
 
     @Override

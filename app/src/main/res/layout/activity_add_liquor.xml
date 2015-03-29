@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/login_container"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/Lcontainer"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    tools:context="cs.ycp.edu.cs481.ratemydrink.activities.LoginActivity"
+    tools:context="cs.ycp.edu.cs481.ratemydrink.activities.AddLiquorActivity"
     tools:ignore="MergeRootFrame" />
     <ListView android:id="@+id/left_drawer"
         android:layout_width="240dp"

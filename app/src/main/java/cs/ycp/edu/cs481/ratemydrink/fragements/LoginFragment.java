@@ -10,10 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import cs.ycp.edu.cs481.ratemydrink.R;
-
-import cs.ycp.edu.cs481.ratemydrink.activities.LoginActivity;
 import cs.ycp.edu.cs481.ratemydrink.activities.RegisterActivity;
 
 
