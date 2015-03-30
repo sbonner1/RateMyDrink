@@ -42,17 +42,38 @@ public class MyServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         String action = req.getParameter("action");
+        String id_param = req.getParameter("id");
         String pathInfo = req.getPathInfo(); //path
 
+        System.out.println(req.getQueryString());
+
+        if(id_param == null){
+            System.out.println("no id present");
+        }
+
+        if(action == null){
+            System.out.println("action parameter is null");
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            resp.setContentType("text/plain");
+            resp.getWriter().println("action parameter is null");
+            return;
+        }
+
         if(action.equals("getBeer")){
-            if(pathInfo.startsWith("/")) {
-                pathInfo = pathInfo.substring(1);
+
+            if(id_param == null){
+                System.out.println("id parameter is null");
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("id parameter is null");
+                return;
             }
 
             Beer beer = null;
             GetBeer controller = new GetBeer();
-            int id = Integer.parseInt(pathInfo, 10);
-            //int id = Integer.valueOf(pathInfo);
+
+            int id = Integer.parseInt(id_param, 10);
+
             try{
                 beer = controller.getBeer(id);
             }catch (SQLException e){
@@ -64,8 +85,12 @@ public class MyServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("No such beer");
+                return;
             }
-            System.out.println(beer.getDrinkName());
+
+            System.out.println("beer found");
+            System.out.println("name: " + beer.getDrinkName());
+
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), beer);
@@ -253,15 +278,20 @@ public class MyServlet extends HttpServlet {
          * to add a new liquor object to the database
          */
         if(action.equals("addLiquor")) {
-            Liquor newLiquor = null;
-            newLiquor = JSON.getObjectMapper().readValue(req.getReader(), Liquor.class);
+            System.out.println("adding a new liquor to the database.");
+
+            Liquor newLiquor = JSON.getObjectMapper().readValue(req.getReader(), Liquor.class);
+
+            if(newLiquor == null){
+                System.out.println("newLiquor object is null.");
+                return;
+            }
 
             AddLiquor controller = new AddLiquor();
             boolean success = false;
 
             try {
                 success = controller.addLiquor(newLiquor);
-
             }catch(SQLException e){
                 e.printStackTrace();
             }
@@ -271,12 +301,13 @@ public class MyServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), newLiquor);
-
+                return;
             }else{
                 System.out.println("failed to add liquor");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("failed to add liquor to database.");
+                return;
             }
         }
 

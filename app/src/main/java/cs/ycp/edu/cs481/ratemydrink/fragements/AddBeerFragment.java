@@ -11,11 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.BeerType;
 import com.rateMyDrink.modelClasses.Drink;
-
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewBeerAsync;
 
@@ -53,6 +51,10 @@ public class AddBeerFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Check to make sure all fields are filled out so no null values get sent to database
+                if(isEmpty(beerName) == true || isEmpty(beerDesc) == true || isEmpty(beerABV) == true){
+                    Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
+                }
                 Beer newBeer = createBeer();
                 //Drink drink = createDrink();
                 PostNewBeerAsync newBeerPost = new PostNewBeerAsync();
@@ -104,5 +106,8 @@ public class AddBeerFragment extends Fragment {
         Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
         return new Drink(name, desc);
     }
-
+    //Simple method to check if an edit text field is empty
+    private boolean isEmpty(EditText etText) {
+        return etText.getText().toString().trim().length() == 0;
+    }
 }

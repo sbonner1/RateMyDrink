@@ -402,6 +402,7 @@ public class DerbyDatabase implements IDatabase {
 
                     //get the drink object to retrieve the drink's name and description
                     stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where drinkId = ?");
+
                     stmt2.setInt(1, id);
                     resultSet2 = stmt2.executeQuery();
 

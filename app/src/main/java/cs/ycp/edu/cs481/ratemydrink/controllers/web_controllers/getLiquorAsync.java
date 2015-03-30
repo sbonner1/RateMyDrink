@@ -24,10 +24,10 @@ public class getLiquorAsync extends AsyncTask<Integer, Void, Liquor> {
 
         IGetLiquor getLiquorService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
-                .setConverter(new GsonConverter(gson))
+                //.setConverter(new GsonConverter(gson))
                 .build()
                 .create(IGetLiquor.class);
 
-        return getLiquorService.get(params[0]);
+        return getLiquorService.get("getLiquor" ,params[0]);
     }
 }

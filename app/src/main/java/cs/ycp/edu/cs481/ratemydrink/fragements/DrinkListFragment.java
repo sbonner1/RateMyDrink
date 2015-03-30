@@ -5,21 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
-
 import com.rateMyDrink.modelClasses.Drink;
-
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkArrayAdapter;
 import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkListArrayAdapter;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetDrinkListAsync;
-import cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers;
-import cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent;
-
-import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent.*;
-import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers.*;
+import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent.ITEMS;
 
 /**
  * A list fragment representing a list of Drinks. This fragment
@@ -31,6 +22,8 @@ import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers.*;
  * interface.
  */
 public class DrinkListFragment extends ListFragment {
+
+    Drink[] drinkArr = null;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -85,33 +78,30 @@ public class DrinkListFragment extends ListFragment {
         GetDrinkListAsync getDrinkList = new GetDrinkListAsync();
         getDrinkList.execute();
 
-        //ArrayList<Drink> arrListDrinks = null;
-        String[] drinkNames = null;
+        //ArrayList<Drink> drinkArr = null;
+
 
         try {
-            //arrListDrinks = (ArrayList<Drink>) getDrinkList.get();
-            drinkNames = (String[]) getDrinkList.get();
+            drinkArr = getDrinkList.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        /*
         DrinkListArrayAdapter<Drink> adapter2 = new DrinkListArrayAdapter<Drink>(
                 getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
-                arrListDrinks.toArray(new Drink[arrListDrinks.size()]));
+                drinkArr);
 
         setListAdapter(adapter2);
-        */
 
-
+        /*
         DrinkListArrayAdapter<String> adapter2 = new DrinkListArrayAdapter<String>(
                 getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
                 drinkNames);
 
         setListAdapter(adapter2);
-
+        */
 
     }
 
@@ -152,7 +142,7 @@ public class DrinkListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(ITEMS.get(position).id);
+        mCallbacks.onItemSelected(String.valueOf(drinkArr[position].getId()));
     }
 
     @Override
