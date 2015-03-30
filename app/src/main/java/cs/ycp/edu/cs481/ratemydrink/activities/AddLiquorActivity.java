@@ -109,7 +109,7 @@ public class AddLiquorActivity extends ActionBarActivity {
         }
         //This would go to add a liquor drink
         if(position == 2) {
-            Toast.makeText(this, "You already are on the add beer page", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You already are on the add liquor page", Toast.LENGTH_SHORT).show();
             return true;
         }
         //This would go to add a mixed drink

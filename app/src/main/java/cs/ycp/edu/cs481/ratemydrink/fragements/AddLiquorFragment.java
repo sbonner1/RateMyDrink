@@ -102,7 +102,7 @@ public class AddLiquorFragment extends Fragment{
         String abv = liquorABV.getText().toString();
         LiquorType type = (LiquorType) spinner.getSelectedItem();
         Toast.makeText(getActivity(), type.toString(), Toast.LENGTH_SHORT).show();
-        return new Liquor(name, desc, Double.valueOf(abv), type);
+        return new Liquor(name, desc, Float.valueOf(abv), type);
     }
 
     private Drink createDrink(){
