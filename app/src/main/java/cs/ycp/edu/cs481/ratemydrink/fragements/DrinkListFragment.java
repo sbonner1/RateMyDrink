@@ -23,6 +23,8 @@ import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent.ITEMS;
  */
 public class DrinkListFragment extends ListFragment {
 
+    Drink[] drinkArr = null;
+
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -77,10 +79,9 @@ public class DrinkListFragment extends ListFragment {
         getDrinkList.execute();
 
         //ArrayList<Drink> drinkArr = null;
-        Drink[] drinkArr = null;
+
 
         try {
-            //drinkArr = (ArrayList<Drink>) getDrinkList.get();
             drinkArr = getDrinkList.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -141,7 +142,7 @@ public class DrinkListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(ITEMS.get(position).id);
+        mCallbacks.onItemSelected(String.valueOf(drinkArr[position].getId()));
     }
 
     @Override

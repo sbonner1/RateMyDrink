@@ -7,8 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.rateMyDrink.modelClasses.Beer;
+
+import java.util.concurrent.ExecutionException;
+
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetBeerAsync;
 
 /**
  * A fragment representing a single Drink detail screen.
@@ -27,7 +32,7 @@ public class DrinkDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private DummyBeers.DummyBeer mItem;
+    private Beer mBeer;
     private RatingBar ratingBar;
     private TextView txtRatingValue;
     /**
@@ -41,14 +46,28 @@ public class DrinkDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        int id = -1;
+
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyBeers.BEER_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            id = Integer.valueOf(getArguments().getString(ARG_ITEM_ID));
         }
 
-
+        if(id > 0){
+            GetBeerAsync getBeer = new GetBeerAsync();
+            getBeer.execute(id);
+            try {
+                mBeer = getBeer.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }else{
+            //error
+        }
 
     }
 
@@ -59,15 +78,15 @@ public class DrinkDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_beer_drink_detail, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.beer_name)).setText(mItem.name);
-            ((TextView) rootView.findViewById(R.id.beer_desc)).setText(mItem.description);
-            ((TextView) rootView.findViewById(R.id.beer_abv)).setText("ABV: " + mItem.ABV);
-            ((TextView) rootView.findViewById(R.id.beer_cal)).setText("Cal: " + mItem.calories);
-            ((TextView) rootView.findViewById(R.id.beer_type)).setText(mItem.type);
-            ((TextView) rootView.findViewById(R.id.beerAvgRate)).setText(mItem.rating + "");
+        if (mBeer != null) {
+            ((TextView) rootView.findViewById(R.id.beer_name)).setText(mBeer.getDrinkName());
+            ((TextView) rootView.findViewById(R.id.beer_desc)).setText(mBeer.getDescription());
+            ((TextView) rootView.findViewById(R.id.beer_abv)).setText("ABV: " + mBeer.getABV());
+            ((TextView) rootView.findViewById(R.id.beer_cal)).setText("Cal: " + mBeer.getCalories());
+            ((TextView) rootView.findViewById(R.id.beer_type)).setText(mBeer.getBeerTypeReadableName());
+            ((TextView) rootView.findViewById(R.id.beerAvgRate)).setText(mBeer.getRating() + "");
             //Pre-fills the star with avg user rating
-            ((RatingBar) rootView.findViewById(R.id.BeerRatingBar)).setRating(mItem.rating);
+            ((RatingBar) rootView.findViewById(R.id.BeerRatingBar)).setRating(mBeer.getRating());
         }
 
         return rootView;

@@ -15,6 +15,7 @@ import com.rateMyDrink.modelClasses.Liquor;
 import com.rateMyDrink.modelClasses.LiquorType;
 import com.rateMyDrink.modelClasses.Drink;
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewLiquorAsync;
 //import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewLiquorAsync;
 
 /**
@@ -60,9 +61,8 @@ public class AddLiquorFragment extends Fragment{
                 else {
                     Toast.makeText(getActivity(), "This would post to the database", Toast.LENGTH_SHORT).show();
                     Liquor newLiquor = createLiquor();
-                    Drink drink = createDrink();
-                    //PostNewBeerAsync newBeerPost = new PostNewBeerAsync();
-                    //newBeerPost.execute(newBeer);
+                    PostNewLiquorAsync postLiquor = new PostNewLiquorAsync();
+                    postLiquor.execute(newLiquor);
                 }
             }
         });
