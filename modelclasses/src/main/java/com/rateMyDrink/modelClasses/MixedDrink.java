@@ -10,14 +10,14 @@ public class MixedDrink extends Drink {
     private int id;
     private String instructions;
     private LiquorType maxIng;
-    private ArrayList<String> ingredients;
-    private ArrayList<Double> ingrAmount;
+    private ArrayList<Ingredient> ingredients;
+   // private ArrayList<Double> ingrAmount;
   //  public String[][] recipe;
 
     public MixedDrink(){
 
-        ingredients = new ArrayList<String>();
-        ingrAmount = new ArrayList<Double>();
+        ingredients = new ArrayList<Ingredient>();
+       // ingrAmount = new ArrayList<Double>();
        // recipe = new String[15][15]; //using a double array would be easier to keep all values in the same order
                                      //and make it easier to store in the database
     }
@@ -38,21 +38,19 @@ public class MixedDrink extends Drink {
         return this.instructions;
     }
 
-    public void setIngredients(ArrayList<String> ingrList){
+    public void setIngredients(ArrayList<Ingredient> ingrList){
        this.ingredients.addAll(ingrList);
     }
 
-    public ArrayList<String> getIngredients(){
+    public ArrayList<Ingredient> getIngredients(){
         return this.ingredients;
     }
 
-    public void setIngrAmount(ArrayList<Double> ingrAmountList){
-        this.ingrAmount.addAll(ingrAmountList);
-    }
+    //public void setIngrAmount(ArrayList<Double> ingrAmountList){this.ingrAmount.addAll(ingrAmountList); }
 
-    public ArrayList<Double> getIngrAmount(){
-        return this.ingrAmount;
-    }
+    //public ArrayList<Double> getIngrAmount(){
+    //   return this.ingrAmount;
+    //}
 
     //Set the max ingredient
     public void setMaxIngredient(LiquorType setMaxIng) { this.maxIng = setMaxIng; }

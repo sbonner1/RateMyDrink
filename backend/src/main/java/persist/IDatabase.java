@@ -3,6 +3,7 @@ package persist;
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.Liquor;
+import com.rateMyDrink.modelClasses.MixedDrink;
 import com.rateMyDrink.modelClasses.User;
 
 import java.sql.SQLException;
@@ -18,6 +19,8 @@ public interface IDatabase {
     boolean addNewDrink(Drink drink) throws SQLException;
 
     boolean addNewLiquor(Liquor liquor) throws SQLException;
+
+    boolean addNewMixedDrink(MixedDrink mixedDrink) throws SQLException;
 
     public boolean addNewUser(User user, String hashedPassword) throws SQLException;
 
@@ -43,7 +46,8 @@ public interface IDatabase {
 
     public User loginUser(String userName, String password) throws SQLException;
 
-    User getUser(String userName, String password) throws SQLException;
+    MixedDrink getMixedDrink(int id) throws SQLException;
 
+    User getUser(String userName, String password) throws SQLException;
 
 }
