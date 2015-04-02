@@ -421,7 +421,9 @@ public class DerbyDatabase implements IDatabase {
                     return beer;
                 }finally{
                     DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(resultSet2);
                     DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
                 }
             }
         });
@@ -495,7 +497,9 @@ public class DerbyDatabase implements IDatabase {
                     return liquor;
                 }finally{
                     DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(resultSet2);
                     DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
                 }
             }
         });
@@ -558,7 +562,12 @@ public class DerbyDatabase implements IDatabase {
                     mixedDrink.setDescription(drink.getDescription());
                     return mixedDrink;
                 }finally{
-
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(resultSet2);
+                    DBUtil.closeQuietly(resultSet3);
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                    DBUtil.closeQuietly(stmt3);
                 }
             }
         });

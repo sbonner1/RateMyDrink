@@ -8,14 +8,9 @@ public class Comment {
     private int drinkId;
     private String username;
     private String comment;
-
-
-=======
+/**
  * Model object to represent a comment posted to a Drink
  */
-public class Comment {
-    private String comment;
-
     //constructor
     public Comment(String comment) {
         this.comment = comment;
@@ -30,5 +25,5 @@ public class Comment {
     public void setComment(String comment) {
         this.comment = comment;
     }
->>>>>>> 99209166652b4543b2812f9bdb8151ad5b449d0a
+
 }
