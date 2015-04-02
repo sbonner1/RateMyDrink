@@ -401,7 +401,7 @@ public class DerbyDatabase implements IDatabase {
                     loadBeer(beer, resultSet, 1);
 
                     //get the drink object to retrieve the drink's name and description
-                    stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where drinkId = ?");
+                    stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
 
                     stmt2.setInt(1, id);
                     resultSet2 = stmt2.executeQuery();
@@ -479,7 +479,7 @@ public class DerbyDatabase implements IDatabase {
                     loadLiquor(liquor, resultSet, 1);
 
                     //get the drink object to retrieve the drink's name and description
-                    stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where drinkId = ?");
+                    stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
                     stmt2.setInt(1, id);
                     resultSet2 = stmt2.executeQuery();
 
@@ -546,7 +546,7 @@ public class DerbyDatabase implements IDatabase {
                     mixedDrink.setIngredients(result);
 
                     //get the drink object to retrieve the drink's name and description
-                    stmt3 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where drinkId = ?");
+                    stmt3 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
                     stmt3.setInt(1, id);
                     resultSet3 = stmt3.executeQuery();
 
@@ -763,7 +763,7 @@ public class DerbyDatabase implements IDatabase {
                 PreparedStatement stmt4 = null; //mixed drink database table
                 PreparedStatement stmt5 = null; //liquor database table
                 PreparedStatement stmt6 = null; //ingredient amount database table
-                PreparedStatement stmt7 = null; //ingredient name table
+                PreparedStatement stmt7 = null; //comment table
 
                 try{
                     //database table to store all created user objects
