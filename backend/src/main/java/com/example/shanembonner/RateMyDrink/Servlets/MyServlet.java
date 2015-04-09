@@ -145,11 +145,8 @@ public class MyServlet extends HttpServlet {
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), mixedDrink);
         }
+
         if(action.equals("getUser")){
-            //get the user name
-            if(pathInfo.startsWith("/")) {
-                pathInfo = pathInfo.substring(1);
-            }
 
             String password = JSON.getObjectMapper().readValue(req.getReader(), String.class);
             User user = null;
@@ -162,6 +159,7 @@ public class MyServlet extends HttpServlet {
             }
 
             if(user == null){
+                System.out.println("user is null.");
                 //no such item, so return a NOT FOUND response
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
@@ -376,6 +374,8 @@ public class MyServlet extends HttpServlet {
 
         //case to handle adding a new user to the database
         if(action.equals("addUser")) {
+            System.out.println("action is 'addUser'");
+
             User newUser = null;
             String password = null;
 
@@ -383,23 +383,24 @@ public class MyServlet extends HttpServlet {
             newUser = JSON.getObjectMapper().readValue(req.getReader(), User.class);
             password = newUser.getUserPassword();
 
-
             AddUser addController = new AddUser();
             boolean success = false;
 
             try {
+                System.out.println("attempting to add user to database");
                 success = addController.addNewUser(newUser, password);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-
             if (success) {
+                System.out.println("user successfully added.");
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), newUser);
 
             }else{
+                System.out.println("failed to add new user.");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("User " + pathInfo + "already exists");

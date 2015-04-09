@@ -10,7 +10,13 @@ import retrofit.http.Query;
  */
 public interface IGetMixedDrink {
 
-    @GET("/getMixedDrink")
+    /**
+     * retrieves a MixedDrink object with the given id
+     *
+     * @param id the id of the MixedDrink
+     * @return the MixedDrink object with the given id
+     */
+    @GET("/backend/?action=getMixedDrink")
     MixedDrink get(@Query("id") int id);
 
 }
