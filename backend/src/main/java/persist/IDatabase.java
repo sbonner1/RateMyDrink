@@ -1,6 +1,7 @@
 package persist;
 
 import com.rateMyDrink.modelClasses.Beer;
+import com.rateMyDrink.modelClasses.Comment;
 import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.Liquor;
 import com.rateMyDrink.modelClasses.MixedDrink;
@@ -15,6 +16,8 @@ import java.util.List;
 public interface IDatabase {
 
     boolean addNewBeer(Beer beer) throws SQLException;
+
+    boolean addNewComment(Comment comment) throws SQLException;
 
     boolean addNewDrink(Drink drink) throws SQLException;
 
