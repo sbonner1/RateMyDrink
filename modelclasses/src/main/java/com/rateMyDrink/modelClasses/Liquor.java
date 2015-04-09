@@ -8,9 +8,13 @@ public class Liquor extends Drink {
     private LiquorType liquorType;
     private double ABV;
 
+    /**
+     * default empty constructor
+     */
     public Liquor(){
 
     }
+
     /**
      * constuctor
      *

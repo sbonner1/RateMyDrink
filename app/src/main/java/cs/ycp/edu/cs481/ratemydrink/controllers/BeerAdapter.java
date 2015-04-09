@@ -9,7 +9,7 @@ import com.rateMyDrink.modelClasses.Beer;
 import java.io.IOException;
 
 /**
- * Created by user on 3/19/2015.
+ * An adapter to convert JSON object to Beer objects and also to convert Beer objects to JSON objects
  */
 public class BeerAdapter extends TypeAdapter<Beer> {
     @Override

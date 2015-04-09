@@ -62,10 +62,7 @@ public class MyServlet extends HttpServlet {
         if(action.equals("getBeer")){
 
             if(id_param == null){
-                System.out.println("id parameter is null");
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                resp.setContentType("text/plain");
-                resp.getWriter().println("id parameter is null");
+                resp = setHttpResponse(resp, "id parameter not found.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
 
@@ -479,4 +476,25 @@ public class MyServlet extends HttpServlet {
             resp.getWriter().println("User list deleted");
         }
     }
+
+    /**
+     * sets the HttpServletResponse
+     *
+     * @param resp the HttpServletResponse
+     * @param msg the message to be sent to the user
+     * @param contentType the content-type of the message
+     * @param status the HTTP Status code
+     * @return the HttpServletResponse with above parameters applied
+     * @throws IOException
+     */
+    private HttpServletResponse setHttpResponse(HttpServletResponse resp, String msg, String contentType, int status) throws IOException{
+
+        System.out.println(msg);
+        resp.setStatus(status);
+        resp.setContentType(contentType);
+        resp.getWriter().println(msg);
+
+        return resp;
+    }
+
 }
