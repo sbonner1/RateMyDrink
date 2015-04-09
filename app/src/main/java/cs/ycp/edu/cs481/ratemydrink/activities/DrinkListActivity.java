@@ -73,8 +73,8 @@ public class DrinkListActivity extends ActionBarActivity implements DrinkListFra
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, navTitles));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, navTitles));
+        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 
 //        mDrawerToggle = new ActionBarDrawerToggle(
@@ -99,7 +99,7 @@ public class DrinkListActivity extends ActionBarActivity implements DrinkListFra
 //        };
 
         // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        //mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     /**

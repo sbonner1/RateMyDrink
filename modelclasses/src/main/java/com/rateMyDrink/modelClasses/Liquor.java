@@ -7,6 +7,7 @@ public class Liquor extends Drink {
     private int id;
     private float content;
     private LiquorType liquorType;
+    private double ABV;
 
     public Liquor(){
 
@@ -19,12 +20,12 @@ public class Liquor extends Drink {
      * @param abv  liquor's alcohol-by-content volume
      * @param type the type of liquor
      */
-    public Liquor(String name, String desc, float abv, LiquorType type){
+    public Liquor(String name, String desc, double abv, LiquorType type){
         this.id = 0;
         this.rating = 0;
         this.drinkName = name;
         this.description = desc;
-        this.content = abv;
+        this.ABV = abv;
         this.liquorType = type;
     }
     public void setId(int value){
