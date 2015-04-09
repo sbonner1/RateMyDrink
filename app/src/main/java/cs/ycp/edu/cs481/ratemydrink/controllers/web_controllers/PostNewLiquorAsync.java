@@ -5,26 +5,23 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Liquor;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;
-import cs.ycp.edu.cs481.ratemydrink.controllers.BeerAdapter;
 import cs.ycp.edu.cs481.ratemydrink.controllers.LiquorAdapter;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
- * Created by user on 3/29/2015.
+ * An AsyncTask to post a new Liquor object to the backend database
  */
 public class PostNewLiquorAsync extends AsyncTask<Liquor, Void, Liquor> {
     @Override
     protected Liquor doInBackground(Liquor... params) {
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Beer.class, new LiquorAdapter())
+                .registerTypeAdapter(Liquor.class, new LiquorAdapter())
                 .create();
-
 
         IPostNewLiquor newLiquorService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
@@ -40,6 +37,5 @@ public class PostNewLiquorAsync extends AsyncTask<Liquor, Void, Liquor> {
                 .create(IPostNewLiquor.class);
 
         return newLiquorService.post(params[0]);
-
     }
 }

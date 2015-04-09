@@ -1,12 +1,10 @@
 package cs.ycp.edu.cs481.ratemydrink.controllers;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.rateMyDrink.modelClasses.Beer;
-import com.rateMyDrink.modelClasses.BeerType;
 
 import java.io.IOException;
 
@@ -43,32 +41,31 @@ public class BeerAdapter extends TypeAdapter<Beer> {
         Beer beer = new Beer();
 
         jsonReader.beginObject();
-        while(jsonReader.hasNext()){
-            String field = jsonReader.nextName();
-            if(field.equals("drinkName")){
-                beer.setDrinkName(jsonReader.nextString());
+            while(jsonReader.hasNext()){
+                String field = jsonReader.nextName();
+                if(field.equals("drinkName")){
+                    beer.setDrinkName(jsonReader.nextString());
+                }
+                if(field.equals("description")){
+                    beer.setDescription(jsonReader.nextString());
+                }
+                if(field.equals("rating")){
+                    beer.setRating(Float.valueOf(jsonReader.nextString()));
+                }
+                if(field.equals("id")){
+                    beer.setId(Integer.valueOf(jsonReader.nextString()));
+                }
+                if(field.equals("abv")){
+                    beer.setABV(Integer.valueOf(jsonReader.nextString()));
+                }
+                if(field.equals("calories")){
+                    beer.setCalories(Integer.valueOf(jsonReader.nextString()));
+                }else{
+                    jsonReader.skipValue();
+                }
             }
-            if(field.equals("description")){
-                beer.setDescription(jsonReader.nextString());
-            }
-            if(field.equals("rating")){
-                beer.setRating(Float.valueOf(jsonReader.nextString()));
-            }
-            if(field.equals("id")){
-                beer.setId(Integer.valueOf(jsonReader.nextString()));
-            }
-            if(field.equals("abv")){
-                beer.setABV(Integer.valueOf(jsonReader.nextString()));
-            }
-            if(field.equals("calories")){
-                beer.setCalories(Integer.valueOf(jsonReader.nextString()));
-            }else{
-                jsonReader.skipValue();
-            }
-        }
         jsonReader.endObject();
 
         return beer;
-
     }
 }

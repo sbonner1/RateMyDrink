@@ -4,7 +4,6 @@ package com.rateMyDrink.modelClasses;
  * Created by shanembonner on 2/5/15.
  */
 public class Liquor extends Drink {
-    private int id;
     private float content;
     private LiquorType liquorType;
     private double ABV;

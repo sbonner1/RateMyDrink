@@ -278,7 +278,7 @@ public class MyServlet extends HttpServlet {
          * to add a new liquor object to the database
          */
         if(action.equals("addLiquor")) {
-            System.out.println("adding a new liquor to the database.");
+            System.out.println("action is addLiquor.");
 
             Liquor newLiquor = JSON.getObjectMapper().readValue(req.getReader(), Liquor.class);
 
@@ -291,6 +291,7 @@ public class MyServlet extends HttpServlet {
             boolean success = false;
 
             try {
+                System.out.println("attempting to add liquor to database.");
                 success = controller.addLiquor(newLiquor);
             }catch(SQLException e){
                 e.printStackTrace();

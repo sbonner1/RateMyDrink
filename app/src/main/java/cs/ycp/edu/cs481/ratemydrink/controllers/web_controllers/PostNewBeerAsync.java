@@ -25,7 +25,6 @@ public class PostNewBeerAsync extends AsyncTask<Beer, Void, String> {
                 .registerTypeAdapter(Beer.class, new BeerAdapter())
                 .create();
 
-
         IPostNewBeer newBeerService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
                 .setConverter(new GsonConverter(gson))
