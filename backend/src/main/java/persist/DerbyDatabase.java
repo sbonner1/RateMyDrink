@@ -599,7 +599,6 @@ public class DerbyDatabase implements IDatabase {
         });
     }
 
-
     @Override
     public User getUser(final String userName, final String password) throws SQLException {
         return executeTransaction(new Transaction<User>() {
@@ -630,7 +629,6 @@ public class DerbyDatabase implements IDatabase {
             }
         });
     }
-
 
     @Override
     public List<User> getUserList() throws SQLException {
@@ -709,7 +707,6 @@ public class DerbyDatabase implements IDatabase {
     public void replaceUserList(List<User> newUserList) {
         //TODO: replace user list
     }
-
 
     @Override
     public User findUser(String userName) {
@@ -846,7 +843,7 @@ public class DerbyDatabase implements IDatabase {
                             "create table " + DB_INGREDIENTS_TABLENAME + " (" +
                             "drinkId integer," +
                             "name varchar(200)," +
-                            "amt double" +
+                            "amt double(2)" +
                             ")"
                     );
 
@@ -890,7 +887,6 @@ public class DerbyDatabase implements IDatabase {
         stmt.setString(index++, user.getUserName());
         stmt.setString(index++, user.getUserPassword());
     }
-
 
     protected void storeDrinkNoId(Drink drink, PreparedStatement stmt, int index) throws SQLException {
         stmt.setString(index++, drink.getDrinkName());
@@ -973,7 +969,6 @@ public class DerbyDatabase implements IDatabase {
             }
         });
     }
-
 
     protected void loadBeer(Beer beer, ResultSet resultSet, int index) throws SQLException {
         beer.setId(resultSet.getInt(index++));
