@@ -345,6 +345,7 @@ public class MyServlet extends HttpServlet {
          * to add a mixedDrink object to the database
          */
         if(action.equals("addMixedDrink")){
+            System.out.println("action is addMixedDrink");
             MixedDrink mixedDrink = null;
             mixedDrink = JSON.getObjectMapper().readValue(req.getReader(), MixedDrink.class);
 
@@ -352,8 +353,8 @@ public class MyServlet extends HttpServlet {
             boolean success = false;
 
             try {
+                System.out.println("trying to add mixed drink to database.");
                 success = controller.addMixedDrink(mixedDrink);
-
             }catch(SQLException e){
                 e.printStackTrace();
             }
@@ -363,12 +364,13 @@ public class MyServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), mixedDrink);
-
+                return;
             }else{
                 System.out.println("failed to add mixed drink");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("failed to add mixed drink to database.");
+                return;
             }
         }
 
