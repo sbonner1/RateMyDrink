@@ -22,11 +22,11 @@ public class getLiquorAsync extends AsyncTask<Integer, Void, Liquor> {
                 .registerTypeAdapter(Liquor.class, new DateTypeAdapter())
                 .create();
 
-        IGetLiquor getLiquorService = RETROFIT.getRestAdapterBuilder()
+        ILiquorRequests getLiquorService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
                 //.setConverter(new GsonConverter(gson))
                 .build()
-                .create(IGetLiquor.class);
+                .create(ILiquorRequests.class);
 
         return getLiquorService.get("getLiquor" ,params[0]);
     }
