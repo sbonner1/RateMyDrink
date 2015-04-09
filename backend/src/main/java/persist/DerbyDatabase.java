@@ -31,8 +31,8 @@ public class DerbyDatabase implements IDatabase {
     }
 
     private static final int MAX_ATTEMPTS = 10;
-    //private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
-    private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
+    private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
+    //private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
     private static final String DB_USER_TABLENAME = "userList";
     private static final String DB_MAIN_DRINK_TABLENAME = "mainDrinkTable";
     private static final String DB_BEER_TABLENAME = "beerTable";
@@ -806,7 +806,7 @@ public class DerbyDatabase implements IDatabase {
                             " drinkName varchar(200) unique," +
                             " description varchar(1500), " +
                             " rating float(1)" +
-                             ")"
+                            ")"
                      );
 
                     //database table for the beer objects
@@ -823,17 +823,17 @@ public class DerbyDatabase implements IDatabase {
                     //database table for the mixed drink objects
                     stmt4 = conn.prepareStatement(
                             "create table " + DB_MIXED_DRINK_TABLENAME + " (" +
-                            "drinkId integer," +
-                            "mainIng integer" +
+                            " drinkId integer," +
+                            " mainIng integer" +
                             ")"
                     );
 
                     //database table for the liquor objects
                     stmt5 = conn.prepareStatement(
                             "create table " + DB_LIQUOR_TABLENAME + " (" +
-                            "drinkId integer," +
-                            "content float(1)," +
-                            "liquorType integer" +
+                            " drinkId integer," +
+                            " content float(1)," +
+                            " liquorType integer" +
                             ")"
                     );
 
@@ -851,9 +851,9 @@ public class DerbyDatabase implements IDatabase {
                     //the user who posted the comment
                     stmt7 = conn.prepareStatement(
                             "create table " + DB_COMMENT_TABLENAME + " (" +
-                            "drinkId integer," +
-                            "userName varchar(80)," +
-                            "comment varchar(800)" +
+                            " drinkId integer," +
+                            " userName varchar(80)," +
+                            " comment varchar(800)" +
                             ")"
                     );
 
