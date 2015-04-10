@@ -59,7 +59,7 @@ public class AddLiquorFragment extends Fragment{
                     Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getActivity(), "This would post to the database", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "This would post to the database", Toast.LENGTH_SHORT).show();
                     Liquor newLiquor = createLiquor();
                     PostNewLiquorAsync postLiquor = new PostNewLiquorAsync();
                     postLiquor.execute(newLiquor);

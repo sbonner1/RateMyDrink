@@ -110,7 +110,9 @@ public class LoginActivity extends ActionBarActivity {
         }
         //This would go to add a mixed drink
         if(position == 3) {
-            Toast.makeText(this, "Pretend this goes to the mixed drink page", Toast.LENGTH_SHORT).show();
+            Intent newMixedIntent = new Intent(this, AddMixedDrinkActivity.class);
+            startActivity(newMixedIntent);
+            return true;
         }
         //Main menu screen, but you are already here
         if(position == 4) {
