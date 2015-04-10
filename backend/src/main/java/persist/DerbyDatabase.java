@@ -31,8 +31,8 @@ public class DerbyDatabase implements IDatabase {
     }
 
     private static final int MAX_ATTEMPTS = 10;
-    private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
-    //private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
+    //private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
+    private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
     private static final String DB_USER_TABLENAME = "userList";
     private static final String DB_MAIN_DRINK_TABLENAME = "mainDrinkTable";
     private static final String DB_BEER_TABLENAME = "beerTable";
@@ -236,7 +236,7 @@ public class DerbyDatabase implements IDatabase {
                 PreparedStatement stmt = null;
                 PreparedStatement stmt2 = null;
                 PreparedStatement stmt3 = null;
-                PreparedStatement stmt4 = null;
+              //  PreparedStatement stmt4 = null;
                 ResultSet generatedKeys = null;
 
                 try{
@@ -283,8 +283,7 @@ public class DerbyDatabase implements IDatabase {
                     for(Ingredient item : ingrList){
                         //prepare statement for each ingredient
                         stmt3 = conn.prepareStatement(
-                                "insert into " + DB_INGREDIENTS_TABLENAME + "(drinkId, name, amt) values (?,?,?)",
-                                PreparedStatement.RETURN_GENERATED_KEYS
+                                "insert into " + DB_INGREDIENTS_TABLENAME + "(drinkId, name, amt) values (?,?,?)"
                         );
 
                         //set up the statement for each ingredient and add for a batch insert
@@ -299,6 +298,8 @@ public class DerbyDatabase implements IDatabase {
                 }finally{
                     DBUtil.closeQuietly(stmt);
                     DBUtil.closeQuietly(stmt2);
+                    DBUtil.closeQuietly(stmt3);
+                    DBUtil.closeQuietly(generatedKeys);
                 }
 
 
@@ -841,9 +842,9 @@ public class DerbyDatabase implements IDatabase {
                     //reference to the id of the corresponding drink
                     stmt6 = conn.prepareStatement(
                             "create table " + DB_INGREDIENTS_TABLENAME + " (" +
-                            "drinkId integer," +
-                            "name varchar(200)," +
-                            "amt double(2)" +
+                            " drinkId integer," +
+                            " name varchar(200)," +
+                            " amt double" +
                             ")"
                     );
 

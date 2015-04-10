@@ -239,6 +239,11 @@ public class MyServlet extends HttpServlet {
         String pathInfo = req.getPathInfo(); //path
         String action = req.getParameter("action");
 
+        if(action == null){
+            System.out.println("action is null");
+            return;
+        }
+
         /**
          * to add a new beer object to the database
          */
