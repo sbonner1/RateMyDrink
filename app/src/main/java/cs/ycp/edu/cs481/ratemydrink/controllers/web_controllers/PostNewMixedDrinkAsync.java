@@ -24,7 +24,7 @@ public class PostNewMixedDrinkAsync extends AsyncTask<MixedDrink, Void, MixedDri
                 .registerTypeAdapter(MixedDrink.class, new MixedDrinkAdapter())
                 .create();
 
-        IPostNewMixedDrink newMixedDrinkService = RETROFIT.getRestAdapterBuilder()
+        IMixedDrinkRequests newMixedDrinkService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
                 .setConverter(new GsonConverter(gson))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -35,7 +35,7 @@ public class PostNewMixedDrinkAsync extends AsyncTask<MixedDrink, Void, MixedDri
                     }
                 })
                 .build()
-                .create(IPostNewMixedDrink.class);
+                .create(IMixedDrinkRequests.class);
 
         return newMixedDrinkService.post(params[0]);
     }
