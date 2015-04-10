@@ -23,7 +23,7 @@ public class PostNewLiquorAsync extends AsyncTask<Liquor, Void, Liquor> {
                 .registerTypeAdapter(Liquor.class, new LiquorAdapter())
                 .create();
 
-        IPostNewLiquor newLiquorService = RETROFIT.getRestAdapterBuilder()
+        ILiquorRequests newLiquorService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
                 .setConverter(new GsonConverter(gson))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -34,7 +34,7 @@ public class PostNewLiquorAsync extends AsyncTask<Liquor, Void, Liquor> {
                     }
                 })
                 .build()
-                .create(IPostNewLiquor.class);
+                .create(ILiquorRequests.class);
 
         return newLiquorService.post(params[0]);
     }

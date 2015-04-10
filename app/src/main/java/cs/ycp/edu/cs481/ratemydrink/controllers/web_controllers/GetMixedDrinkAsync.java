@@ -21,11 +21,11 @@ public class GetMixedDrinkAsync extends AsyncTask<Integer, Void, MixedDrink>{
                 .registerTypeAdapter(MixedDrink.class, new DateTypeAdapter())
                 .create();
 
-        IGetMixedDrink getMixedDrinkService = RETROFIT.getRestAdapterBuilder()
+        IMixedDrinkRequests getMixedDrinkService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
                 .setConverter(new GsonConverter(gson))
                 .build()
-                .create(IGetMixedDrink.class);
+                .create(IMixedDrinkRequests.class);
 
         return getMixedDrinkService.get(params[0]);
     }

@@ -11,7 +11,7 @@ import com.rateMyDrink.modelClasses.Beer;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;
-import cs.ycp.edu.cs481.ratemydrink.controllers.BeerJsonAdapter;
+import cs.ycp.edu.cs481.ratemydrink.controllers.BeerAdapter;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -24,10 +24,10 @@ public class GetBeerAsync extends AsyncTask<Integer, Void, Beer> {
     protected Beer doInBackground(Integer... params) {
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Beer.class, new BeerJsonAdapter())
+                .registerTypeAdapter(Beer.class, new BeerAdapter())
                 .create();
 
-        IGetBeer getBeerService = RETROFIT.getRestAdapterBuilder()
+        IBeerRequests getBeerService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
                 //.setConverter(new GsonConverter(gson))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -38,7 +38,7 @@ public class GetBeerAsync extends AsyncTask<Integer, Void, Beer> {
                     }
                 })
                 .build()
-                .create(IGetBeer.class);
+                .create(IBeerRequests.class);
 
         return getBeerService.get("getBeer" ,params[0]);
     }
