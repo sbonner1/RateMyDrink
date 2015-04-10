@@ -59,7 +59,7 @@ public class AddLiquorFragment extends Fragment{
                     Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getActivity(), "This would post to the database", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "This would post to the database", Toast.LENGTH_SHORT).show();
                     Liquor newLiquor = createLiquor();
                     PostNewLiquorAsync postLiquor = new PostNewLiquorAsync();
                     postLiquor.execute(newLiquor);
@@ -102,7 +102,7 @@ public class AddLiquorFragment extends Fragment{
         String abv = liquorABV.getText().toString();
         LiquorType type = (LiquorType) spinner.getSelectedItem();
         Toast.makeText(getActivity(), type.toString(), Toast.LENGTH_SHORT).show();
-        return new Liquor(name, desc, Double.valueOf(abv), type);
+        return new Liquor(name, desc, Float.valueOf(abv), type);
     }
 
     private Drink createDrink(){

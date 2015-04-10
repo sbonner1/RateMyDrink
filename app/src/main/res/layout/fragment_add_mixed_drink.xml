@@ -1,0 +1,215 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="cs.ycp.edu.cs481.ratemydrink.activities.AddMixedDrinkActivity$PlaceholderFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/add_mixed_drink"
+        android:id="@+id/AddMDTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/quantityOz"
+        android:id="@+id/QuantityTitle"
+        android:layout_below="@+id/AddMDTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="75dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/ingredient"
+        android:id="@+id/IngredientTitle"
+        android:layout_alignTop="@+id/QuantityTitle"
+        android:layout_toRightOf="@+id/QuantityTitle"
+        android:layout_toEndOf="@+id/QuantityTitle"
+        android:layout_marginLeft="25dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/quantityOne"
+        android:layout_below="@+id/QuantityTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/IngredientTitle"
+        android:layout_toStartOf="@+id/IngredientTitle"
+        android:layout_marginTop="15dp"
+        android:hint="@string/Oz" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/mDrink_name"
+        android:id="@+id/drinkNameTitle"
+        android:layout_below="@+id/AddMDTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/drinkName"
+        android:hint="@string/drink_name_hint"
+        android:layout_alignTop="@+id/drinkNameTitle"
+        android:layout_toRightOf="@+id/drinkNameTitle"
+        android:layout_toEndOf="@+id/drinkNameTitle" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/quantityTwo"
+        android:layout_below="@+id/quantityOne"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/quantityOne"
+        android:layout_alignEnd="@+id/quantityOne"
+        android:hint="@string/Oz"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/quantityThree"
+        android:layout_below="@+id/quantityTwo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/quantityTwo"
+        android:layout_alignEnd="@+id/quantityTwo"
+        android:hint="@string/Oz"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/quantityFour"
+        android:layout_below="@+id/quantityThree"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/quantityThree"
+        android:layout_alignEnd="@+id/quantityThree"
+        android:hint="@string/Oz"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/quantityFive"
+        android:layout_below="@+id/quantityFour"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/quantityFour"
+        android:layout_alignEnd="@+id/quantityFour"
+        android:hint="@string/Oz"
+        android:layout_marginTop="15dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_mixed_drink"
+        android:id="@+id/mdSubmit"
+        android:layout_below="@+id/mdDescField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/mixed_drink_description"
+        android:id="@+id/mdDescTitle"
+        android:layout_below="@+id/quantityFive"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mdDescField"
+        android:layout_alignTop="@+id/mdDescTitle"
+        android:layout_alignLeft="@+id/drinkName"
+        android:layout_alignStart="@+id/drinkName"
+        android:hint="@string/md_description_hint" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ingredientSpinnerOne"
+        android:layout_alignTop="@+id/quantityOne"
+        android:layout_alignLeft="@+id/IngredientTitle"
+        android:layout_alignStart="@+id/IngredientTitle"
+        android:layout_above="@+id/quantityTwo"
+        android:spinnerMode="dropdown"
+        android:entries="@array/liquors" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ingredientSpinnerTwo"
+        android:layout_alignTop="@+id/quantityTwo"
+        android:layout_alignLeft="@+id/ingredientSpinnerOne"
+        android:layout_alignStart="@+id/ingredientSpinnerOne"
+        android:layout_above="@+id/quantityThree"
+        android:layout_alignRight="@+id/ingredientSpinnerOne"
+        android:layout_alignEnd="@+id/ingredientSpinnerOne"
+        android:spinnerMode="dropdown"
+        android:entries="@array/liquors" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ingredientSpinnerThree"
+        android:layout_alignTop="@+id/quantityThree"
+        android:layout_alignLeft="@+id/ingredientSpinnerTwo"
+        android:layout_alignStart="@+id/ingredientSpinnerTwo"
+        android:layout_above="@+id/quantityFour"
+        android:spinnerMode="dropdown" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/otherIngredOne"
+        android:layout_alignTop="@+id/quantityFour"
+        android:layout_alignLeft="@+id/ingredientSpinnerThree"
+        android:layout_alignStart="@+id/ingredientSpinnerThree"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:hint="@string/IngredHint" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/otherIngredTwo"
+        android:layout_alignTop="@+id/quantityFive"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/otherIngredOne"
+        android:layout_alignStart="@+id/otherIngredOne"
+        android:hint="@string/IngredHint" />
+
+</RelativeLayout>

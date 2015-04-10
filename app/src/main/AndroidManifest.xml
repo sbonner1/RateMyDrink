@@ -61,6 +61,10 @@
             android:name=".activities.AddLiquorActivity"
             android:label="@string/title_activity_add_liquor" >
         </activity>
+        <activity
+            android:name=".activities.AddMixedDrinkActivity"
+            android:label="@string/title_activity_add_mixed_drink" >
+        </activity>
     </application>
 
 </manifest>
