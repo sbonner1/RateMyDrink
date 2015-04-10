@@ -20,13 +20,13 @@ public class BeerAdapter extends TypeAdapter<Beer> {
         }
 
         jsonWriter.beginObject();
-        jsonWriter.name("drinkName").value(beer.getDrinkName());
-        jsonWriter.name("description").value(beer.getDescription());
-        jsonWriter.name("rating").value(beer.getRating());
-        jsonWriter.name("id").value(String.valueOf(beer.getId()));
-        jsonWriter.name("abv").value(beer.getABV());
-        jsonWriter.name("calories").value(String.valueOf(beer.getCalories()));
-        jsonWriter.name("beerType").value("LAGER");
+            jsonWriter.name("drinkName").value(beer.getDrinkName());
+            jsonWriter.name("description").value(beer.getDescription());
+            jsonWriter.name("rating").value(beer.getRating());
+            jsonWriter.name("id").value(String.valueOf(beer.getId()));
+            jsonWriter.name("abv").value(beer.getABV());
+            jsonWriter.name("calories").value(String.valueOf(beer.getCalories()));
+            jsonWriter.name("beerType").value(beer.getBeerTypeReadableName());
         jsonWriter.endObject();
 
     }
@@ -41,25 +41,28 @@ public class BeerAdapter extends TypeAdapter<Beer> {
         Beer beer = new Beer();
 
         jsonReader.beginObject();
-            while(jsonReader.hasNext()){
+            while(jsonReader.hasNext()) {
                 String field = jsonReader.nextName();
-                if(field.equals("drinkName")){
+                if (field.equals("drinkName")) {
                     beer.setDrinkName(jsonReader.nextString());
                 }
-                if(field.equals("description")){
+                if (field.equals("description")) {
                     beer.setDescription(jsonReader.nextString());
                 }
-                if(field.equals("rating")){
+                if (field.equals("rating")) {
                     beer.setRating(Float.valueOf(jsonReader.nextString()));
                 }
-                if(field.equals("id")){
+                if (field.equals("id")) {
                     beer.setId(Integer.valueOf(jsonReader.nextString()));
                 }
-                if(field.equals("abv")){
+                if (field.equals("abv")) {
                     beer.setABV(Integer.valueOf(jsonReader.nextString()));
                 }
-                if(field.equals("calories")){
+                if (field.equals("calories")) {
                     beer.setCalories(Integer.valueOf(jsonReader.nextString()));
+                }
+                if(field.equals("beerType")){
+                    beer.setBeerTypewithString(jsonReader.nextString());
                 }else{
                     jsonReader.skipValue();
                 }

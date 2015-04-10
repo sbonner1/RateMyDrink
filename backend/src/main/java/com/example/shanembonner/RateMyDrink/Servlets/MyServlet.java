@@ -91,13 +91,16 @@ public class MyServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), beer);
+            return;
         }
 
         if(action.equals("getLiquor")){
-            if(pathInfo.startsWith("/")){
-                pathInfo = pathInfo.substring(1);
+            if(id_param == null){
+                resp = setHttpResponse(resp, "id parameter not found.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+                return;
             }
-            int id = Integer.parseInt(pathInfo, 10);
+
+            int id = Integer.parseInt(id_param, 10);
             Liquor liquor = null;
             GetLiquor controller = new GetLiquor();
 
@@ -108,15 +111,18 @@ public class MyServlet extends HttpServlet {
             }
 
             if(liquor == null){
+                System.out.println("liquor object not found in database");
                 //no such item
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plan");
                 resp.getWriter().println("No such liquor");
+                return;
             }
-
+            System.out.println(liquor.getDrinkName());
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), liquor);
+            return;
         }
 
         if(action.equals("getMixedDrink")){
@@ -171,7 +177,7 @@ public class MyServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), user);
-
+            return;
         }
 
         if(action.equals("getUserList")){

@@ -25,7 +25,7 @@ public class LiquorAdapter extends TypeAdapter<Liquor> {
         jsonWriter.name("rating").value(liquor.getRating());
         jsonWriter.name("id").value(String.valueOf(liquor.getId()));
         jsonWriter.name("alcoholContent").value(liquor.getAlcoholContent());
-        jsonWriter.name("liquorType").value("RUM");
+        jsonWriter.name("liquorType").value(liquor.getLiquorTypeReadableType());
         jsonWriter.endObject();
     }
 
@@ -60,6 +60,9 @@ public class LiquorAdapter extends TypeAdapter<Liquor> {
                 }
                 if(field.equals("alcoholContent")){
                     liquor.setAlcoholContent(Float.valueOf(jsonReader.nextString()));
+                }
+                if(field.equals("liquorType")) {
+                    liquor.setLiquorTypeWithString(jsonReader.nextString());
                 }else{
                     jsonReader.skipValue();
                 }

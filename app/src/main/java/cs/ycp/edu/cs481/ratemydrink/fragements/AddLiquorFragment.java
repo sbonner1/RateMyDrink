@@ -101,8 +101,10 @@ public class AddLiquorFragment extends Fragment{
         String desc = liquorDesc.getText().toString();
         String abv = liquorABV.getText().toString();
         LiquorType type = (LiquorType) spinner.getSelectedItem();
-        Toast.makeText(getActivity(), type.toString(), Toast.LENGTH_SHORT).show();
-        return new Liquor(name, desc, Double.valueOf(abv), type);
+        Toast.makeText(getActivity(), "adding to database", Toast.LENGTH_SHORT).show();
+        Liquor newLiquor = new Liquor(name, desc, Double.valueOf(abv), LiquorType.ABSINTHE);
+        newLiquor.setLiquorTypeWithString(type.toString().toUpperCase());
+        return newLiquor;
     }
 
     private Drink createDrink(){
