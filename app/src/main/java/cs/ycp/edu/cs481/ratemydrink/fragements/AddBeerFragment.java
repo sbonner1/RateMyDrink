@@ -56,7 +56,6 @@ public class AddBeerFragment extends Fragment {
                     Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
                 }
                 Beer newBeer = createBeer();
-                //Drink drink = createDrink();
                 PostNewBeerAsync newBeerPost = new PostNewBeerAsync();
                 newBeerPost.execute(newBeer);
             }

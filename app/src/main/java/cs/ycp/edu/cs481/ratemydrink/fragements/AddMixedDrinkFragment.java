@@ -3,6 +3,7 @@ package cs.ycp.edu.cs481.ratemydrink.fragements;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class AddMixedDrinkFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_add_beer, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_add_mixed_drink, container, false);
 
         //Text fields
         drinkName = (EditText) rootView.findViewById(R.id.drinkName);
@@ -62,11 +63,25 @@ public class AddMixedDrinkFragment extends Fragment {
         //Ingredients, this may need tweaked
         //GETTING NULL POINTER EXCEPTION HERE 
         i1 = (Spinner) rootView.findViewById((R.id.ingredientSpinnerOne));
-        i1.setAdapter(new ArrayAdapter<LiquorType>(getActivity(), android.R.layout.simple_spinner_item, LiquorType.values()));
+
+        if(i1 == null){
+            Log.d("NULL WIDGET", "i1 is null");
+        }
+
+        //i1.setAdapter(new ArrayAdapter<LiquorType>(getActivity(), android.R.layout.simple_spinner_item, LiquorType.values()));
         i2 = (Spinner) rootView.findViewById((R.id.ingredientSpinnerTwo));
-        i2.setAdapter(new ArrayAdapter<LiquorType>(getActivity(), android.R.layout.simple_spinner_item, LiquorType.values()));
+
+        if(i2 == null){
+            Log.d("NULL WIDGET", "i2 is null");
+        }
+        //i2.setAdapter(new ArrayAdapter<LiquorType>(getActivity(), android.R.layout.simple_spinner_item, LiquorType.values()));
         i3 = (Spinner) rootView.findViewById((R.id.ingredientSpinnerThree));
-        i3.setAdapter(new ArrayAdapter<LiquorType>(getActivity(), android.R.layout.simple_spinner_item, LiquorType.values()));
+
+        if(i3 == null){
+            Log.d("NULL WIDGET", "i3 is null");
+        }
+
+        //i3.setAdapter(new ArrayAdapter<LiquorType>(getActivity(), android.R.layout.simple_spinner_item, LiquorType.values()));
         //Two slots for other ingredients
         i4 = (EditText) rootView.findViewById(R.id.otherIngredOne);
         i5 = (EditText) rootView.findViewById(R.id.otherIngredTwo);
@@ -78,9 +93,6 @@ public class AddMixedDrinkFragment extends Fragment {
                 MixedDrink newMixedDrink = createMixedDrink();
                 //Do Post here
                 Toast.makeText(getActivity(), "Post Mixed Drink", Toast.LENGTH_SHORT).show();
-
-
-                //Drink drink = createDrink();
 
             }
         });
@@ -138,12 +150,6 @@ public class AddMixedDrinkFragment extends Fragment {
         return new MixedDrink();
     }
 
-   // private Drink createDrink(){
-        //String name = beerName.getText().toString();
-       // String desc = beerDesc.getText().toString();
-        //Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
-       // return new Drink(name, desc);
-   // }
     //Simple method to check if an edit text field is empty
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
