@@ -17,8 +17,9 @@ public enum LiquorType implements Serializable {
     TEQUILA, //("Tequila"),
     BOURBON, //("Bourbon"),
     SCOTCH, //("Scotch"),
-    COGNAC; //("Cognac");
-    
+    COGNAC, //("Cognac");
+    NONE; //(" ");
+
     //Override toString method so that calls to this enum can return string values directly
     //This will be useful for custom display adapters which multiple ones may need these values.
     private String typeNames;

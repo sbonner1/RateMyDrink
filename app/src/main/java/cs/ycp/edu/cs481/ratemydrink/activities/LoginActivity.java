@@ -110,13 +110,15 @@ public class LoginActivity extends ActionBarActivity {
         }
         //This would go to add a mixed drink
         if(position == 3) {
-            Intent newMenuIntent = new Intent(this, TypeActivity.class);
-            startActivity(newMenuIntent);
+            Intent newMixedIntent = new Intent(this, AddMixedDrinkActivity.class);
+            startActivity(newMixedIntent);
             return true;
         }
         //Main menu screen, but you are already here
         if(position == 4) {
-
+            Intent newMenuIntent = new Intent(this, TypeActivity.class);
+            startActivity(newMenuIntent);
+            return true;
         }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);

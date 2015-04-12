@@ -14,9 +14,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.fragements.AddBeerFragment;
+import cs.ycp.edu.cs481.ratemydrink.fragements.AddMixedDrinkFragment;
 
-public class AddBeerActivity extends ActionBarActivity {
+import static cs.ycp.edu.cs481.ratemydrink.R.id.Mcontainer;
+
+
+public class AddMixedDrinkActivity extends ActionBarActivity {
 
     private String[] navTitles;
     private DrawerLayout mDrawerLayout;
@@ -29,10 +32,10 @@ public class AddBeerActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_beer);
+        setContentView(R.layout.activity_add_mixed_drink);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new AddBeerFragment())
+                    .add(R.id.Mcontainer, new AddMixedDrinkFragment())
                     .commit();
         }
         navTitles = getResources().getStringArray(R.array.navItems);
@@ -65,17 +68,16 @@ public class AddBeerActivity extends ActionBarActivity {
 //        };
 
         // Set the drawer toggle as the DrawerListener
-        mDrawerList.setItemChecked(1, true);
-        setTitle(navTitles[1]);
+        mDrawerList.setItemChecked(3, true);
+        setTitle(navTitles[3]);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_beer, menu);
+        getMenuInflater().inflate(R.menu.menu_add_mixed_drink, menu);
         return true;
     }
 
@@ -106,7 +108,9 @@ public class AddBeerActivity extends ActionBarActivity {
         }
         //Open up new drink page
         if(position == 1) {
-            Toast.makeText(this, "You already are on the add beer page", Toast.LENGTH_SHORT).show();
+            Intent newBeerIntent = new Intent(this, AddBeerActivity.class);
+            startActivity(newBeerIntent);
+            return true;
         }
         //This would go to add a liquor drink
         if(position == 2) {
@@ -116,8 +120,7 @@ public class AddBeerActivity extends ActionBarActivity {
         }
         //This would go to add a mixed drink
         if(position == 3) {
-            Intent newMixedIntent = new Intent(this, AddMixedDrinkActivity.class);
-            startActivity(newMixedIntent);
+            Toast.makeText(this, "You are already on the add mixed drink page", Toast.LENGTH_SHORT).show();
             return true;
         }
         //Main menu screen, but you are already here
@@ -140,7 +143,4 @@ public class AddBeerActivity extends ActionBarActivity {
             selectItem(position);
         }
     }
-
 }
-
-

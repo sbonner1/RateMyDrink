@@ -17,11 +17,13 @@
     <string name="title_activity_type">TypeActivity</string>
     <string name="title_activity_add_beer">AddBeerActivity</string>
 
-    <string name="new_beer_desc">Short Beer Description</string>
+    <string name="new_beer_desc">Description</string>
     <string name="new_beer_abv">ABV %</string>
     <string name="new_beer_name">Beer Brand and Name</string>
     <string name="new_beer_title">Add New Beer</string>
     <string name="add_beer_btn">ADD BEER</string>
+    <string name="cal">Calories:</string>
+    <string name="calHint">Calories</string>
 
     <string name="beer_name">Beer Name:</string>
     <string name="beer_desc">Beer Description:</string>
@@ -77,6 +79,7 @@
         <item>Bourbon</item>
         <item>Scotch</item>
         <item>Cognac</item>
+        <item> </item>
     </string-array>
 
     <string-array name="navItems">
@@ -96,10 +99,22 @@
     <string name="liquor_type">Liquor Type:</string>
     <string name="liquor_desc">Liquor Description:</string>
     <string name="new_liquor_name">Liquor Brand and Name</string>
-    <string name="new_liq_desc">Liquor Description</string>
+    <string name="new_liq_desc">Description</string>
     <string name="liquor_abv">Liquor ABV:</string>
     <string name="new_liquor_abv">ABV %</string>
     <string name="add_liq_btn">ADD LIQUOR</string>
     <string name="new_liquor_title">Add New Liquor</string>
+
+    <string name="add_mixed_drink">Add Mixed Drink</string>
+    <string name="mDrink_name">Drink Name:</string>
+    <string name="drink_name_hint">Name of Drink</string>
+    <string name="ingredient">Ingredients</string>
+    <string name="quantityOz">Quantity</string>
+    <string name="Oz">Oz</string>
+    <string name="IngredHint">Ingredient</string>
+    <string name="add_Drink">Add Mixed Drink</string>
+    <string name="title_activity_add_mixed_drink">AddMixedDrinkActivity</string>
+    <string name="mixed_drink_description">Description:</string>
+    <string name="md_description_hint">Drink Description</string>
 
 </resources>
