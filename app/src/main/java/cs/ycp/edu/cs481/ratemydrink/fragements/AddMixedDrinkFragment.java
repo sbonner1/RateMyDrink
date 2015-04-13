@@ -16,10 +16,15 @@ import android.widget.Toast;
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.BeerType;
 import com.rateMyDrink.modelClasses.Drink;
+import com.rateMyDrink.modelClasses.Ingredient;
 import com.rateMyDrink.modelClasses.LiquorType;
 import com.rateMyDrink.modelClasses.MixedDrink;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewMixedDrinkAsync;
 //import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.;
 
 /**
@@ -94,6 +99,9 @@ public class AddMixedDrinkFragment extends Fragment {
                 //Do Post here
                 Toast.makeText(getActivity(), "Post Mixed Drink", Toast.LENGTH_SHORT).show();
 
+                PostNewMixedDrinkAsync postMixedDrink = new PostNewMixedDrinkAsync();
+                postMixedDrink.execute(newMixedDrink);
+
             }
         });
 
@@ -129,29 +137,40 @@ public class AddMixedDrinkFragment extends Fragment {
     private MixedDrink createMixedDrink(){
         String name = drinkName.getText().toString();
         String desc = drinkDesc.getText().toString();
-        LiquorType type1 = (LiquorType) i1.getSelectedItem();
-        LiquorType type2 = (LiquorType) i2.getSelectedItem();
-        LiquorType type3 = (LiquorType) i3.getSelectedItem();
+        LiquorType type1 = LiquorType.valueOf(((String) i1.getSelectedItem()).toUpperCase());
+        //LiquorType type2 = LiquorType.valueOf(((String) i2.getSelectedItem()).toUpperCase());
+        //LiquorType type3 = LiquorType.valueOf(((String) i3.getSelectedItem()).toUpperCase());
        // Toast.makeText(getActivity(), type1.toString(), Toast.LENGTH_SHORT).show();
         //Toast.makeText(getActivity(), type2.toString(), Toast.LENGTH_SHORT).show();
        // Toast.makeText(getActivity(), type3.toString(), Toast.LENGTH_SHORT).show();
+
+        ArrayList<Ingredient> ingredients= new ArrayList<Ingredient>();
 
         //Check if user input fields are empty
         if(isEmpty(i4) == false && isEmpty((q4))) {
             String userIngredientOne = i4.getText().toString();
             String userQuantityOne = q4.toString();
+            ingredients.add(new Ingredient(0, userIngredientOne, Double.valueOf(userQuantityOne)));
         }
         //Check if user input fields are empty
         if(isEmpty(i5) == false && isEmpty((q5))) {
             String userIngredientTwo = i5.getText().toString();
             String userQuantityTwo = q5.toString();
+            ingredients.add(new Ingredient(0, userIngredientTwo, Double.valueOf(userQuantityTwo)));
         }
+
+        ingredients.add(new Ingredient(0, "ingredient1", Double.valueOf("5")));
+        ingredients.add(new Ingredient(0, "ingredient2", Double.valueOf("3")));
+
         //MixedDrink needs to accept array lists
-        return new MixedDrink();
+        MixedDrink mixedDrink = new MixedDrink(name, desc, "", type1, ingredients);
+
+        return mixedDrink;
     }
 
     //Simple method to check if an edit text field is empty
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }
+
 }

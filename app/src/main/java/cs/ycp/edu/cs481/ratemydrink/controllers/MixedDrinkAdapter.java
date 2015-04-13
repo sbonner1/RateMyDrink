@@ -31,11 +31,13 @@ public class MixedDrinkAdapter extends TypeAdapter<MixedDrink> {
             writer.name("ingredients").beginArray();
                ArrayList<Ingredient> ingredientArrList =  mixedDrink.getIngredients();
                for(Ingredient ingrdient : ingredientArrList){
-                    writer.name("drinkId").value(String.valueOf(mixedDrink.getId()));
-                    writer.name("ingredientName").value(ingrdient.getIngredientName());
-                    writer.name("amount").value(ingrdient.getAmount());
+                   writer.beginObject();
+                       writer.name("drinkId").value(String.valueOf(mixedDrink.getId()));
+                       writer.name("ingredientName").value(ingrdient.getIngredientName());
+                       writer.name("amount").value(ingrdient.getAmount());
+                   writer.endObject();
                }
-            writer.name("ingredients").endArray();
+            writer.endArray();
         writer.endObject();
     }
 
