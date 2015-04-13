@@ -2,6 +2,7 @@ package persist;
 
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.BeerType;
+import com.rateMyDrink.modelClasses.Comment;
 import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.Ingredient;
 import com.rateMyDrink.modelClasses.Liquor;
@@ -30,8 +31,8 @@ public class DerbyDatabase implements IDatabase {
     }
 
     private static final int MAX_ATTEMPTS = 10;
-    //private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
-    private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
+    private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
+    //private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
     private static final String DB_USER_TABLENAME = "userList";
     private static final String DB_MAIN_DRINK_TABLENAME = "mainDrinkTable";
     private static final String DB_BEER_TABLENAME = "beerTable";
@@ -39,7 +40,6 @@ public class DerbyDatabase implements IDatabase {
     private static final String DB_LIQUOR_TABLENAME = "liquorTable";
     private static final String DB_COMMENT_TABLENAME = "commentTable";
     private static final String DB_INGREDIENTS_TABLENAME = "ingredientsTable";
-    //private static final String DB_INGREDIENT_NAMES_TABLENAME = "ingrNameTable";
 
 
     @Override
@@ -79,6 +79,98 @@ public class DerbyDatabase implements IDatabase {
 
                     storeBeerNoId(beer, stmt2, 1);
                     stmt2.executeUpdate();
+                    return true;
+                }finally{
+                    DBUtil.closeQuietly(generatedKeys);
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean addNewComment(final Comment comment) throws SQLException {
+        return executeTransaction(new Transaction<Boolean>() {
+
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+
+                try{
+                    stmt = conn.prepareStatement(
+                            "insert into " + DB_COMMENT_TABLENAME + ("drinkId, userName, comment) values (?,?,?)")
+                    );
+
+
+                }finally{
+
+                }
+
+                return null;
+            }
+        });
+    }
+
+    //unused function
+    @Override
+    public boolean addNewDrink(final Drink drink) throws SQLException {
+        return executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                ResultSet generatedKeys = null;
+
+                try{
+                    stmt = conn.prepareStatement(
+                            "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)",
+                            PreparedStatement.RETURN_GENERATED_KEYS
+                    );
+
+                    storeDrinkNoId(drink, stmt, 1);
+
+                    //attempt to insert the drink
+                    stmt.executeUpdate();
+
+                    //determine auto-generated id
+                    generatedKeys = stmt.getGeneratedKeys();
+                    if(!generatedKeys.next()){
+                        throw new SQLException("Could not get auto-generated key for inserted Drink");
+
+                    }
+
+                    //id is used to link the drink in the main table to an item in the subclass table
+                    int drinkId = generatedKeys.getInt(1);
+                    drink.setId(drinkId);
+
+                    //Determine which of the subclasses the new drink is, and store it in the correct
+                    //sub-table with the corresponding variables and storeNoId function call
+                    if(drink instanceof Beer){
+                        Beer tempBeer = (Beer) drink;
+
+                        stmt2 = conn.prepareStatement(
+                                "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, abv, beerType) values (?,?,?,?)"
+
+                        );
+                        storeBeerNoId(tempBeer, stmt, 1);
+                        stmt2.executeUpdate();
+                    }
+
+                    if(drink instanceof MixedDrink){
+                        //TODO:implement MixedDrink
+                    }
+
+                    if(drink instanceof Liquor){
+                        Liquor tempLiquor = (Liquor) drink;
+                        stmt2 = conn.prepareStatement(
+                                "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, content, liquorType) values (?,?,?)"
+
+                        );
+                        storeLiquorNoId(tempLiquor, stmt, 1);
+                        stmt2.executeUpdate();
+                    }
+
                     return true;
                 }finally{
                     DBUtil.closeQuietly(generatedKeys);
@@ -215,73 +307,7 @@ public class DerbyDatabase implements IDatabase {
        // return false;
     }
 
-    @Override
-    public boolean addNewDrink(final Drink drink) throws SQLException {
-        return executeTransaction(new Transaction<Boolean>() {
-            @Override
-            public Boolean execute(Connection conn) throws SQLException {
-                PreparedStatement stmt = null;
-                PreparedStatement stmt2 = null;
-                ResultSet generatedKeys = null;
 
-                try{
-                    stmt = conn.prepareStatement(
-                            "insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)",
-                            PreparedStatement.RETURN_GENERATED_KEYS
-                    );
-
-                    storeDrinkNoId(drink, stmt, 1);
-
-                    //attempt to insert the drink
-                    stmt.executeUpdate();
-
-                    //determine auto-generated id
-                    generatedKeys = stmt.getGeneratedKeys();
-                    if(!generatedKeys.next()){
-                        throw new SQLException("Could not get auto-generated key for inserted Drink");
-
-                    }
-
-                    //id is used to link the drink in the main table to an item in the subclass table
-                    int drinkId = generatedKeys.getInt(1);
-                    drink.setId(drinkId);
-
-                    //Determine which of the subclasses the new drink is, and store it in the correct
-                    //sub-table with the corresponding variables and storeNoId function call
-                    if(drink instanceof Beer){
-                        Beer tempBeer = (Beer) drink;
-
-                        stmt2 = conn.prepareStatement(
-                                "insert into " + DB_BEER_TABLENAME + "(drinkId, cals, abv, beerType) values (?,?,?,?)"
-
-                        );
-                        storeBeerNoId(tempBeer, stmt, 1);
-                        stmt2.executeUpdate();
-                    }
-
-                    if(drink instanceof MixedDrink){
-                        //TODO:implement MixedDrink
-                    }
-
-                    if(drink instanceof Liquor){
-                        Liquor tempLiquor = (Liquor) drink;
-                        stmt2 = conn.prepareStatement(
-                                "insert into " + DB_LIQUOR_TABLENAME + "(drinkId, content, liquorType) values (?,?,?)"
-
-                        );
-                        storeLiquorNoId(tempLiquor, stmt, 1);
-                        stmt2.executeUpdate();
-                    }
-
-                    return true;
-                }finally{
-                    DBUtil.closeQuietly(generatedKeys);
-                    DBUtil.closeQuietly(stmt);
-                    DBUtil.closeQuietly(stmt2);
-                }
-            }
-        });
-    }
     @Override
     public boolean addNewUser(final User user, String hashedPassword) throws SQLException {
         return executeTransaction(new Transaction<Boolean>() {
@@ -783,7 +809,7 @@ public class DerbyDatabase implements IDatabase {
                             " drinkName varchar(200) unique," +
                             " description varchar(1500), " +
                             " rating float(1)" +
-                             ")"
+                            ")"
                      );
 
                     //database table for the beer objects
@@ -800,17 +826,17 @@ public class DerbyDatabase implements IDatabase {
                     //database table for the mixed drink objects
                     stmt4 = conn.prepareStatement(
                             "create table " + DB_MIXED_DRINK_TABLENAME + " (" +
-                            "drinkId integer," +
-                            "mainIng integer" +
+                            " drinkId integer," +
+                            " mainIng integer" +
                             ")"
                     );
 
                     //database table for the liquor objects
                     stmt5 = conn.prepareStatement(
                             "create table " + DB_LIQUOR_TABLENAME + " (" +
-                            "drinkId integer," +
-                            "content float(1)," +
-                            "liquorType integer" +
+                            " drinkId integer," +
+                            " content float(1)," +
+                            " liquorType integer" +
                             ")"
                     );
 
@@ -818,11 +844,22 @@ public class DerbyDatabase implements IDatabase {
                     //reference to the id of the corresponding drink
                     stmt6 = conn.prepareStatement(
                             "create table " + DB_INGREDIENTS_TABLENAME + " (" +
-                            "drinkId integer," +
-                            "name varchar(200)," +
-                            "amt double," +
+                            " drinkId integer," +
+                            " name varchar(200)," +
+                            " amt double" +
                             ")"
                     );
+
+                    //table for the comments stored for a specific drink, with the id of
+                    //the user who posted the comment
+                    stmt7 = conn.prepareStatement(
+                            "create table " + DB_COMMENT_TABLENAME + " (" +
+                            " drinkId integer," +
+                            " userName varchar(80)," +
+                            " comment varchar(800)" +
+                            ")"
+                    );
+
 
                     stmt.executeUpdate();
                     stmt2.executeUpdate();
@@ -830,6 +867,7 @@ public class DerbyDatabase implements IDatabase {
                     stmt4.executeUpdate();
                     stmt5.executeUpdate();
                     stmt6.executeUpdate();
+                    stmt7.executeUpdate();
 
                     return true;
                 }finally {
@@ -839,6 +877,7 @@ public class DerbyDatabase implements IDatabase {
                     DBUtil.closeQuietly(stmt4);
                     DBUtil.closeQuietly(stmt5);
                     DBUtil.closeQuietly(stmt6);
+                    DBUtil.closeQuietly(stmt7);
                 }
             }
         } );
