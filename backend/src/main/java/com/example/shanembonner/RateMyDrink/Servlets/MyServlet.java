@@ -356,8 +356,7 @@ public class MyServlet extends HttpServlet {
          */
         if(action.equals("addMixedDrink")){
             System.out.println("action is addMixedDrink");
-            MixedDrink mixedDrink = null;
-            mixedDrink = JSON.getObjectMapper().readValue(req.getReader(), MixedDrink.class);
+            MixedDrink mixedDrink = JSON.getObjectMapper().readValue(req.getReader(), MixedDrink.class);
 
             AddMixedDrink controller = new AddMixedDrink();
             boolean success = false;
@@ -388,12 +387,8 @@ public class MyServlet extends HttpServlet {
         if(action.equals("addUser")) {
             System.out.println("action is 'addUser'");
 
-            User newUser = null;
-            String password = null;
-
-            //newUser = JSON.getObjectMapper().readValue(req.getReader(), User.class);
-            newUser = JSON.getObjectMapper().readValue(req.getReader(), User.class);
-            password = newUser.getUserPassword();
+            User newUser = JSON.getObjectMapper().readValue(req.getReader(), User.class);
+            String password = newUser.getUserPassword();
 
             AddUser addController = new AddUser();
             boolean success = false;
@@ -406,7 +401,7 @@ public class MyServlet extends HttpServlet {
             }
 
             if (success) {
-                System.out.println("user successfully added.");
+                System.out.println("user " + newUser.getUserName() + "successfully added.");
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), newUser);

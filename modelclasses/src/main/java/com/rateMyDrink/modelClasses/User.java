@@ -6,7 +6,7 @@ package com.rateMyDrink.modelClasses;
 public class User implements Cloneable {
     private String userName;
     private String password;
-    private String passwordHash;
+    //private String passwordHash;
     private int id;
     private boolean adminStatus;
 

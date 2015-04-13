@@ -7,25 +7,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.rateMyDrink.modelClasses.Beer;
-import com.rateMyDrink.modelClasses.BeerType;
-import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.Ingredient;
 import com.rateMyDrink.modelClasses.LiquorType;
 import com.rateMyDrink.modelClasses.MixedDrink;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewMixedDrinkAsync;
-//import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.;
 
 /**
  * Created by Aaron on 4/9/2015.
