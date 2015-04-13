@@ -60,7 +60,7 @@ public class AddMixedDrinkFragment extends Fragment {
         q5 = (EditText) rootView.findViewById(R.id.quantityFive);
 
         //Ingredients, this may need tweaked
-        //GETTING NULL POINTER EXCEPTION HERE 
+        //GETTING NULL POINTER EXCEPTION HERE
         i1 = (Spinner) rootView.findViewById((R.id.ingredientSpinnerOne));
         i1.setAdapter(new ArrayAdapter<LiquorType>(getActivity(), android.R.layout.simple_spinner_item, LiquorType.values()));
         i2 = (Spinner) rootView.findViewById((R.id.ingredientSpinnerTwo));
