@@ -4,7 +4,6 @@ package com.rateMyDrink.modelClasses;
  * Created by shanembonner on 1/28/15.
  */
 public class Beer extends Drink {
-    //private int id;
     private double ABV;
     private int calories;
     private BeerType beerType;
@@ -59,27 +58,57 @@ public class Beer extends Drink {
     {
         switch(this.beerType)
         {
-            case LAGER:             return "Lager";
+            case LAGER:             return "LAGER";
             case IPA:               return "IPA";
-            case SAISON:            return "Saison";
-            case IMPERIAL:          return "Imperial";
-            case STOUT:             return "Stout";
-            case ALE:               return "Ale";
-            case PALEALE:           return "Pale Ale";
-            case LAMBIC:            return "Lambic";
-            case BELGIAN:           return "Belgian";
-            case HEFEWEIZEN:        return "Hefeweizen";
-            case PILSNER:           return "Pilsner";
-            case KRISTALLWEIZEN:    return "Kristall Weizen";
-            case HELLES:            return "Helles";
-            case MARZEN:            return "Marzen";
-            case PORTER:            return "Porter";
-            case MALT:              return "Malt";
-            case WEISBIER:          return "Weisbier";
-            case CIDER:             return "Cider";
+            case SAISON:            return "SAISON";
+            case IMPERIAL:          return "IMPERIAL";
+            case STOUT:             return "STOUT";
+            case ALE:               return "ALE";
+            case PALEALE:           return "PALEALE";
+            case LAMBIC:            return "LAMBIC";
+            case BELGIAN:           return "BELGIAN";
+            case HEFEWEIZEN:        return "HEFEWEIZEN";
+            case PILSNER:           return "PILSNER";
+            case KRISTALLWEIZEN:    return "KRISTALLWEIZEN";
+            case HELLES:            return "HELLES";
+            case MARZEN:            return "MARZEN";
+            case PORTER:            return "PORTER";
+            case MALT:              return "MALT";
+            case WEISBIER:          return "WEISBIER";
+            case CIDER:             return "CIDER";
             default:                return null;
         }
     }
     //Set beerType
     public void setBeerType(BeerType SBeerType) { this.beerType = SBeerType; }
+
+    /**
+     * sets a Beer's beerType via the string name of the BeerType.
+     *
+     * @param type the type of beer as a string
+     */
+    public void setBeerTypewithString(String type) {
+        switch(type) {
+            case "LAGER":             this.beerType = BeerType.LAGER;          return;
+            case "IPA":               this.beerType = BeerType.IPA;            return;
+            case "SAISON":            this.beerType = BeerType.SAISON;         return;
+            case "IMPERIAL":          this.beerType = BeerType.IMPERIAL;       return;
+            case "STOUT":             this.beerType = BeerType.STOUT;          return;
+            case "ALE":               this.beerType = BeerType.ALE;            return;
+            case "PALEALE":           this.beerType = BeerType.PALEALE;        return;
+            case "LAMBIC":            this.beerType = BeerType.LAMBIC;         return;
+            case "BELGIAN":           this.beerType = BeerType.BELGIAN;        return;
+            case "HEFEWEIZEN":        this.beerType = BeerType.HEFEWEIZEN;     return;
+            case "PILSNER":           this.beerType = BeerType.PILSNER;        return;
+            case "KRISTALLWEIZEN":    this.beerType = BeerType.KRISTALLWEIZEN; return;
+            case "HELLES":            this.beerType = BeerType.HELLES;         return;
+            case "MARZEN":            this.beerType = BeerType.MARZEN;         return;
+            case "PORTER":            this.beerType = BeerType.PORTER;         return;
+            case "MALT":              this.beerType = BeerType.MALT;           return;
+            case "WEISBIER":          this.beerType = BeerType.WEISBIER;       return;
+            case "CIDER":             this.beerType = BeerType.CIDER;          return;
+            default:                  this.beerType = null;
+        }
+    }
+
 }

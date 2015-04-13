@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class MixedDrink extends Drink {
 
-    private int id;
+    //private int id;
     private String instructions;
     private LiquorType maxIng;
     private ArrayList<Ingredient> ingredients;
@@ -20,6 +20,16 @@ public class MixedDrink extends Drink {
        // ingrAmount = new ArrayList<Double>();
        // recipe = new String[15][15]; //using a double array would be easier to keep all values in the same order
                                      //and make it easier to store in the database
+    }
+
+    public MixedDrink(String name, String desc, String instructions, LiquorType type, ArrayList<Ingredient> ingredientsList){
+        this.id = 0;
+        this.rating = 0.0f;
+        this.drinkName = name;
+        this.description = desc;
+        this.instructions = instructions;
+        this.maxIng = type;
+        this.ingredients = ingredientsList;
     }
 
     public void setId(int value){
@@ -63,17 +73,17 @@ public class MixedDrink extends Drink {
     {
         switch(this.maxIng)
         {
-            case RUM:               return "Rum";
-            case WHISKEY:           return "Whiskey";
-            case VODKA:             return "Vodka";
-            case CHOCOLATELIQUOR:   return "Chocolate Liquor";
-            case ABSINTHE:          return "Absinthe";
-            case BRANDY:            return "Brandy";
-            case GIN:               return "Gin";
-            case TEQUILA:           return "Tequila";
-            case BOURBON:           return "Bourbon";
-            case SCOTCH:            return "Scotch";
-            case COGNAC:            return "Cognac";
+            case RUM:               return "RUM";
+            case WHISKEY:           return "WHISKEY";
+            case VODKA:             return "VODKA";
+            case CHOCOLATELIQUOR:   return "CHOCOLATE LIQUOR";
+            case ABSINTHE:          return "ABSINTHE";
+            case BRANDY:            return "BRANDY";
+            case GIN:               return "GIN";
+            case TEQUILA:           return "TEQUILA";
+            case BOURBON:           return "BOURBON";
+            case SCOTCH:            return "SCOTCH";
+            case COGNAC:            return "COGNAC";
             default:                return null;
         }
     }

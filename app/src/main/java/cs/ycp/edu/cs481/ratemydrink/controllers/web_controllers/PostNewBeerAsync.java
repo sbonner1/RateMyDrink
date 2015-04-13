@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.internal.bind.DateTypeAdapter;
 import com.rateMyDrink.modelClasses.Beer;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
@@ -25,8 +24,7 @@ public class PostNewBeerAsync extends AsyncTask<Beer, Void, String> {
                 .registerTypeAdapter(Beer.class, new BeerAdapter())
                 .create();
 
-
-        IPostNewBeer newBeerService = RETROFIT.getRestAdapterBuilder()
+        IBeerRequests newBeerService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
                 .setConverter(new GsonConverter(gson))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -37,7 +35,7 @@ public class PostNewBeerAsync extends AsyncTask<Beer, Void, String> {
                     }
                 })
                 .build()
-                .create(IPostNewBeer.class);
+                .create(IBeerRequests.class);
 
         newBeerService.post(params[0]);
 

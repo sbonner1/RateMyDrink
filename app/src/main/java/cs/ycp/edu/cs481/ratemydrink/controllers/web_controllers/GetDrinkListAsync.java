@@ -17,15 +17,12 @@ import cs.ycp.edu.cs481.ratemydrink.controllers.StringArrayAdapter;
 import retrofit.RestAdapter;
 
 /**
- * Created by user on 3/6/2015.
+ * A controller to asynchronously make a GET request to the database for an array of Drink objects.
  */
 public class GetDrinkListAsync extends AsyncTask<Void, Void, Drink[]>{
 
     @Override
     protected Drink[] doInBackground(Void... params) {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Drink[].class, new StringArrayAdapter())
-                .create();
 
         IGetDrinksList getDrinkListService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)

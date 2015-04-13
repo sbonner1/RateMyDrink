@@ -62,10 +62,7 @@ public class MyServlet extends HttpServlet {
         if(action.equals("getBeer")){
 
             if(id_param == null){
-                System.out.println("id parameter is null");
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                resp.setContentType("text/plain");
-                resp.getWriter().println("id parameter is null");
+                resp = setHttpResponse(resp, "id parameter not found.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
 
@@ -94,13 +91,16 @@ public class MyServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), beer);
+            return;
         }
 
         if(action.equals("getLiquor")){
-            if(pathInfo.startsWith("/")){
-                pathInfo = pathInfo.substring(1);
+            if(id_param == null){
+                resp = setHttpResponse(resp, "id parameter not found.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+                return;
             }
-            int id = Integer.parseInt(pathInfo, 10);
+
+            int id = Integer.parseInt(id_param, 10);
             Liquor liquor = null;
             GetLiquor controller = new GetLiquor();
 
@@ -111,15 +111,18 @@ public class MyServlet extends HttpServlet {
             }
 
             if(liquor == null){
+                System.out.println("liquor object not found in database");
                 //no such item
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plan");
                 resp.getWriter().println("No such liquor");
+                return;
             }
-
+            System.out.println(liquor.getDrinkName());
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), liquor);
+            return;
         }
 
         if(action.equals("getMixedDrink")){
@@ -148,11 +151,8 @@ public class MyServlet extends HttpServlet {
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), mixedDrink);
         }
+
         if(action.equals("getUser")){
-            //get the user name
-            if(pathInfo.startsWith("/")) {
-                pathInfo = pathInfo.substring(1);
-            }
 
             String password = JSON.getObjectMapper().readValue(req.getReader(), String.class);
             User user = null;
@@ -165,6 +165,7 @@ public class MyServlet extends HttpServlet {
             }
 
             if(user == null){
+                System.out.println("user is null.");
                 //no such item, so return a NOT FOUND response
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
@@ -176,7 +177,7 @@ public class MyServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), user);
-
+            return;
         }
 
         if(action.equals("getUserList")){
@@ -244,12 +245,16 @@ public class MyServlet extends HttpServlet {
         String pathInfo = req.getPathInfo(); //path
         String action = req.getParameter("action");
 
+        if(action == null){
+            System.out.println("action is null");
+            return;
+        }
+
         /**
          * to add a new beer object to the database
          */
         if(action.equals("addBeer")){
-            Beer newBeer = new Beer();
-            newBeer = JSON.getObjectMapper().readValue(req.getReader(), Beer.class);
+            Beer newBeer = JSON.getObjectMapper().readValue(req.getReader(), Beer.class);
 
             AddBeer controller = new AddBeer();
             boolean success = false;
@@ -265,12 +270,13 @@ public class MyServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), newBeer);
-
+                return;
             }else{
                 System.out.println("failed to add beer");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("failed to add beer to database.");
+                return;
             }
         }
 
@@ -278,7 +284,7 @@ public class MyServlet extends HttpServlet {
          * to add a new liquor object to the database
          */
         if(action.equals("addLiquor")) {
-            System.out.println("adding a new liquor to the database.");
+            System.out.println("action is addLiquor.");
 
             Liquor newLiquor = JSON.getObjectMapper().readValue(req.getReader(), Liquor.class);
 
@@ -291,6 +297,7 @@ public class MyServlet extends HttpServlet {
             boolean success = false;
 
             try {
+                System.out.println("attempting to add liquor to database.");
                 success = controller.addLiquor(newLiquor);
             }catch(SQLException e){
                 e.printStackTrace();
@@ -315,10 +322,10 @@ public class MyServlet extends HttpServlet {
          * to add a drink object to the database
          */
         if(action.equals("addDrink")){
-            Drink newDrink = null;
+
             System.out.println("action: addDrink");
             System.out.println("pathinfo: " + pathInfo);
-            newDrink = JSON.getObjectMapper().readValue(req.getReader(), Drink.class);
+            Drink newDrink = JSON.getObjectMapper().readValue(req.getReader(), Drink.class);
 
             AddDrink controller = new AddDrink();
             boolean success = false;
@@ -334,12 +341,13 @@ public class MyServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), newDrink);
-
+                return;
             }else{
                 System.out.println("failed to add drink");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("failed to add drink to database.");
+                return;
             }
         }
 
@@ -347,15 +355,15 @@ public class MyServlet extends HttpServlet {
          * to add a mixedDrink object to the database
          */
         if(action.equals("addMixedDrink")){
-            MixedDrink mixedDrink = null;
-            mixedDrink = JSON.getObjectMapper().readValue(req.getReader(), MixedDrink.class);
+            System.out.println("action is addMixedDrink");
+            MixedDrink mixedDrink = JSON.getObjectMapper().readValue(req.getReader(), MixedDrink.class);
 
             AddMixedDrink controller = new AddMixedDrink();
             boolean success = false;
 
             try {
+                System.out.println("trying to add mixed drink to database.");
                 success = controller.addMixedDrink(mixedDrink);
-
             }catch(SQLException e){
                 e.printStackTrace();
             }
@@ -365,44 +373,45 @@ public class MyServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), mixedDrink);
-
+                return;
             }else{
                 System.out.println("failed to add mixed drink");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("failed to add mixed drink to database.");
+                return;
             }
         }
 
         //case to handle adding a new user to the database
         if(action.equals("addUser")) {
-            User newUser = null;
-            String password = null;
+            System.out.println("action is 'addUser'");
 
-            //newUser = JSON.getObjectMapper().readValue(req.getReader(), User.class);
-            newUser = JSON.getObjectMapper().readValue(req.getReader(), User.class);
-            password = newUser.getUserPassword();
-
+            User newUser = JSON.getObjectMapper().readValue(req.getReader(), User.class);
+            String password = newUser.getUserPassword();
 
             AddUser addController = new AddUser();
             boolean success = false;
 
             try {
+                System.out.println("attempting to add user to database");
                 success = addController.addNewUser(newUser, password);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-
             if (success) {
+                System.out.println("user " + newUser.getUserName() + "successfully added.");
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("application/json");
                 JSON.getObjectMapper().writeValue(resp.getWriter(), newUser);
-
+                return;
             }else{
+                System.out.println("failed to add new user.");
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.setContentType("text/plain");
                 resp.getWriter().println("User " + pathInfo + "already exists");
+                return;
             }
 
         }
@@ -478,4 +487,25 @@ public class MyServlet extends HttpServlet {
             resp.getWriter().println("User list deleted");
         }
     }
+
+    /**
+     * sets the HttpServletResponse
+     *
+     * @param resp the HttpServletResponse
+     * @param msg the message to be sent to the user
+     * @param contentType the content-type of the message
+     * @param status the HTTP Status code
+     * @return the HttpServletResponse with above parameters applied
+     * @throws IOException
+     */
+    private HttpServletResponse setHttpResponse(HttpServletResponse resp, String msg, String contentType, int status) throws IOException{
+
+        System.out.println(msg);
+        resp.setStatus(status);
+        resp.setContentType(contentType);
+        resp.getWriter().println(msg);
+
+        return resp;
+    }
+
 }

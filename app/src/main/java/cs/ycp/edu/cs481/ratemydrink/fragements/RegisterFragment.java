@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.rateMyDrink.modelClasses.User;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.RegisterUserAsync;
 
 
 /**
@@ -73,10 +74,12 @@ public class RegisterFragment extends Fragment {
                 else {
                     //Post Registration here
                     Toast.makeText(getActivity(), "Success, do post here!", Toast.LENGTH_SHORT).show();
+                    RegisterUserAsync registerUser = new RegisterUserAsync();
+                    registerUser.execute(createUser());
+                    Toast.makeText(getActivity(), "user registered.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
 
         return rootView;
     }
