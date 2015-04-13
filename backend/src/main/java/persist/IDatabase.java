@@ -37,11 +37,17 @@ public interface IDatabase {
 
     Beer getBeer(int id) throws SQLException;
 
-    Liquor getLiquor(int id) throws SQLException;
-
-    List<User> getUserList() throws SQLException;
+    List<Comment> getComments() throws SQLException;
 
     List<Drink> getDrinkList() throws SQLException;
+
+    Liquor getLiquor(int id) throws SQLException;
+
+    MixedDrink getMixedDrink(int id) throws SQLException;
+
+    User getUser(String userName, String password) throws SQLException;
+
+    List<User> getUserList() throws SQLException;
 
     void replaceUserList(List<User> newUserList);
 
@@ -49,8 +55,5 @@ public interface IDatabase {
 
     public User loginUser(String userName, String password) throws SQLException;
 
-    MixedDrink getMixedDrink(int id) throws SQLException;
-
-    User getUser(String userName, String password) throws SQLException;
 
 }
