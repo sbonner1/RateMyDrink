@@ -132,8 +132,8 @@ public class AddMixedDrinkFragment extends Fragment {
         String name = drinkName.getText().toString();
         String desc = drinkDesc.getText().toString();
         LiquorType type1 = LiquorType.valueOf(((String) i1.getSelectedItem()).toUpperCase());
-        //LiquorType type2 = LiquorType.valueOf(((String) i2.getSelectedItem()).toUpperCase());
-        //LiquorType type3 = LiquorType.valueOf(((String) i3.getSelectedItem()).toUpperCase());
+        LiquorType type2 = LiquorType.valueOf(((String) i2.getSelectedItem()).toUpperCase());
+        LiquorType type3 = LiquorType.valueOf(((String) i3.getSelectedItem()).toUpperCase());
        // Toast.makeText(getActivity(), type1.toString(), Toast.LENGTH_SHORT).show();
         //Toast.makeText(getActivity(), type2.toString(), Toast.LENGTH_SHORT).show();
        // Toast.makeText(getActivity(), type3.toString(), Toast.LENGTH_SHORT).show();
@@ -141,13 +141,13 @@ public class AddMixedDrinkFragment extends Fragment {
         ArrayList<Ingredient> ingredients= new ArrayList<Ingredient>();
 
         //Check if user input fields are empty
-        if(isEmpty(i4) == false && isEmpty((q4))) {
+        if(isEmpty(i4) == false && isEmpty((q4)) == false) {
             String userIngredientOne = i4.getText().toString();
             String userQuantityOne = q4.toString();
             ingredients.add(new Ingredient(0, userIngredientOne, Double.valueOf(userQuantityOne)));
         }
         //Check if user input fields are empty
-        if(isEmpty(i5) == false && isEmpty((q5))) {
+        if(isEmpty(i5) == false && isEmpty((q5)) == false) {
             String userIngredientTwo = i5.getText().toString();
             String userQuantityTwo = q5.toString();
             ingredients.add(new Ingredient(0, userIngredientTwo, Double.valueOf(userQuantityTwo)));

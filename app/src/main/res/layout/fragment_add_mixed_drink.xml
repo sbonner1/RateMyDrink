@@ -194,7 +194,8 @@
             android:layout_alignLeft="@+id/ingredientSpinnerTwo"
             android:layout_alignStart="@+id/ingredientSpinnerTwo"
             android:layout_above="@+id/quantityFour"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+            android:entries="@array/liquors" />
 
         <EditText
             android:layout_width="wrap_content"
