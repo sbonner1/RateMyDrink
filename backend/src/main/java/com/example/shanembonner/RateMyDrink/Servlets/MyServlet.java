@@ -8,6 +8,7 @@ package com.example.shanembonner.RateMyDrink.Servlets;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.rateMyDrink.modelClasses.Beer;
+import com.rateMyDrink.modelClasses.Comment;
 import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.Liquor;
 import com.rateMyDrink.modelClasses.MixedDrink;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controllers.AddBeer;
+import controllers.AddComment;
 import controllers.AddDrink;
 import controllers.AddLiquor;
 import controllers.AddMixedDrink;
@@ -31,6 +33,7 @@ import controllers.DeleteDrink;
 import controllers.DeleteUser;
 import controllers.DeleteUserList;
 import controllers.GetBeer;
+import controllers.GetComments;
 import controllers.GetDrinkList;
 import controllers.GetLiquor;
 import controllers.GetMixedDrink;
@@ -92,6 +95,20 @@ public class MyServlet extends HttpServlet {
             resp.setContentType("application/json");
             JSON.getObjectMapper().writeValue(resp.getWriter(), beer);
             return;
+        }
+
+        if(action.equals("getComments")){
+            GetComments controller = new GetComments();
+            List<Comment> commentList = null;
+            try{
+                commentList = controller.getComments();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            JSON.getObjectMapper().writeValue(resp.getWriter(), commentList);
         }
 
         if(action.equals("getLiquor")){
@@ -204,6 +221,7 @@ public class MyServlet extends HttpServlet {
             JSON.getObjectMapper().writeValue(resp.getWriter(), userNameList);
         }
 
+
         if(action.equals("getDrinkList")){                      //TODO: need to send drink ids with this list <---
             GetDrinkList getController = new GetDrinkList();
             List<Drink> drinkList = null;
@@ -280,6 +298,36 @@ public class MyServlet extends HttpServlet {
             }
         }
 
+        /**
+         * to add a new comment to the database
+         */
+
+        if(action.equals("addComment")){
+            Comment newComment = new Comment();
+            newComment = JSON.getObjectMapper().readValue(req.getReader(), Comment.class);
+
+            AddComment controller = new AddComment();
+            boolean success = false;
+
+            try{
+                success = controller.addComment(newComment);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if(success) {
+                System.out.println("success adding beer");
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("application/json");
+                JSON.getObjectMapper().writeValue(resp.getWriter(), newComment);
+            }else{
+                System.out.println("failed to add comment");
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                resp.setContentType("text/plain");
+                resp.getWriter().println("failed to add comment to database.");
+            }
+
+        }
         /**
          * to add a new liquor object to the database
          */
