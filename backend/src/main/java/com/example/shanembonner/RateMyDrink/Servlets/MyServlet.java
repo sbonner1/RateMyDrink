@@ -360,9 +360,8 @@ public class MyServlet extends HttpServlet {
         }
 
         if(action.equals("loginUser")){
-
+            return;
         }
-
 
     }
 

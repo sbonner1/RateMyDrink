@@ -6,119 +6,107 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|top">
 
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/imageView2"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="30dp"
-    android:focusableInTouchMode="false"
-    android:src="@drawable/drinkicon" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:focusableInTouchMode="false"
+        android:src="@drawable/drinkicon" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:text="Beer Name"
-    android:id="@+id/beer_name"
-    android:layout_below="@+id/imageView2"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="15dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Beer Name"
+        android:id="@+id/beer_name"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Beer Type"
-    android:id="@+id/beer_type"
-    android:layout_below="@+id/beer_name"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Beer Type"
+        android:id="@+id/beer_type"
+        android:layout_below="@+id/beer_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="ABV: "
-    android:id="@+id/beer_abv"
-    android:layout_below="@+id/beer_type"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="ABV: "
+        android:id="@+id/beer_abv"
+        android:layout_below="@+id/beer_type"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
-<RatingBar
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/BeerRatingBar"
-    android:layout_below="@+id/beer_abv"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="70dp"
-    android:progressTint="#fffffb00" />
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BeerRatingBar"
+        android:layout_below="@+id/beer_abv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:progressTint="#fffffb00" />
 
-<!--
-<ListView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/listView"
-    android:layout_below="@+id/beer_comments"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_marginBottom="35dp" />
--->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/DrinkComments"
+        android:id="@+id/beer_comments"
+        android:layout_below="@+id/BeerRatingBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="@string/DrinkComments"
-    android:id="@+id/beer_comments"
-    android:layout_below="@+id/BeerRatingBar"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="5dp" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/comments"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/BeerRatingBar"
+        android:layout_alignEnd="@+id/BeerRatingBar"
+        android:hint="@string/commentHint" />
 
-<EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/comments"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_alignRight="@+id/BeerRatingBar"
-    android:layout_alignEnd="@+id/BeerRatingBar"
-    android:autoText="false"
-    android:hint="Type Comment Here" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Post"
-    android:id="@+id/button"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/ratingValue"
+        android:id="@+id/beerAvgRate"
+        android:layout_alignTop="@+id/BeerRatingBar"
+        android:layout_toRightOf="@+id/BeerRatingBar"
+        android:layout_toEndOf="@+id/BeerRatingBar"
+        android:layout_marginTop="19dp" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceSmall"
-    android:text="@string/ratingValue"
-    android:id="@+id/beerAvgRate"
-    android:layout_alignTop="@+id/BeerRatingBar"
-    android:layout_toRightOf="@+id/BeerRatingBar"
-    android:layout_toEndOf="@+id/BeerRatingBar"
-    android:layout_marginTop="19dp" />
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Description"
-    android:id="@+id/beer_desc"
-    android:layout_below="@+id/beer_abv"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="30dp"
-    android:layout_marginRight="30dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/descriptionTitle"
+        android:id="@+id/beer_desc"
+        android:layout_below="@+id/beer_abv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -129,4 +117,13 @@
         android:layout_above="@+id/beer_abv"
         android:layout_toRightOf="@+id/beer_comments"
         android:layout_toEndOf="@+id/beer_comments" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/comments_listview"
+        android:layout_above="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/beer_comments" />
+
 </RelativeLayout>
