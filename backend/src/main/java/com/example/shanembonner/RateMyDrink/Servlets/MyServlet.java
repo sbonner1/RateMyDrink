@@ -221,7 +221,7 @@ public class MyServlet extends HttpServlet {
         }
 
 
-        if(action.equals("getDrinkList")){                      //TODO: need to send drink ids with this list <---
+        if(action.equals("getDrinkList")){
             GetDrinkList getController = new GetDrinkList();
             List<Drink> drinkList = null;
 

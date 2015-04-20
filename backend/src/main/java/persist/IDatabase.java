@@ -37,7 +37,8 @@ public interface IDatabase {
 
     Beer getBeer(int id) throws SQLException;
 
-    List<Comment> getComments() throws SQLException;
+    //TODO:edit to take start index and end index
+    List<Comment> getComments(int start, int end) throws SQLException;
 
     List<Drink> getDrinkList() throws SQLException;
 
