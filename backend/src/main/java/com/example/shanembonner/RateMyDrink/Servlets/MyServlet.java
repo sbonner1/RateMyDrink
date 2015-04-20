@@ -7,6 +7,7 @@
 package com.example.shanembonner.RateMyDrink.Servlets;
 
 import com.rateMyDrink.modelClasses.Beer;
+import com.rateMyDrink.modelClasses.Comment;
 import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.Liquor;
 import com.rateMyDrink.modelClasses.MixedDrink;
@@ -30,6 +31,7 @@ import controllers.DeleteDrink;
 import controllers.DeleteUser;
 import controllers.DeleteUserList;
 import controllers.GetBeer;
+import controllers.GetComments;
 import controllers.GetDrinkList;
 import controllers.GetLiquor;
 import controllers.GetMixedDrink;
@@ -43,6 +45,8 @@ public class MyServlet extends HttpServlet {
         String action = req.getParameter("action");
         String id_param = req.getParameter("id");
         String pathInfo = req.getPathInfo(); //path
+        String startIndex = null;
+        String endIndex = null;
 
         System.out.println(req.getQueryString());
 
@@ -78,6 +82,28 @@ public class MyServlet extends HttpServlet {
             }
 
             setOkJsonDrinkHttpResponse(resp, beer.getDrinkName() + "was found.", beer);
+            return;
+        }
+
+        if(action.equals("getComments")){
+
+            if(pathInfo.startsWith("/")){
+                startIndex = pathInfo.substring(1); //start index
+                endIndex = pathInfo.substring(2); //end index
+            }
+            int start = Integer.parseInt(startIndex, 10);
+            int end = Integer.parseInt(endIndex, 10);
+            List<Comment> commentList = null;
+            GetComments controller = new GetComments();
+
+            try{
+                commentList = controller.getComments(start, end);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            Comment[] commentArr = commentList.toArray(new Comment[commentList.size()]);
+            setOkJsonCommentHttpResponse(resp, "getting drink list", commentArr);
             return;
         }
 
@@ -451,6 +477,19 @@ public class MyServlet extends HttpServlet {
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("application/json");
         JSON.getObjectMapper().writeValue(resp.getWriter(), drink);
+    }
+
+    /**
+     * sets the Servlet response with a 200 OK status code and writes an array of Comment objects to the body of the response
+     * @param resp the servlet response
+     * @param msg a message to print to the console
+     * @param comments the array of comment objects to be written to the body of the response
+     */
+    private void setOkJsonCommentHttpResponse(HttpServletResponse resp, String msg, Comment[] comments) throws IOException{
+        System.out.println(msg);
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        JSON.getObjectMapper().writeValue(resp.getWriter(), comments);
     }
 
     /**

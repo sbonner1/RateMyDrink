@@ -31,8 +31,8 @@ public class DerbyDatabase implements IDatabase {
     }
 
     private static final int MAX_ATTEMPTS = 10;
-    //private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
-    private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
+    private static final String DB_DIRECTORY = "Users/shanembonner/rateMyDrinkDB/rateMyDrink.db";
+    //private static final String DB_DIRECTORY = "rateMyDrinkDB/rateMyDrink.db"; //josh's
     private static final String DB_USER_TABLENAME = "userList";
     private static final String DB_MAIN_DRINK_TABLENAME = "mainDrinkTable";
     private static final String DB_BEER_TABLENAME = "beerTable";
@@ -99,15 +99,16 @@ public class DerbyDatabase implements IDatabase {
 
                 try{
                     stmt = conn.prepareStatement(
-                            "insert into " + DB_COMMENT_TABLENAME + ("drinkId, userName, comment) values (?,?,?)")
+                            "insert into " + DB_COMMENT_TABLENAME + "(drinkId, userName, comment) values (?,?,?)"
                     );
 
+                    storeCommentNoId(comment, stmt, 1);
+                    stmt.executeUpdate();
 
+                    return true;
                 }finally{
-
+                    DBUtil.closeQuietly(stmt);
                 }
-
-                return null;
             }
         });
     }
@@ -236,7 +237,7 @@ public class DerbyDatabase implements IDatabase {
                 PreparedStatement stmt = null;
                 PreparedStatement stmt2 = null;
                 PreparedStatement stmt3 = null;
-              //  PreparedStatement stmt4 = null;
+                PreparedStatement stmt4 = null;
                 ResultSet generatedKeys = null;
 
                 try{
@@ -283,7 +284,8 @@ public class DerbyDatabase implements IDatabase {
                     for(Ingredient item : ingrList){
                         //prepare statement for each ingredient
                         stmt3 = conn.prepareStatement(
-                                "insert into " + DB_INGREDIENTS_TABLENAME + "(drinkId, name, amt) values (?,?,?)"
+                                "insert into " + DB_INGREDIENTS_TABLENAME + "(drinkId, name, amt) values (?,?,?)",
+                                PreparedStatement.RETURN_GENERATED_KEYS
                         );
 
                         //set up the statement for each ingredient and add for a batch insert
@@ -298,8 +300,6 @@ public class DerbyDatabase implements IDatabase {
                 }finally{
                     DBUtil.closeQuietly(stmt);
                     DBUtil.closeQuietly(stmt2);
-                    DBUtil.closeQuietly(stmt3);
-                    DBUtil.closeQuietly(generatedKeys);
                 }
 
 
@@ -457,6 +457,38 @@ public class DerbyDatabase implements IDatabase {
     }
 
     @Override
+    public List<Comment> getComments(final int start, final int end) throws SQLException {
+        return executeTransaction(new Transaction<List<Comment>>() {
+            @Override
+            public List<Comment> execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet resultSet = null;
+
+                try{
+                    stmt = conn.prepareStatement("select * from " + DB_COMMENT_TABLENAME + " where drinkId = ?");
+                    resultSet = stmt.executeQuery();
+
+                    List<Comment> result = new ArrayList<Comment>();
+                    int count = start;
+                    //ensure that the resultSet only contains the specified ids
+                    while(resultSet.next() && count <= end){
+                        Comment comment = new Comment();
+                        loadComment(comment, resultSet, 1);
+                        result.add(comment);
+                        count++;
+                    }
+
+                    return result;
+                }finally{
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(resultSet);
+
+                }
+            }
+        });
+    }
+
+    @Override
     public List<Drink> getDrinkList() throws SQLException {
         return executeTransaction(new Transaction<List<Drink>>() {
             @Override
@@ -600,6 +632,7 @@ public class DerbyDatabase implements IDatabase {
         });
     }
 
+
     @Override
     public User getUser(final String userName, final String password) throws SQLException {
         return executeTransaction(new Transaction<User>() {
@@ -630,6 +663,7 @@ public class DerbyDatabase implements IDatabase {
             }
         });
     }
+
 
     @Override
     public List<User> getUserList() throws SQLException {
@@ -708,6 +742,7 @@ public class DerbyDatabase implements IDatabase {
     public void replaceUserList(List<User> newUserList) {
         //TODO: replace user list
     }
+
 
     @Override
     public User findUser(String userName) {
@@ -889,6 +924,13 @@ public class DerbyDatabase implements IDatabase {
         stmt.setString(index++, user.getUserPassword());
     }
 
+    protected void storeCommentNoId(Comment comment, PreparedStatement stmt, int index) throws SQLException {
+        stmt.setInt(index++, comment.getDrinkId());
+        stmt.setString(index++, comment.getUsername());
+        stmt.setString(index++, comment.getComment());
+
+    }
+
     protected void storeDrinkNoId(Drink drink, PreparedStatement stmt, int index) throws SQLException {
         stmt.setString(index++, drink.getDrinkName());
         stmt.setString(index++, drink.getDescription());
@@ -971,6 +1013,7 @@ public class DerbyDatabase implements IDatabase {
         });
     }
 
+
     protected void loadBeer(Beer beer, ResultSet resultSet, int index) throws SQLException {
         beer.setId(resultSet.getInt(index++));
         beer.setCalories(resultSet.getInt(index++));
@@ -981,6 +1024,11 @@ public class DerbyDatabase implements IDatabase {
         beer.setBeerType(beerTypes[beerTypeOrdinal]);
     }
 
+    protected void loadComment(Comment comment, ResultSet resultSet, int index) throws SQLException {
+        comment.setDrinkId(resultSet.getInt(index++));
+        comment.setUsername(resultSet.getString(index++));
+        comment.setComment(resultSet.getString(index++));
+    }
     protected void loadDrink(Drink drink, ResultSet resultSet, int index) throws SQLException {
         drink.setId(resultSet.getInt(index++));
         drink.setDrinkName(resultSet.getString(index++));
