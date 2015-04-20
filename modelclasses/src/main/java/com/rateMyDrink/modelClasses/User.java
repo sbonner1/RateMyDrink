@@ -6,7 +6,7 @@ package com.rateMyDrink.modelClasses;
 public class User implements Cloneable {
     private String userName;
     private String password;
-    private String passwordHash;
+    //private String passwordHash;
     private int id;
     private boolean adminStatus;
 
@@ -76,7 +76,7 @@ public class User implements Cloneable {
             User dup = (User) super.clone();
             return dup;
         } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("This can't happen", e);
+            throw new IllegalStateException("Cloning for User class is not supported.", e);
         }
     }
 

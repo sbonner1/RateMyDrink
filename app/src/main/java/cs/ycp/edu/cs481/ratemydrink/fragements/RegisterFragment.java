@@ -13,21 +13,15 @@ import android.widget.Toast;
 import com.rateMyDrink.modelClasses.User;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.RegisterUserAsync;
 
 
 /**
- * Created by Aaron on 3/19/2015.
+ * Fragement to register a new user with the backend.
  */
 public class RegisterFragment extends Fragment {
 
     private EditText username, password, confirmPassword, email;
-    private Button Rsubmit;
-
-    /**
-     * The serialization (saved instance state) Bundle key representing the
-     * activated item position. Only used on tablets.
-     */
-    private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,40 +37,38 @@ public class RegisterFragment extends Fragment {
         confirmPassword = (EditText) rootView.findViewById(R.id.confirmPassword_field);
         email = (EditText) rootView.findViewById(R.id.email_field);
 
-
-        Rsubmit = (Button) rootView.findViewById(R.id.registerSubmit);
+        Button Rsubmit = (Button) rootView.findViewById(R.id.registerSubmit);
         Rsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //Check for validity
-                if(password.toString() != confirmPassword.toString()){
+                if(!password.getText().toString().equals(confirmPassword.getText().toString())){
                     Toast.makeText(getActivity(), "Passwords don't match!", Toast.LENGTH_SHORT).show();
                 }
-
-                if(username.toString() == "")
+                if(username.getText().toString().equals(""))
                 {
                     Toast.makeText(getActivity(), "Username not entered!", Toast.LENGTH_SHORT).show();
                 }
-                if(password.toString() == "")
+                if(password.getText().toString().equals(""))
                 {
                     Toast.makeText(getActivity(), "Password not entered!", Toast.LENGTH_SHORT).show();
                 }
-                if(confirmPassword.toString() == "")
+                if(confirmPassword.getText().toString().equals(""))
                 {
                     Toast.makeText(getActivity(), "Retype Password!", Toast.LENGTH_SHORT).show();
                 }
-                if(email.toString() == "")
+                if(email.getText().toString().equals(""))
                 {
                     Toast.makeText(getActivity(), "Email not entered!", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    //Post Registration here
-                    Toast.makeText(getActivity(), "Success, do post here!", Toast.LENGTH_SHORT).show();
+                    RegisterUserAsync registerUser = new RegisterUserAsync();
+                    registerUser.execute(createUser());
+                    Toast.makeText(getActivity(), "User registered.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
 
         return rootView;
     }
@@ -84,12 +76,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Restore the previously serialized activated item position.
-        if (savedInstanceState != null
-                && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-            //setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
-        }
     }
 
     @Override

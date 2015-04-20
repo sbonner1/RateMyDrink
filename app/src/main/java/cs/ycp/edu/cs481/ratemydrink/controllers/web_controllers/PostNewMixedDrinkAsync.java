@@ -5,26 +5,26 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.rateMyDrink.modelClasses.Beer;
+import com.rateMyDrink.modelClasses.MixedDrink;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;
-import cs.ycp.edu.cs481.ratemydrink.controllers.BeerAdapter;
+import cs.ycp.edu.cs481.ratemydrink.controllers.MixedDrinkAdapter;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
- * A controller to asynchronously make a POST request add a new Beer object to the database.
+ * An AsyncTask to post a new MixedDrink object to the backend database
  */
-public class PostNewBeerAsync extends AsyncTask<Beer, Void, String> {
+public class PostNewMixedDrinkAsync extends AsyncTask<MixedDrink, Void, MixedDrink> {
     @Override
-    protected String doInBackground(Beer... params) {
+    protected MixedDrink doInBackground(MixedDrink... params) {
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Beer.class, new BeerAdapter())
+                .registerTypeAdapter(MixedDrink.class, new MixedDrinkAdapter())
                 .create();
 
-        IBeerRequests newBeerService = RETROFIT.getRestAdapterBuilder()
+        IMixedDrinkRequests newMixedDrinkService = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
                 .setConverter(new GsonConverter(gson))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -35,11 +35,8 @@ public class PostNewBeerAsync extends AsyncTask<Beer, Void, String> {
                     }
                 })
                 .build()
-                .create(IBeerRequests.class);
+                .create(IMixedDrinkRequests.class);
 
-        newBeerService.post(params[0]);
-
-        return "";
-
+        return newMixedDrinkService.post(params[0]);
     }
 }

@@ -12,6 +12,12 @@ public class Ingredient {
 
     }
 
+    public Ingredient(int id, String name, double amount){
+        this.drinkId = id;
+        this.name = name;
+        this.amount = amount;
+    }
+
     public void setDrinkId(int value){
         this.drinkId = value;
     }

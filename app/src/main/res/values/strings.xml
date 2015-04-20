@@ -43,6 +43,8 @@
     <string name="username_hint">Type Username</string>
     <string name="password_hint">Type Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="commentHint">Type Comment Here</string>
+    <string name="descriptionTitle">Description</string>
 
     <string name="drawer_open">Rate My Drink</string>
     <string name="drawer_close">Menu</string>

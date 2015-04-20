@@ -9,7 +9,7 @@ import com.rateMyDrink.modelClasses.Liquor;
 import java.io.IOException;
 
 /**
- * Created by user on 3/29/2015.
+ * An adapter to convert JSON objects into Liquor objects as well as to convert Liquor objects to JSON objects
  */
 public class LiquorAdapter extends TypeAdapter<Liquor> {
     @Override
@@ -24,8 +24,8 @@ public class LiquorAdapter extends TypeAdapter<Liquor> {
         jsonWriter.name("description").value(liquor.getDescription());
         jsonWriter.name("rating").value(liquor.getRating());
         jsonWriter.name("id").value(String.valueOf(liquor.getId()));
-        jsonWriter.name("abv").value(liquor.getAlcoholContent());
-        jsonWriter.name("liquorType").value("RUM");
+        jsonWriter.name("alcoholContent").value(liquor.getAlcoholContent());
+        jsonWriter.name("liquorType").value(liquor.getLiquorTypeReadableType());
         jsonWriter.endObject();
     }
 
@@ -39,30 +39,34 @@ public class LiquorAdapter extends TypeAdapter<Liquor> {
         Liquor liquor = new Liquor();
 
         jsonReader.beginObject();
-        while(jsonReader.hasNext()){
-            String field = jsonReader.nextName();
-            if(field.equals("drinkName")){
-                liquor.setDrinkName(jsonReader.nextString());
+            while(jsonReader.hasNext()){
+
+                String field = "";
+                if(jsonReader.peek() == JsonToken.NAME){
+                    field = jsonReader.nextName();
+                }
+
+                if(field.equals("drinkName")){
+                    liquor.setDrinkName(jsonReader.nextString());
+                }
+                if(field.equals("description")){
+                    liquor.setDescription(jsonReader.nextString());
+                }
+                if(field.equals("rating")){
+                    liquor.setRating(Float.valueOf(jsonReader.nextString()));
+                }
+                if(field.equals("id")){
+                    liquor.setId(Integer.valueOf(jsonReader.nextString()));
+                }
+                if(field.equals("alcoholContent")){
+                    liquor.setAlcoholContent(Float.valueOf(jsonReader.nextString()));
+                }
+                if(field.equals("liquorType")) {
+                    liquor.setLiquorTypeWithString(jsonReader.nextString());
+                }else{
+                    jsonReader.skipValue();
+                }
             }
-            if(field.equals("description")){
-                liquor.setDescription(jsonReader.nextString());
-            }
-            if(field.equals("rating")){
-                liquor.setRating(Float.valueOf(jsonReader.nextString()));
-            }
-            if(field.equals("id")){
-                liquor.setId(Integer.valueOf(jsonReader.nextString()));
-            }
-            if(field.equals("content")){
-                liquor.setAlcoholContent(Float.valueOf(jsonReader.nextString()));
-            }
-            if(field.equals("liquorType")){
-                //liquor.setLiquorType(jsonReader.nextString());
-                jsonReader.skipValue();
-            }else{
-                jsonReader.skipValue();
-            }
-        }
         jsonReader.endObject();
 
         return liquor;
