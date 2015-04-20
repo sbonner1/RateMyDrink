@@ -10,7 +10,7 @@ import cs.ycp.edu.cs481.ratemydrink.URLInfo;
 /**
  * A controller to asynchronously make a GET request to the database for a single Liquor object.
  */
-public class GetLiquorAsync extends AsyncTask<Integer, Void, Liquor> {
+public class getLiquorAsync extends AsyncTask<Integer, Void, Liquor> {
     @Override
     protected Liquor doInBackground(Integer... params) {
 
