@@ -116,5 +116,11 @@
     <string name="title_activity_add_mixed_drink">AddMixedDrinkActivity</string>
     <string name="mixed_drink_description">Description:</string>
     <string name="md_description_hint">Drink Description</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 
 </resources>

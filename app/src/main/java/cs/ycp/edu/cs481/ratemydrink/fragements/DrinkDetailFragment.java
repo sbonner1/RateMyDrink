@@ -5,8 +5,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rateMyDrink.modelClasses.Beer;
 
@@ -35,6 +38,8 @@ public class DrinkDetailFragment extends Fragment {
     private Beer mBeer;
     private RatingBar ratingBar;
     private TextView txtRatingValue;
+    private Button submit;
+    private EditText comment;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -55,6 +60,8 @@ public class DrinkDetailFragment extends Fragment {
             id = Integer.valueOf(getArguments().getString(ARG_ITEM_ID));
         }
 
+
+
         if(id > 0){
             GetBeerAsync getBeer = new GetBeerAsync();
             getBeer.execute(id);
@@ -69,6 +76,7 @@ public class DrinkDetailFragment extends Fragment {
             //error
         }
 
+
     }
 
 
@@ -77,7 +85,7 @@ public class DrinkDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_beer_drink_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
+        // Show the beer content on the page
         if (mBeer != null) {
             ((TextView) rootView.findViewById(R.id.beer_name)).setText(mBeer.getDrinkName());
             ((TextView) rootView.findViewById(R.id.beer_desc)).setText(mBeer.getDescription());
@@ -88,6 +96,21 @@ public class DrinkDetailFragment extends Fragment {
             //Pre-fills the star with avg user rating
             ((RatingBar) rootView.findViewById(R.id.BeerRatingBar)).setRating(mBeer.getRating());
         }
+
+        submit = (Button) rootView.findViewById(R.id.button);
+        comment = (EditText) rootView.findViewById(R.id.comments);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Get text user entered and post it
+                String postComment = comment.getText().toString();
+
+                Toast.makeText(getActivity(), "Post a comment!", Toast.LENGTH_SHORT).show();
+            }
+
+        });
 
         return rootView;
     }

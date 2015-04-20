@@ -30,7 +30,7 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type);
 
-        if (findViewById(R.id.drink_detail_container) != null) {
+        if (findViewById(R.id.container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
             // res/values-sw600dp). If this view is present, then the
