@@ -194,14 +194,6 @@ public class MyServlet extends HttpServlet {
                 setBadHttpResponse(resp, "drinkList is null.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-            String[] drinkNameList = new String[drinkList.size()]; //return the list of usernames for the scoreboard
-            //as an array of strings to be displayed
-            int count = 0;
-            for(Drink drink: drinkList){
-                String drinkName = drink.getDrinkName();
-                drinkNameList[count] = drinkName;
-                count++;
-            }
 
             Drink[] drinkArr = drinkList.toArray(new Drink[drinkList.size()]);
             setOkJsonDrinkHttpResponse(resp, "getting drink list", drinkArr);
