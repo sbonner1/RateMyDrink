@@ -203,7 +203,8 @@ public class MyServlet extends HttpServlet {
                 count++;
             }
 
-            setOkJsonDrinkHttpResponse(resp, "making drink list", drinkNameList);
+            Drink[] drinkArr = drinkList.toArray(new Drink[drinkList.size()]);
+            setOkJsonDrinkHttpResponse(resp, "getting drink list", drinkArr);
         }
     }
 
@@ -360,9 +361,8 @@ public class MyServlet extends HttpServlet {
         }
 
         if(action.equals("loginUser")){
-
+            return;
         }
-
 
     }
 
@@ -469,7 +469,7 @@ public class MyServlet extends HttpServlet {
      * @param drinks the array of drinks to be sent in the response.
      * @throws IOException
      */
-    private void setOkJsonDrinkHttpResponse(HttpServletResponse resp, String msg, String[] drinks) throws IOException{
+    private void setOkJsonDrinkHttpResponse(HttpServletResponse resp, String msg, Drink[] drinks) throws IOException{
         System.out.println(msg);
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("application/json");
