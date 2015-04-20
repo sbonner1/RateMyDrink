@@ -44,14 +44,13 @@ public class RegisterFragment extends Fragment {
         confirmPassword = (EditText) rootView.findViewById(R.id.confirmPassword_field);
         email = (EditText) rootView.findViewById(R.id.email_field);
 
-
         Rsubmit = (Button) rootView.findViewById(R.id.registerSubmit);
         Rsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //Check for validity
-                if(password.toString() != confirmPassword.toString()){
+                if(!password.toString().equals(confirmPassword.toString())){
                     Toast.makeText(getActivity(), "Passwords don't match!", Toast.LENGTH_SHORT).show();
                 }
 
