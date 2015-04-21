@@ -14,6 +14,7 @@ app/src/main/gen/
 
 #database files
 /rateMyDrinkDB
+/Users
 derby.log
 
 RateMyDrink.iml
