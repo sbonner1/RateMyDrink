@@ -456,6 +456,7 @@ public class DerbyDatabase implements IDatabase {
         });
     }
 
+    //this method will end up being unused
     @Override
     public List<Comment> getComments(final int start, final int end) throws SQLException {
         return executeTransaction(new Transaction<List<Comment>>() {

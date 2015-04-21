@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controllers.AddBeer;
+import controllers.AddComment;
 import controllers.AddDrink;
 import controllers.AddLiquor;
 import controllers.AddMixedDrink;
@@ -104,7 +105,7 @@ public class MyServlet extends HttpServlet {
 
             if(commentList != null){
                 Comment[] commentArr = commentList.toArray(new Comment[commentList.size()]);
-                setOkJsonCommentHttpResponse(resp, "getting drink list", commentArr);
+                setOkJsonCommentsHttpResponse(resp, "getting drink list", commentArr);
                 return;
             }else{
                 setBadHttpResponse(resp, "unable to get comments", "text/plain", HttpServletResponse.SC_NOT_FOUND);
@@ -272,6 +273,28 @@ public class MyServlet extends HttpServlet {
             }
         }
 
+        /**
+         * to add a new comment object to the database
+         */
+        if(action.equals("addComment")){
+            System.out.println("action is addComment");
+
+            Comment newComment = JSON.getObjectMapper().readValue(req.getReader(), Comment.class);
+            AddComment controller = new AddComment();
+            boolean success = false;
+
+            try{
+                success = controller.addComment(newComment);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if(success){
+                setOkJsonCommentHttpResponse(resp, "new comment successfully added to database", newComment);
+            }else{
+                setBadHttpResponse(resp, "failed to add comment to database", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+            }
+        }
         /**
          * to add a new liquor object to the database
          */
@@ -486,12 +509,26 @@ public class MyServlet extends HttpServlet {
     }
 
     /**
+     *
+     * @param resp the servlet response
+     * @param msg a message to print to the console
+     * @param comment the comment object to be written to the body of the response
+     * @throws IOException
+     */
+    private void setOkJsonCommentHttpResponse(HttpServletResponse resp, String msg, Comment comment) throws IOException{
+        System.out.println(msg);
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        JSON.getObjectMapper().writeValue(resp.getWriter(), comment);
+    }
+
+    /**
      * sets the Servlet response with a 200 OK status code and writes an array of Comment objects to the body of the response
      * @param resp the servlet response
      * @param msg a message to print to the console
      * @param comments the array of comment objects to be written to the body of the response
      */
-    private void setOkJsonCommentHttpResponse(HttpServletResponse resp, String msg, Comment[] comments) throws IOException{
+    private void setOkJsonCommentsHttpResponse(HttpServletResponse resp, String msg, Comment[] comments) throws IOException{
         System.out.println(msg);
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("application/json");
