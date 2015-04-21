@@ -89,22 +89,24 @@ public class MyServlet extends HttpServlet {
         if(action.equals("getComments")){
 
             if(pathInfo.startsWith("/")){
-                startIndex = pathInfo.substring(1); //start index
-                endIndex = pathInfo.substring(2); //end index
+                id_param = pathInfo.substring(1);
+                startIndex = pathInfo.substring(2); //start Index
+                endIndex = pathInfo.substring(3); //end index
             }
+            int id = Integer.parseInt(id_param, 10);
             int start = Integer.parseInt(startIndex, 10);
             int end = Integer.parseInt(endIndex, 10);
             List<Comment> commentList = null;
             GetComments controller = new GetComments();
 
             try{
-                commentList = controller.getComments(start, end);
+                commentList = controller.getComments(id, start, end);
             }catch(SQLException e){
                 e.printStackTrace();
             }
 
             Comment[] commentArr = commentList.toArray(new Comment[commentList.size()]);
-            setOkJsonCommentsHttpResponse(resp, "getting drink list", commentArr);
+            setOkJsonCommentsHttpResponse(resp, "getting comment list", commentArr);
             return;
         }
 

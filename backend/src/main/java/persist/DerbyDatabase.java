@@ -458,7 +458,7 @@ public class DerbyDatabase implements IDatabase {
 
     //this method will end up being unused
     @Override
-    public List<Comment> getComments(final int start, final int end) throws SQLException {
+    public List<Comment> getComments(final int id, final int start, final int end) throws SQLException {
         return executeTransaction(new Transaction<List<Comment>>() {
             @Override
             public List<Comment> execute(Connection conn) throws SQLException {
@@ -467,6 +467,7 @@ public class DerbyDatabase implements IDatabase {
 
                 try{
                     stmt = conn.prepareStatement("select * from " + DB_COMMENT_TABLENAME + " where drinkId = ?");
+                    stmt.setInt(1, id);
                     resultSet = stmt.executeQuery();
 
                     List<Comment> result = new ArrayList<Comment>();

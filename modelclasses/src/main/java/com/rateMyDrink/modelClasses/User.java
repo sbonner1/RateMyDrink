@@ -68,7 +68,7 @@ public class User implements Cloneable {
         return user.loggedInStatus;
     }
 
-   
+
 
     @Override
     public User clone(){
