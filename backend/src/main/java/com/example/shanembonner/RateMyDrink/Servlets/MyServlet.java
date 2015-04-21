@@ -102,9 +102,15 @@ public class MyServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-            Comment[] commentArr = commentList.toArray(new Comment[commentList.size()]);
-            setOkJsonCommentHttpResponse(resp, "getting drink list", commentArr);
-            return;
+            if(commentList != null){
+                Comment[] commentArr = commentList.toArray(new Comment[commentList.size()]);
+                setOkJsonCommentHttpResponse(resp, "getting drink list", commentArr);
+                return;
+            }else{
+                setBadHttpResponse(resp, "unable to get comments", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+
         }
 
         if(action.equals("getLiquor")){
