@@ -46,8 +46,8 @@ public class MyServlet extends HttpServlet {
         String action = req.getParameter("action");
         String id_param = req.getParameter("id");
         String pathInfo = req.getPathInfo(); //path
-        String startIndex = null;
-        String endIndex = null;
+        String startIndex = req.getParameter("startIndex");
+        String endIndex = req.getParameter("endIndex");
 
         System.out.println(req.getQueryString());
 
@@ -88,10 +88,11 @@ public class MyServlet extends HttpServlet {
 
         if(action.equals("getComments")){
 
-            if(pathInfo.startsWith("/")){
-                startIndex = pathInfo.substring(1); //start index
-                endIndex = pathInfo.substring(2); //end index
+            if(startIndex == null || endIndex == null){
+                setBadHttpResponse(resp, "startIndex or endIndex is null", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+                return;
             }
+
             int start = Integer.parseInt(startIndex, 10);
             int end = Integer.parseInt(endIndex, 10);
             List<Comment> commentList = null;
