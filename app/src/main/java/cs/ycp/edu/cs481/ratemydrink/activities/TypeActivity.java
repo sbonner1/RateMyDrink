@@ -172,6 +172,12 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
         if(position == 4) {
             Toast.makeText(this, "You already are on the main menu", Toast.LENGTH_SHORT).show();
         }
+        //This would go to the profile page
+        if(position == 5) {
+            Intent newProfile = new Intent(this, ProfileActivity.class);
+            startActivity(newProfile);
+            return true;
+        }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(navTitles[position]);

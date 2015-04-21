@@ -1,9 +1,116 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="cs.ycp.edu.cs481.ratemydrink.activities.ProfileActivity$PlaceholderFragment">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
 
-</RelativeLayout>
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="641dp"
+            android:background="#96ff8000">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/ProfileTab1"
+                android:id="@+id/profileTitle"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/username"
+                android:id="@+id/usernameTitle"
+                android:layout_below="@+id/profileTitle"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="50dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/num_posted_drinks"
+                android:id="@+id/totalDrinksTitle"
+                android:layout_below="@+id/usernameTitle"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/num_favorites"
+                android:id="@+id/totalFavsTitle"
+                android:layout_below="@+id/totalDrinksTitle"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/num_comments"
+                android:id="@+id/totalCommentsTitle"
+                android:layout_below="@+id/totalFavsTitle"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Sample username"
+                android:id="@+id/usernameField"
+                android:layout_alignBottom="@+id/usernameTitle"
+                android:layout_toRightOf="@+id/usernameTitle"
+                android:layout_toEndOf="@+id/usernameTitle"
+                android:layout_marginLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Sample 40"
+                android:id="@+id/totalDrinksField"
+                android:layout_above="@+id/totalFavsTitle"
+                android:layout_toRightOf="@+id/totalDrinksTitle"
+                android:layout_toEndOf="@+id/totalDrinksTitle"
+                android:layout_marginLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Sample 21"
+                android:id="@+id/totalFavoritesField"
+                android:layout_above="@+id/totalCommentsTitle"
+                android:layout_toRightOf="@+id/totalFavsTitle"
+                android:layout_toEndOf="@+id/totalFavsTitle"
+                android:layout_marginLeft="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Sample 2"
+                android:id="@+id/totalCommentsField"
+                android:layout_alignBottom="@+id/totalCommentsTitle"
+                android:layout_toRightOf="@+id/totalCommentsTitle"
+                android:layout_toEndOf="@+id/totalCommentsTitle"
+                android:layout_marginLeft="15dp" />
+        </RelativeLayout>
+    </FrameLayout>
+</ScrollView>

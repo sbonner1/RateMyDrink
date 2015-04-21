@@ -90,6 +90,7 @@
         <item>Add Liquor</item>
         <item>Add Mixed Drink</item>
         <item>Main Menu</item>
+        <item>Profile</item>
     </string-array>
 
 <!-- TODO: Remove or change this placeholder text -->
@@ -121,8 +122,16 @@
     <string name="title_activity_profile">ProfileActivity</string>
 
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="ProfileTab1">Profile Info</string>
+    <string name="ProfileTab2">Favorites</string>
+    <string name="ProfileTab3">Comments</string>
+
+    <string name="account_name">Username: </string>
+    <string name="num_posted_drinks">Total Drinks: </string>
+    <string name="num_comments">Total Comments: </string>
+    <string name="num_favorites">Total Favorites: </string>
+    <string name="date_joined">Date Joined: </string>
+
+
 
 </resources>
