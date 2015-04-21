@@ -8,7 +8,7 @@ public class User implements Cloneable {
     private String password;
     //private String passwordHash;
     private int id;
-    private boolean adminStatus;
+    private boolean loggedInStatus;
 
     public User() {
         this.userName = "";
@@ -58,17 +58,17 @@ public class User implements Cloneable {
 	*/
     }
 
-    public void setAdminStatusTrue(){
-        this.adminStatus = true;
+    public void setLoggedInStatusTrue(){
+        this.loggedInStatus = true;
     }
 
-    public boolean getAdminStatus(User user){
-        return user.adminStatus;
+    public void setLoggedInStatusFalse() { this.loggedInStatus = false; }
+
+    public boolean isLoggedIn(User user){
+        return user.loggedInStatus;
     }
 
-    public boolean isAdmin(boolean adminStatus){
-        return this.adminStatus;
-    }
+   
 
     @Override
     public User clone(){
