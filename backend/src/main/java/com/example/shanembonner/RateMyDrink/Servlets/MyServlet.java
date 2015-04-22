@@ -87,19 +87,21 @@ public class MyServlet extends HttpServlet {
         }
 
         if(action.equals("getComments")){
+            System.out.println("action is getComments.");
 
-            if(startIndex == null || endIndex == null){
-                setBadHttpResponse(resp, "startIndex or endIndex is null", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+            if(startIndex == null || endIndex == null || id_param == null){
+                setBadHttpResponse(resp, "startIndex or endIndex, or id_param null", "text/plain", HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
 
+            int id = Integer.parseInt(id_param, 10);
             int start = Integer.parseInt(startIndex, 10);
             int end = Integer.parseInt(endIndex, 10);
             List<Comment> commentList = null;
             GetComments controller = new GetComments();
 
             try{
-                commentList = controller.getComments(start, end);
+                commentList = controller.getComments(id, start, end);
             }catch(SQLException e){
                 e.printStackTrace();
             }
