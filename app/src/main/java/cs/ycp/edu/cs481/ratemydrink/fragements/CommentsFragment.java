@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
 
@@ -18,16 +20,27 @@ public class CommentsFragment extends Fragment {
      * activated item position. Only used on tablets.
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
+    private ListView comments;
+    private String[] list;
+    private ArrayAdapter<String> adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile_comments, container, false);
+        //Init ListView
+        list = getResources().getStringArray(R.array.tempComments);
+        comments = (ListView) rootView.findViewById(R.id.commentsList);
 
+        //Set ListView (temp for now)
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
         return rootView;
     }
     @Override

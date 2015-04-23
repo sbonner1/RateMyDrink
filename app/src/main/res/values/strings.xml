@@ -93,7 +93,6 @@
         <item>Profile</item>
     </string-array>
 
-<!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
@@ -133,5 +132,47 @@
     <string name="date_joined">Date Joined: </string>
 
 
+    <!-- TODO: Remove or change this when database comments/favs are implemented -->
+
+    <string-array name="tempComments">
+        <item>Such beer, much alcohol, wow</item>
+        <item>This liquor will put hair on your chest</item>
+        <item>The ABV in this must be over 9000</item>
+        <item>Bleij hausfuf aspuia berr</item>
+        <item>This natty tastes like piss</item>
+        <item>I do say, this beer is astonishing</item>
+        <item>Testing scrollability1</item>
+        <item>Testing scrollability2</item>
+        <item>Testing scrollability3</item>
+        <item>Testing scrollability4</item>
+        <item>Testing scrollability5</item>
+        <item>Testing scrollability6</item>
+        <item>Testing scrollability7</item>
+        <item>Testing scrollability8</item>
+        <item>Testing scrollability9</item>
+        <item>Testing scrollability10</item>
+        <item>Testing scrollability11</item>
+
+    </string-array>
+
+    <string-array name="tempFavs">
+        <item>Captain Morgan Private Stock</item>
+        <item>Grey Goose</item>
+        <item>Hofbrahaus Munich</item>
+        <item>Fireball</item>
+        <item>Jack Daniels Tennessee Honey Whiskey</item>
+        <item>Trashcan</item>
+        <item>Testing scrollability1</item>
+        <item>Testing scrollability2</item>
+        <item>Testing scrollability3</item>
+        <item>Testing scrollability4</item>
+        <item>Testing scrollability5</item>
+        <item>Testing scrollability6</item>
+        <item>Testing scrollability7</item>
+        <item>Testing scrollability8</item>
+        <item>Testing scrollability9</item>
+        <item>Testing scrollability10</item>
+        <item>Testing scrollability11</item>
+    </string-array>
 
 </resources>

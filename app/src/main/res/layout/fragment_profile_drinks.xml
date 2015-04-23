@@ -1,6 +1,3 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
@@ -20,6 +17,14 @@
             android:id="@+id/textView3"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
-        </RelativeLayout>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/favoritesList"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textView3"
+            android:layout_marginBottom="70dp"
+            android:entries="@array/tempFavs" />
+    </RelativeLayout>
     </FrameLayout>
-</ScrollView>
