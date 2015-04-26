@@ -14,13 +14,11 @@ import android.widget.TextView;
 
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Comment;
-import com.rateMyDrink.modelClasses.Drink;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkListArrayAdapter;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetBeerAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetCommentsAsync;
 
@@ -107,7 +105,7 @@ public class DrinkDetailFragment extends Fragment {
             comments = new ArrayList<String>();
 
             GetCommentsAsync getComments = new GetCommentsAsync();
-            getComments.execute(0, 0);
+            getComments.execute(mBeer.getId(),0, 0);
 
             try {
                 try{

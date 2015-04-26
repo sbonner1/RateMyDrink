@@ -15,8 +15,8 @@ import cs.ycp.edu.cs481.ratemydrink.URLInfo;
 public class GetCommentsAsync extends AsyncTask<Integer, Void, Comment[]> {
     @Override
     protected Comment[] doInBackground(Integer... params) {
-        if(params.length < 2){
-            throw new InvalidParameterException("GetCommentsAsync.execute requires 2 parameters.");
+        if(params.length < 3){
+            throw new InvalidParameterException("GetCommentsAsync.execute requires 3 parameters.");
         }
 
         ICommentRequests getCommentsService = RETROFIT.getRestAdapterBuilder()
@@ -24,6 +24,6 @@ public class GetCommentsAsync extends AsyncTask<Integer, Void, Comment[]> {
                 .build()
                 .create(ICommentRequests.class);
 
-        return getCommentsService.getComments(params[0] ,params[1]);
+        return getCommentsService.getComments(params[0], params[1] ,params[2]);
     }
 }

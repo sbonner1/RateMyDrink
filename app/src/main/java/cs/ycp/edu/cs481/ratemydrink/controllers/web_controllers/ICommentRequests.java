@@ -19,6 +19,6 @@ public interface ICommentRequests {
      * @return an array of Comments from the database between indices start and end.
      */
     @GET("/backend/?action=getComments")
-    Comment[] getComments(@Query("start") int start, @Query("end") int end);
+    Comment[] getComments(@Query("id") int id, @Query("startIndex") int start, @Query("endIndex") int end);
 
 }
