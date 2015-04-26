@@ -90,9 +90,9 @@
         <item>Add Liquor</item>
         <item>Add Mixed Drink</item>
         <item>Main Menu</item>
+        <item>Profile</item>
     </string-array>
 
-<!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
@@ -118,5 +118,61 @@
     <string name="title_activity_add_mixed_drink">AddMixedDrinkActivity</string>
     <string name="mixed_drink_description">Description:</string>
     <string name="md_description_hint">Drink Description</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+
+
+    <string name="ProfileTab1">Profile Info</string>
+    <string name="ProfileTab2">Favorites</string>
+    <string name="ProfileTab3">Comments</string>
+
+    <string name="account_name">Username: </string>
+    <string name="num_posted_drinks">Total Drinks: </string>
+    <string name="num_comments">Total Comments: </string>
+    <string name="num_favorites">Total Favorites: </string>
+    <string name="date_joined">Date Joined: </string>
+
+
+    <!-- TODO: Remove or change this when database comments/favs are implemented -->
+
+    <string-array name="tempComments">
+        <item>Such beer, much alcohol, wow</item>
+        <item>This liquor will put hair on your chest</item>
+        <item>The ABV in this must be over 9000</item>
+        <item>Bleij hausfuf aspuia berr</item>
+        <item>This natty tastes like piss</item>
+        <item>I do say, this beer is astonishing</item>
+        <item>Testing scrollability1</item>
+        <item>Testing scrollability2</item>
+        <item>Testing scrollability3</item>
+        <item>Testing scrollability4</item>
+        <item>Testing scrollability5</item>
+        <item>Testing scrollability6</item>
+        <item>Testing scrollability7</item>
+        <item>Testing scrollability8</item>
+        <item>Testing scrollability9</item>
+        <item>Testing scrollability10</item>
+        <item>Testing scrollability11</item>
+
+    </string-array>
+
+    <string-array name="tempFavs">
+        <item>Captain Morgan Private Stock</item>
+        <item>Grey Goose</item>
+        <item>Hofbrahaus Munich</item>
+        <item>Fireball</item>
+        <item>Jack Daniels Tennessee Honey Whiskey</item>
+        <item>Trashcan</item>
+        <item>Testing scrollability1</item>
+        <item>Testing scrollability2</item>
+        <item>Testing scrollability3</item>
+        <item>Testing scrollability4</item>
+        <item>Testing scrollability5</item>
+        <item>Testing scrollability6</item>
+        <item>Testing scrollability7</item>
+        <item>Testing scrollability8</item>
+        <item>Testing scrollability9</item>
+        <item>Testing scrollability10</item>
+        <item>Testing scrollability11</item>
+    </string-array>
 
 </resources>
