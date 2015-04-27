@@ -106,7 +106,7 @@ public class DrinkDetailFragment extends Fragment {
             comments = new ArrayList<String>();
 
             GetCommentsAsync getComments = new GetCommentsAsync();
-            getComments.execute(mBeer.getId(),0, 0);
+            getComments.execute(mBeer.getId(),0, 10);
 
             try {
                 try{
@@ -134,11 +134,9 @@ public class DrinkDetailFragment extends Fragment {
             addComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!commentEditText.getText().toString().equals("")){
-                        Comment comment = new Comment();
-                        comment.setDrinkId(mBeer.getId());
-                        comment.setUsername("user");
-                        comment.setComment(commentEditText.getText().toString());
+                    String commentStr = commentEditText.getText().toString();
+                    if(!commentStr.equals("")){
+                        Comment comment = new Comment(mBeer.getId(), "user", commentStr);
                         comments.add(commentEditText.getText().toString());
                         commentAdapter.notifyDataSetChanged();
                         PostNewCommentAsync postComment = new PostNewCommentAsync();
