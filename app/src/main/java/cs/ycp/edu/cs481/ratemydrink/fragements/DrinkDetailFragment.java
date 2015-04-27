@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetBeerAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetCommentsAsync;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewCommentAsync;
 
 /**
  * A fragment representing a single Drink detail screen.
@@ -134,8 +135,14 @@ public class DrinkDetailFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if(!commentEditText.getText().toString().equals("")){
+                        Comment comment = new Comment();
+                        comment.setDrinkId(mBeer.getId());
+                        comment.setUsername("user");
+                        comment.setComment(commentEditText.getText().toString());
                         comments.add(commentEditText.getText().toString());
                         commentAdapter.notifyDataSetChanged();
+                        PostNewCommentAsync postComment = new PostNewCommentAsync();
+                        postComment.execute(comment);
                     }
                 }
             });
