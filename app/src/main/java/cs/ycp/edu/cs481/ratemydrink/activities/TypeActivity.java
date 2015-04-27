@@ -30,7 +30,7 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type);
 
-        if (findViewById(R.id.container) != null) {
+        if (findViewById(R.id.drink_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
             // res/values-sw600dp). If this view is present, then the
@@ -171,12 +171,6 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
         //Main menu screen, but you are already here
         if(position == 4) {
             Toast.makeText(this, "You already are on the main menu", Toast.LENGTH_SHORT).show();
-        }
-        //This would go to the profile page
-        if(position == 5) {
-            Intent newProfile = new Intent(this, ProfileActivity.class);
-            startActivity(newProfile);
-            return true;
         }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);

@@ -13,14 +13,15 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.rateMyDrink.modelClasses.Beer;
-import com.rateMyDrink.modelClasses.Drink;
+import com.rateMyDrink.modelClasses.Comment;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkListArrayAdapter;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetBeerAsync;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetCommentsAsync;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewCommentAsync;
 
 /**
  * A fragment representing a single Drink detail screen.
@@ -104,7 +105,23 @@ public class DrinkDetailFragment extends Fragment {
 
             comments = new ArrayList<String>();
 
+            GetCommentsAsync getComments = new GetCommentsAsync();
+            getComments.execute(mBeer.getId(),0, 10);
 
+            try {
+                try{
+                    Comment[] commentArr = getComments.get();
+                    if(commentArr != null){
+                        for(Comment comment : commentArr){
+                            comments.add(comment.getComment());
+                        }
+                    }
+                }catch(ExecutionException e){
+                    e.printStackTrace();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             final ArrayAdapter<String> commentAdapter = new ArrayAdapter<String>(
                     getActivity().getBaseContext(), android.R.layout.simple_expandable_list_item_1, comments);
@@ -117,9 +134,13 @@ public class DrinkDetailFragment extends Fragment {
             addComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!commentEditText.getText().toString().equals("")){
+                    String commentStr = commentEditText.getText().toString();
+                    if(!commentStr.equals("")){
+                        Comment comment = new Comment(mBeer.getId(), "user", commentStr);
                         comments.add(commentEditText.getText().toString());
                         commentAdapter.notifyDataSetChanged();
+                        PostNewCommentAsync postComment = new PostNewCommentAsync();
+                        postComment.execute(comment);
                     }
                 }
             });

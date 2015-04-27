@@ -7,6 +7,7 @@
 package com.example.shanembonner.RateMyDrink.Servlets;
 
 import com.rateMyDrink.modelClasses.Beer;
+import com.rateMyDrink.modelClasses.Comment;
 import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.Liquor;
 import com.rateMyDrink.modelClasses.MixedDrink;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controllers.AddBeer;
+import controllers.AddComment;
 import controllers.AddDrink;
 import controllers.AddLiquor;
 import controllers.AddMixedDrink;
@@ -30,6 +32,7 @@ import controllers.DeleteDrink;
 import controllers.DeleteUser;
 import controllers.DeleteUserList;
 import controllers.GetBeer;
+import controllers.GetComments;
 import controllers.GetDrinkList;
 import controllers.GetLiquor;
 import controllers.GetMixedDrink;
@@ -43,6 +46,8 @@ public class MyServlet extends HttpServlet {
         String action = req.getParameter("action");
         String id_param = req.getParameter("id");
         String pathInfo = req.getPathInfo(); //path
+        String startIndex = req.getParameter("startIndex");
+        String endIndex = req.getParameter("endIndex");
 
         System.out.println(req.getQueryString());
 
@@ -79,6 +84,37 @@ public class MyServlet extends HttpServlet {
 
             setOkJsonDrinkHttpResponse(resp, beer.getDrinkName() + "was found.", beer);
             return;
+        }
+
+        if(action.equals("getComments")){
+            System.out.println("action is getComments.");
+
+            if(startIndex == null || endIndex == null || id_param == null){
+                setBadHttpResponse(resp, "startIndex or endIndex, or id_param null", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+
+            int id = Integer.parseInt(id_param, 10);
+            int start = Integer.parseInt(startIndex, 10);
+            int end = Integer.parseInt(endIndex, 10);
+            List<Comment> commentList = null;
+            GetComments controller = new GetComments();
+
+            try{
+                commentList = controller.getComments(id, start, end);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if(commentList != null){
+                Comment[] commentArr = commentList.toArray(new Comment[commentList.size()]);
+                setOkJsonCommentsHttpResponse(resp, "getting drink list", commentArr);
+                return;
+            }else{
+                setBadHttpResponse(resp, "unable to get comments", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+
         }
 
         if(action.equals("getLiquor")){
@@ -194,14 +230,6 @@ public class MyServlet extends HttpServlet {
                 setBadHttpResponse(resp, "drinkList is null.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-            String[] drinkNameList = new String[drinkList.size()]; //return the list of usernames for the scoreboard
-            //as an array of strings to be displayed
-            int count = 0;
-            for(Drink drink: drinkList){
-                String drinkName = drink.getDrinkName();
-                drinkNameList[count] = drinkName;
-                count++;
-            }
 
             Drink[] drinkArr = drinkList.toArray(new Drink[drinkList.size()]);
             setOkJsonDrinkHttpResponse(resp, "getting drink list", drinkArr);
@@ -248,6 +276,28 @@ public class MyServlet extends HttpServlet {
             }
         }
 
+        /**
+         * to add a new comment object to the database
+         */
+        if(action.equals("addComment")){
+            System.out.println("action is addComment");
+
+            Comment newComment = JSON.getObjectMapper().readValue(req.getReader(), Comment.class);
+            AddComment controller = new AddComment();
+            boolean success = false;
+
+            try{
+                success = controller.addComment(newComment);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if(success){
+                setOkJsonCommentHttpResponse(resp, "new comment successfully added to database", newComment);
+            }else{
+                setBadHttpResponse(resp, "failed to add comment to database", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+            }
+        }
         /**
          * to add a new liquor object to the database
          */
@@ -459,6 +509,33 @@ public class MyServlet extends HttpServlet {
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("application/json");
         JSON.getObjectMapper().writeValue(resp.getWriter(), drink);
+    }
+
+    /**
+     *
+     * @param resp the servlet response
+     * @param msg a message to print to the console
+     * @param comment the comment object to be written to the body of the response
+     * @throws IOException
+     */
+    private void setOkJsonCommentHttpResponse(HttpServletResponse resp, String msg, Comment comment) throws IOException{
+        System.out.println(msg);
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        JSON.getObjectMapper().writeValue(resp.getWriter(), comment);
+    }
+
+    /**
+     * sets the Servlet response with a 200 OK status code and writes an array of Comment objects to the body of the response
+     * @param resp the servlet response
+     * @param msg a message to print to the console
+     * @param comments the array of comment objects to be written to the body of the response
+     */
+    private void setOkJsonCommentsHttpResponse(HttpServletResponse resp, String msg, Comment[] comments) throws IOException{
+        System.out.println(msg);
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        JSON.getObjectMapper().writeValue(resp.getWriter(), comments);
     }
 
     /**

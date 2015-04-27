@@ -3,6 +3,7 @@ package com.rateMyDrink.modelClasses;
 import com.fasterxml.jackson.core.JsonParseException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by shanembonner on 1/28/15.
@@ -13,6 +14,7 @@ public class Drink {
     protected String description;
     protected float rating;
     protected int id;
+    protected ArrayList<Comment> comments;
 
     //constructor
     public Drink(){
@@ -78,7 +80,15 @@ public class Drink {
     public float getRating(){
         return this.rating;
     }
+/*
+    public void setComments(ArrayList<Comment> commentList){
+        this.comments.addAll(commentList);
+    }
 
+    public ArrayList<Comment> getComments(){
+        return this.comments;
+    }
+*/
 }
 
 

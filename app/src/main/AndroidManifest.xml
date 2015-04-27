@@ -65,10 +65,6 @@
             android:name=".activities.AddMixedDrinkActivity"
             android:label="@string/title_activity_add_mixed_drink" >
         </activity>
-        <activity
-            android:name=".activities.ProfileActivity"
-            android:label="@string/title_activity_profile" >
-        </activity>
     </application>
 
 </manifest>

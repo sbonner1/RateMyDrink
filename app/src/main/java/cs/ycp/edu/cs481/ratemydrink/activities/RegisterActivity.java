@@ -123,12 +123,6 @@ public class RegisterActivity extends ActionBarActivity {
             return true;
 
         }
-        //This would go to the profile page
-        if(position == 5) {
-            Intent newProfile = new Intent(this, ProfileActivity.class);
-            startActivity(newProfile);
-            return true;
-        }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(navTitles[position]);

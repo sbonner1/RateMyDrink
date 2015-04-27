@@ -15,6 +15,19 @@ public class Comment {
         //this.comment = comment;
     }
 
+    /**
+     * constructor to initialize all fields
+     *
+     * @param id id of the associated drink
+     * @param username name of the user that posted this comment
+     * @param comment the comment
+     */
+    public Comment(int id, String username, String comment){
+        this.drinkId = id;
+        this.username = username;
+        this.comment = comment;
+    }
+
     public void setDrinkId(int value){
         this.drinkId = value;
     }

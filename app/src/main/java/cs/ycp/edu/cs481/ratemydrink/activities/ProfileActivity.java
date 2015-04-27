@@ -1,104 +1,36 @@
 package cs.ycp.edu.cs481.ratemydrink.activities;
 
-import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.TabListener;
-import cs.ycp.edu.cs481.ratemydrink.fragements.CommentsFragment;
-import cs.ycp.edu.cs481.ratemydrink.fragements.FavoritesFragment;
-import cs.ycp.edu.cs481.ratemydrink.fragements.ProfileFragment;
 
-@SuppressWarnings("deprecation")
 public class ProfileActivity extends ActionBarActivity {
-
-    private String[] navTitles;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private boolean mTwoPane;
-    private CharSequence mTitle;
-    private CharSequence mDrawerTitle;
-    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setup action bar for tabs
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        ActionBar.Tab tab = actionBar.newTab()
-                .setText(R.string.ProfileTab1)
-                .setTabListener(new TabListener<ProfileFragment>(
-                        this, "Profile", ProfileFragment.class));
-        actionBar.addTab(tab);
-
-        ActionBar.Tab tab2 = actionBar.newTab()
-                .setText(R.string.ProfileTab2)
-                .setTabListener(new TabListener<FavoritesFragment>(
-                        this, "Profile", FavoritesFragment.class));
-        actionBar.addTab(tab2);
-
-        ActionBar.Tab tab3 = actionBar.newTab()
-                .setText(R.string.ProfileTab3)
-                .setTabListener(new TabListener<CommentsFragment>(
-                        this, "Profile", CommentsFragment.class));
-        actionBar.addTab(tab3);
-
-//        setContentView(R.layout.activity_profile);
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.Pcontainer, new ProfileFragment())
-//                    .commit();
-//        }
-//        navTitles = getResources().getStringArray(R.array.navItems);
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-//
-//        mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, navTitles));
-//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-//
-//        // Set the drawer toggle as the DrawerListener
-//        mDrawerLayout.setDrawerListener(mDrawerToggle);
-    }
-
-    private void setupTabs() {
-//        ActionBar bar = getSupportActionBar();
-//        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-//        bar.setDisplayShowTitleEnabled(true);
-//
-//        //Add Tabs
-//        ActionBar.Tab profileTab = bar
-//                .newTab()
-//                .setText("Info")
-//                .setIcon(R.drawable.drinkicon)
-//                .setTabListener(
-//                        new SupportFragmentTabListener<ProfileFragment>(R.id.), this, "Profile", ProfileFragment.class));
-//
-
+        setContentView(R.layout.activity_profile);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment())
+                    .commit();
+        }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
     }
 
@@ -117,53 +49,19 @@ public class ProfileActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Allows items from drawer to be selected
-    private boolean selectItem(int position) {
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
 
-        //Open up login page
-        if(position == 0)
-        {
-            Intent newLoginIntent = new Intent(this, LoginActivity.class);
-            startActivity(newLoginIntent);
-            return true;
+        public PlaceholderFragment() {
         }
-        //Open up new drink page
-        if(position == 1) {
-            Intent newDrinkIntent = new Intent(this, AddBeerActivity.class);
-            startActivity(newDrinkIntent);
-            return true;
-        }
-        //This would go to add a liquor drink
-        if(position == 2) {
-            Intent newLiquorIntent = new Intent(this, AddLiquorActivity.class);
-            startActivity(newLiquorIntent);
-            return true;
-        }
-        //This would go to add a mixed drink
-        if(position == 3) {
-            Intent newMixedIntent = new Intent(this, AddMixedDrinkActivity.class);
-            startActivity(newMixedIntent);
-            return true;
-        }
-        //Main menu screen, but you are already here
-        if(position == 4) {
-            Intent newMenuIntent = new Intent(this, TypeActivity.class);
-            startActivity(newMenuIntent);
-            return true;
-        }
-        // Highlight the selected item, update the title, and close the drawer
-//        mDrawerList.setItemChecked(position, true);
-//        setTitle(navTitles[position]);
-//        mDrawerLayout.closeDrawer(mDrawerList);
-        return false;
-    }
 
-    //Click listener on drawer
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            selectItem(position);
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+            return rootView;
         }
     }
-
 }

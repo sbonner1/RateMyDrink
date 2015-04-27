@@ -456,8 +456,9 @@ public class DerbyDatabase implements IDatabase {
         });
     }
 
+    //this method will end up being unused
     @Override
-    public List<Comment> getComments() throws SQLException {
+    public List<Comment> getComments(final int id, final int start, final int end) throws SQLException {
         return executeTransaction(new Transaction<List<Comment>>() {
             @Override
             public List<Comment> execute(Connection conn) throws SQLException {
@@ -466,17 +467,23 @@ public class DerbyDatabase implements IDatabase {
 
                 try{
                     stmt = conn.prepareStatement("select * from " + DB_COMMENT_TABLENAME + " where drinkId = ?");
+                    stmt.setInt(1, id);
                     resultSet = stmt.executeQuery();
 
                     List<Comment> result = new ArrayList<Comment>();
-                    while(resultSet.next()){
+                    int count = start;
+                    //ensure that the resultSet only contains the specified ids
+                    while(resultSet.next() && count <= end){
                         Comment comment = new Comment();
                         loadComment(comment, resultSet, 1);
                         result.add(comment);
+                        count++;
                     }
 
                     return result;
                 }finally{
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(resultSet);
 
                 }
             }
