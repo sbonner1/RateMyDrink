@@ -24,6 +24,7 @@ public class FavoritesFragment extends Fragment {
     private ListView favs;
     private String[] list2;
     private ArrayAdapter<String> adapter2;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
