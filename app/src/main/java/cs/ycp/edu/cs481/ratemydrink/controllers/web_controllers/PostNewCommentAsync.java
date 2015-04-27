@@ -12,7 +12,7 @@ import cs.ycp.edu.cs481.ratemydrink.controllers.CommentAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
- * Created by Josh on 4/27/2015.
+ * An AsyncTask to post a new Comment object to the backend database
  */
 public class PostNewCommentAsync extends AsyncTask<Comment, Void, Comment> {
     @Override
