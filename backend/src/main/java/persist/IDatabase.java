@@ -37,6 +37,8 @@ public interface IDatabase {
 
     Beer getBeer(int id) throws SQLException;
 
+    List<Beer> getBeerList() throws SQLException;
+
     //TODO:edit to take start index and end index
     List<Comment> getComments(int id, int start, int end) throws SQLException;
 
@@ -44,7 +46,11 @@ public interface IDatabase {
 
     Liquor getLiquor(int id) throws SQLException;
 
+    List<Liquor> getLiquorList() throws SQLException;
+
     MixedDrink getMixedDrink(int id) throws SQLException;
+
+    List<MixedDrink> getMixedDrinkList() throws SQLException;
 
     User getUser(String userName, String password) throws SQLException;
 

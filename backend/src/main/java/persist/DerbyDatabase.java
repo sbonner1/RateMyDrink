@@ -403,6 +403,17 @@ public class DerbyDatabase implements IDatabase {
         });
     }
 
+
+    /**
+     *
+     *
+     *
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+
     @Override
     public Beer getBeer(final int id) throws SQLException {
         return executeTransaction(new Transaction<Beer>() {
@@ -456,6 +467,54 @@ public class DerbyDatabase implements IDatabase {
         });
     }
 
+    @Override
+    public List<Beer> getBeerList() throws SQLException{
+        return executeTransaction(new Transaction<List<Beer>>() {
+            @Override
+            public List<Beer> execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                ResultSet resultSet = null;
+                ResultSet resultSet2 = null;
+
+                try{
+                    stmt = conn.prepareStatement("select * from " + DB_BEER_TABLENAME);
+                    resultSet = stmt.executeQuery();
+
+                    List<Beer> result = new ArrayList<Beer>();
+
+                    while(resultSet.next()){
+                        Beer beer = new Beer();
+                        loadBeer(beer, resultSet, 1);
+                        result.add(beer);
+                    }
+
+                    //for each beer item, get the name and description from the main drink database
+                    for(Beer item: result){
+                        stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
+                        stmt2.setInt(1, item.getId());
+
+                        resultSet2 = stmt2.executeQuery();
+                        Drink newDrink = new Drink();
+                        loadDrink(newDrink, resultSet2, 1);
+
+                        item.setDescription(newDrink.getDescription());
+                        item.setDrinkName(newDrink.getDrinkName());
+
+                    }
+
+                    return result;
+
+                }finally{
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(resultSet2);
+                }
+            }
+        });
+    }
+
     //this method will end up being unused
     @Override
     public List<Comment> getComments(final int id, final int start, final int end) throws SQLException {
@@ -499,7 +558,7 @@ public class DerbyDatabase implements IDatabase {
                 ResultSet resultSet = null;
 
                 try{
-                    stmt = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME );
+                    stmt = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME);
                     resultSet = stmt.executeQuery();
 
                     List<Drink> result = new ArrayList<Drink>();
@@ -561,6 +620,47 @@ public class DerbyDatabase implements IDatabase {
                     DBUtil.closeQuietly(resultSet2);
                     DBUtil.closeQuietly(stmt);
                     DBUtil.closeQuietly(stmt2);
+                }
+            }
+        });
+    }
+
+    @Override
+    public List<Liquor> getLiquorList() throws SQLException{
+        return executeTransaction(new Transaction<List<Liquor>>() {
+            @Override
+            public List<Liquor> execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                ResultSet resultSet = null;
+                ResultSet resultSet2 = null;
+
+                try{
+                    stmt = conn.prepareStatement("select * from " + DB_LIQUOR_TABLENAME);
+                    resultSet = stmt.executeQuery();
+
+                    List<Liquor> result = new ArrayList<Liquor>();
+                    while(resultSet.next()){
+                        Liquor liquor = new Liquor();
+                        loadLiquor(liquor, resultSet, 1);
+                        result.add(liquor);
+                    }
+
+                    for(Liquor item : result){
+                        stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
+                        stmt2.setInt(1, item.getId());
+
+                        resultSet2 = stmt2.executeQuery();
+                        Drink drink = new Drink();
+                        loadDrink(drink, resultSet2, 1);
+
+                        item.setDrinkName(drink.getDrinkName());
+                        item.setDescription(drink.getDescription());
+                    }
+
+                    return result;
+                }finally{
+
                 }
             }
         });
@@ -629,6 +729,75 @@ public class DerbyDatabase implements IDatabase {
                     DBUtil.closeQuietly(stmt);
                     DBUtil.closeQuietly(stmt2);
                     DBUtil.closeQuietly(stmt3);
+                }
+            }
+        });
+    }
+
+    @Override
+    public List<MixedDrink> getMixedDrinkList() throws SQLException{
+        return executeTransaction(new Transaction<List<MixedDrink>>() {
+            @Override
+            public List<MixedDrink> execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                PreparedStatement stmt3 = null;
+                ResultSet resultSet = null; //get the mixedDrink object
+                ResultSet resultSet2 = null; //get the list of ingredient objects
+                ResultSet resultSet3 = null; //get the Drink object and take the name and description from it
+
+                try{
+                    //retrieve all mixedDrink items
+                    stmt = conn.prepareStatement("select * from " + DB_MIXED_DRINK_TABLENAME);
+                    resultSet = stmt.executeQuery();
+
+                    List<MixedDrink> result = new ArrayList<MixedDrink>();
+                    while(resultSet.next()) {
+                        MixedDrink mixedDrink = new MixedDrink();
+                        loadMixedDrink(mixedDrink, resultSet, 1);
+                        result.add(mixedDrink);
+                    }
+
+                    //for each mixedDrink item, you must retrieve the ingredients list as well
+                    for(MixedDrink item : result){
+                        stmt2 = conn.prepareStatement("select * from " + DB_INGREDIENTS_TABLENAME + " where drinkId = ?");
+                        stmt2.setInt(1, item.getId());
+
+                        resultSet2 = stmt2.executeQuery();
+
+                        ArrayList<Ingredient> ingrList = new ArrayList<Ingredient>();
+                        while(resultSet2.next()){
+                            Ingredient ingr = new Ingredient();
+                            loadMixedDrinkIngredient(ingr, resultSet2, 1);
+                            ingrList.add(ingr);
+                        }
+
+                        item.setIngredients(ingrList);
+                    }
+
+                    //now retrieve the name and description from the corresponding drink object
+                    for(MixedDrink item: result){
+                        stmt3 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
+                        stmt3.setInt(1, item.getId());
+
+                        resultSet3 = stmt3.executeQuery();
+                        Drink newDrink = new Drink();
+                        loadDrink(newDrink, resultSet3, 1);
+
+                        item.setDescription(newDrink.getDescription());
+                        item.setDrinkName(newDrink.getDrinkName());
+
+                    }
+
+                    return result;
+                }finally{
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                    DBUtil.closeQuietly(stmt3);
+                    DBUtil.closeQuietly(resultSet);
+                    DBUtil.closeQuietly(resultSet2);
+                    DBUtil.closeQuietly(resultSet3);
+
                 }
             }
         });
