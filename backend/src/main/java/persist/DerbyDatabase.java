@@ -473,12 +473,34 @@ public class DerbyDatabase implements IDatabase {
             @Override
             public List<Beer> execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
-                PreparedStatement stmt2 = null;
+                //PreparedStatement stmt2 = null;
                 ResultSet resultSet = null;
-                ResultSet resultSet2 = null;
+                //ResultSet resultSet2 = null;
 
                 try{
-                    stmt = conn.prepareStatement("select * from " + DB_BEER_TABLENAME);
+
+                    stmt = conn.prepareStatement("select d.*, b.* " +
+                            " from mainDrinkTable as d, beerTable as b " +
+                            "  where d.id = b.drink_id");
+
+                    List<Beer> result = new ArrayList<Beer>();
+
+                    resultSet = stmt.executeQuery();
+                    while(resultSet.next()) {
+                        Drink drink = new Drink();
+                        Beer beer = new Beer();
+                        // the third parameter of loadDrink and loadBeer is
+                        // the offset in the ResultSet where the field values
+                        // will be loaded from (i.e., the index)
+                        loadDrink(drink, resultSet, 1);
+                        loadBeer(beer, resultSet, Drink.NUM_FIELDS+1);
+
+                        beer.setDescription(drink.getDescription());
+                        beer.setDrinkName(drink.getDrinkName());
+
+                        result.add(beer);
+                    }
+      /*              stmt = conn.prepareStatement("select * from " + DB_BEER_TABLENAME);
                     resultSet = stmt.executeQuery();
 
                     List<Beer> result = new ArrayList<Beer>();
@@ -502,14 +524,14 @@ public class DerbyDatabase implements IDatabase {
                         item.setDrinkName(newDrink.getDrinkName());
 
                     }
-
+*/
                     return result;
 
                 }finally{
                     DBUtil.closeQuietly(stmt);
-                    DBUtil.closeQuietly(stmt2);
+                 //   DBUtil.closeQuietly(stmt2);
                     DBUtil.closeQuietly(resultSet);
-                    DBUtil.closeQuietly(resultSet2);
+                 // DBUtil.closeQuietly(resultSet2);
                 }
             }
         });
