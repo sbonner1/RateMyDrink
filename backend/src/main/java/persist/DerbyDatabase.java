@@ -481,7 +481,7 @@ public class DerbyDatabase implements IDatabase {
 
                     stmt = conn.prepareStatement("select d.*, b.* " +
                             " from mainDrinkTable as d, beerTable as b " +
-                            "  where d.id = b.drink_id");
+                            "  where d.id = b.drinkId");
 
                     List<Beer> result = new ArrayList<Beer>();
 
