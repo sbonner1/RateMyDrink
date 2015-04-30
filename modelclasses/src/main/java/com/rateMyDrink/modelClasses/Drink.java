@@ -14,6 +14,8 @@ public class Drink {
     protected String description;
     protected float rating;
     protected int id;
+    public static final int NUM_FIELDS = 4;
+
     protected ArrayList<Comment> comments;
 
     //constructor
