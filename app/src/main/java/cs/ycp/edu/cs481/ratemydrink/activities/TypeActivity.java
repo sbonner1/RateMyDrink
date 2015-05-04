@@ -138,6 +138,7 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
             // for the selected item ID.
             Intent detailIntent = new Intent(this, DrinkListActivity.class);
             detailIntent.putExtra(DrinkDetailFragment.ARG_ITEM_ID, id);
+            DrinkListFragment.DRINK_TYPE_ID = Integer.parseInt(id);
             startActivity(detailIntent);
         }
     }

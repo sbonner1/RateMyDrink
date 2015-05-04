@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.fragements.DrinkDetailFragment;
@@ -123,7 +122,6 @@ public class DrinkListActivity extends ActionBarActivity implements DrinkListFra
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, DrinkDetailActivity.class);
-            detailIntent.putExtra(DrinkDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }

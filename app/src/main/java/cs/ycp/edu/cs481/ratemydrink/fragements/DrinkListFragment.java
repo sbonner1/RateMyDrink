@@ -25,6 +25,8 @@ import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetDrinkListAsyn
  */
 public class DrinkListFragment extends ListFragment {
 
+    public static int DRINK_TYPE_ID;
+
     Drink[] drinkArr = null;
 
     /**
@@ -78,7 +80,7 @@ public class DrinkListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         GetDrinkListAsync getDrinkList = new GetDrinkListAsync();
-        getDrinkList.execute();
+        getDrinkList.execute(DRINK_TYPE_ID);
 
         try {
             drinkArr = getDrinkList.get();

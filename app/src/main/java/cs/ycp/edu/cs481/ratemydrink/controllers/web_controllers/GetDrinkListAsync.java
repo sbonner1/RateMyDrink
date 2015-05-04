@@ -29,9 +29,9 @@ public class GetDrinkListAsync extends AsyncTask<Integer, Void, Drink[]>{
                 .build()
                 .create(IGetDrinksList.class);
 
-        if(params[0] == 0){
+        if(params[0] == 1){
             return getDrinkListService.getBeerList();
-        }else if(params[0] == 1){
+        }else if(params[0] == 2){
             return getDrinkListService.getLiquorList();
         }else{
             return getDrinkListService.getMixedDrinkList();
