@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Comment;
@@ -44,6 +45,7 @@ public class DrinkDetailFragment extends Fragment {
     private TextView txtRatingValue;
     private EditText commentEditText;
     private Button addComment;
+    private Button favorites;
     private ArrayList<String> comments;
 
     /**
@@ -144,6 +146,15 @@ public class DrinkDetailFragment extends Fragment {
                     }
                 }
             });
+            favorites = (Button) rootView.findViewById(R.id.favButton);
+            favorites.setOnClickListener(new View.OnClickListener() {
+                @Override
+            public void onClick(View v) {
+                    //Post drink as a favorites for the user
+                    Toast.makeText(getActivity(), "Drink has been added to your favorites!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
 
         return rootView;

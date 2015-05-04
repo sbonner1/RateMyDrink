@@ -180,7 +180,6 @@ public class DrinkListActivity extends ActionBarActivity implements DrinkListFra
             NavUtils.navigateUpTo(this, new Intent(this, TypeActivity.class));
         }
         //This would go to the profile page
-        //This would go to the profile page
         if(position == 5) {
             if(TypeActivity.loginStatus == true) {
                 Intent newProfile = new Intent(this, ProfileActivity.class);
