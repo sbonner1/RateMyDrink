@@ -122,9 +122,15 @@ public class LoginActivity extends ActionBarActivity {
         }
         //This would go to the profile page
         if(position == 5) {
-            Intent newProfile = new Intent(this, ProfileActivity.class);
-            startActivity(newProfile);
+            if(TypeActivity.loginStatus == true) {
+                Intent newProfile = new Intent(this, ProfileActivity.class);
+                startActivity(newProfile);
+            }
+            else{
+                Toast.makeText(this, "You need to login to view a profile!", Toast.LENGTH_SHORT).show();
+            }
             return true;
+
         }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);

@@ -27,7 +27,7 @@ public class DummyContent {
         // Add 3 sample items.
         addItem(new DummyItem("1", "Beer", "After a long day."));
         addItem(new DummyItem("2", "Hard Liquor", "After a very long day."));
-        addItem(new DummyItem("3", "Wine", "Just because."));
+        addItem(new DummyItem("3", "Mixed Drinks", "When you need to hold a party."));
     }
 
     private static void addItem(DummyItem item) {

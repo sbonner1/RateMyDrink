@@ -26,6 +26,7 @@ public class AddBeerActivity extends ActionBarActivity {
     private CharSequence mDrawerTitle;
     private ActionBarDrawerToggle mDrawerToggle;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,7 @@ public class AddBeerActivity extends ActionBarActivity {
                     .add(R.id.container, new AddBeerFragment())
                     .commit();
         }
+
         navTitles = getResources().getStringArray(R.array.navItems);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -128,9 +130,15 @@ public class AddBeerActivity extends ActionBarActivity {
         }
         //This would go to the profile page
         if(position == 5) {
-            Intent newProfile = new Intent(this, ProfileActivity.class);
-            startActivity(newProfile);
+            if(TypeActivity.loginStatus == true) {
+                Intent newProfile = new Intent(this, ProfileActivity.class);
+                startActivity(newProfile);
+            }
+            else{
+                Toast.makeText(this, "You need to login to view a profile!", Toast.LENGTH_SHORT).show();
+            }
             return true;
+
         }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
