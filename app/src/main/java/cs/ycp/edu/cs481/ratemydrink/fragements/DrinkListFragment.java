@@ -1,6 +1,7 @@
 package cs.ycp.edu.cs481.ratemydrink.fragements;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -77,8 +78,11 @@ public class DrinkListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Bundle idBundle = new Intent().getExtras();
+
+
         GetDrinkListAsync getDrinkList = new GetDrinkListAsync();
-        getDrinkList.execute();
+        getDrinkList.execute(Integer.parseInt(idBundle.getString(DrinkDetailFragment.ARG_ITEM_ID)));
 
         try {
             drinkArr = getDrinkList.get();

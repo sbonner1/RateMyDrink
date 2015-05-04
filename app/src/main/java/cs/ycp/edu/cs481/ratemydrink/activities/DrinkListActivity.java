@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.fragements.DrinkDetailFragment;

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.fragements.DrinkDetailFragment;
 import cs.ycp.edu.cs481.ratemydrink.fragements.DrinkListFragment;
 import cs.ycp.edu.cs481.ratemydrink.fragements.TypeListFragment;
 
@@ -136,6 +137,7 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, DrinkListActivity.class);
+            detailIntent.putExtra(DrinkDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }
