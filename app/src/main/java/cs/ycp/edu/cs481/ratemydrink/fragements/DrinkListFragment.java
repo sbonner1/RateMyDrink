@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
+
 import com.rateMyDrink.modelClasses.Drink;
+
 import java.util.concurrent.ExecutionException;
+
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkListArrayAdapter;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetDrinkListAsync;
-import static cs.ycp.edu.cs481.ratemydrink.dummy.DummyContent.ITEMS;
 
 /**
  * A list fragment representing a list of Drinks. This fragment
@@ -78,9 +80,6 @@ public class DrinkListFragment extends ListFragment {
         GetDrinkListAsync getDrinkList = new GetDrinkListAsync();
         getDrinkList.execute();
 
-        //ArrayList<Drink> drinkArr = null;
-
-
         try {
             drinkArr = getDrinkList.get();
         } catch (InterruptedException e) {
@@ -94,14 +93,6 @@ public class DrinkListFragment extends ListFragment {
                 drinkArr);
 
         setListAdapter(adapter2);
-
-        /*
-        DrinkListArrayAdapter<String> adapter2 = new DrinkListArrayAdapter<String>(
-                getActivity().getBaseContext(), R.layout.list_item_layout, R.layout.list_item_layout,
-                drinkNames);
-
-        setListAdapter(adapter2);
-        */
 
     }
 
