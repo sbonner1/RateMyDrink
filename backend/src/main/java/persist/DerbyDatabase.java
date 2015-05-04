@@ -743,11 +743,9 @@ public class DerbyDatabase implements IDatabase {
                 ResultSet resultSet = null; //get the mixedDrink object
 
                 try{
-                    stmt = conn.prepareStatement("select d.*, m.*, i.* " +
-                            " from mainDrinkTable as d, mixedDrinkTable as m, ingredientsTable as i " +
-                            " where d.id = m.drinkId " +
-                            " and d.id = i.id "
-                    );
+                    stmt = conn.prepareStatement("select d.*, m.* " +
+                            " from mainDrinkTable as d, mixedDrinkTable as m " +
+                            "  where d.id = m.drinkId");
 
 
                     List<MixedDrink> result = new ArrayList<MixedDrink>();
@@ -761,7 +759,7 @@ public class DerbyDatabase implements IDatabase {
                         // will be loaded from (i.e., the index)
                         loadDrink(drink, resultSet, 1);
                         loadMixedDrink(mixedDrink, resultSet, Drink.NUM_FIELDS+1);
-                        mixedDrink.setIngredients(getIngredientsForMixedDrink(conn, mixedDrink));
+                        mixedDrink.setIngredients(getIngredientsForMixedDrink(conn, mixedDrink)); //method below
 
                         mixedDrink.setDescription(drink.getDescription());
                         mixedDrink.setDrinkName(drink.getDrinkName());
@@ -994,6 +992,7 @@ public class DerbyDatabase implements IDatabase {
                 PreparedStatement stmt5 = null; //liquor database table
                 PreparedStatement stmt6 = null; //ingredient amount database table
                 PreparedStatement stmt7 = null; //comment table
+                PreparedStatement stmt8 = null; //favorites table
 
                 try{
                     //database table to store all created user objects
