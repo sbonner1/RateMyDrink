@@ -4,6 +4,7 @@ import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.BeerType;
 import com.rateMyDrink.modelClasses.Comment;
 import com.rateMyDrink.modelClasses.Drink;
+import com.rateMyDrink.modelClasses.Favorite;
 import com.rateMyDrink.modelClasses.Ingredient;
 import com.rateMyDrink.modelClasses.Liquor;
 import com.rateMyDrink.modelClasses.LiquorType;
@@ -40,6 +41,7 @@ public class DerbyDatabase implements IDatabase {
     private static final String DB_LIQUOR_TABLENAME = "liquorTable";
     private static final String DB_COMMENT_TABLENAME = "commentTable";
     private static final String DB_INGREDIENTS_TABLENAME = "ingredientsTable";
+    private static final String DB_FAVORITES_TABLENAME = "favoritesTable";
 
 
     @Override
@@ -182,6 +184,22 @@ public class DerbyDatabase implements IDatabase {
         });
     }
 
+    @Override
+    public boolean addNewFavorite(final Favorite fav) throws SQLException {
+        return executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+
+                try{
+                    return null;
+                }finally{
+
+                }
+
+            }
+        });
+    }
     @Override
     public boolean addNewLiquor(final Liquor liquor) throws SQLException {
         return executeTransaction(new Transaction<Boolean>() {
@@ -404,15 +422,6 @@ public class DerbyDatabase implements IDatabase {
     }
 
 
-    /**
-     *
-     *
-     *
-     *
-     * @param id
-     * @return
-     * @throws SQLException
-     */
 
     @Override
     public Beer getBeer(final int id) throws SQLException {
@@ -574,6 +583,7 @@ public class DerbyDatabase implements IDatabase {
             }
         });
     }
+
 
     @Override
     public Liquor getLiquor(final int id) throws SQLException {
@@ -908,6 +918,45 @@ public class DerbyDatabase implements IDatabase {
     }
 
     @Override
+    public boolean updateRating(final Drink drink, final float rating) throws SQLException{
+       return executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+                ResultSet resultSet = null;
+
+                try{
+                    stmt = conn.prepareStatement("select * where drinkId = ?");
+                    stmt.setInt(1, drink.getId());
+                    stmt.executeUpdate();
+
+                    Drink newDrink = new Drink();
+                    loadDrink(newDrink, resultSet, 1);
+
+                    int numRatings = newDrink.getNumRatings();
+                    float newRating = newDrink.getRating();
+
+                    numRatings++;
+                    newRating = (newRating + rating) / numRatings;
+
+                    stmt2 = conn.prepareStatement("update " + DB_MAIN_DRINK_TABLENAME + " set rating = ?, numRatings = ? where drinkId = ?");
+                    stmt2.setFloat(1, newRating);
+                    stmt2.setInt(2, numRatings);
+                    stmt2.setInt(3, newDrink.getId());
+
+                    stmt2.executeUpdate();
+                    return true;
+                } finally{
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(stmt2);
+                    DBUtil.closeQuietly(resultSet);
+                }
+            }
+        });
+    }
+
+    @Override
     public void replaceUserList(List<User> newUserList) {
         //TODO: replace user list
     }
@@ -1010,8 +1059,9 @@ public class DerbyDatabase implements IDatabase {
                             "create table " + DB_MAIN_DRINK_TABLENAME + " (" +
                             " id integer primary key not null generated always as identity," +
                             " drinkName varchar(200) unique," +
-                            " description varchar(1500), " +
-                            " rating float(1)" +
+                            " description varchar(1500)," +
+                            " rating float(1)," +
+                            " numRatings integer" +
                             ")"
                      );
 
@@ -1063,6 +1113,14 @@ public class DerbyDatabase implements IDatabase {
                             ")"
                     );
 
+                    stmt8 = conn.prepareStatement(
+
+                            "create table " + DB_FAVORITES_TABLENAME + " (" +
+                            " userId integer," +
+                            " drinkId integer" +
+                            ")"
+                    );
+
 
                     stmt.executeUpdate();
                     stmt2.executeUpdate();
@@ -1071,6 +1129,7 @@ public class DerbyDatabase implements IDatabase {
                     stmt5.executeUpdate();
                     stmt6.executeUpdate();
                     stmt7.executeUpdate();
+                    stmt8.executeUpdate();
 
                     return true;
                 }finally {
@@ -1081,6 +1140,7 @@ public class DerbyDatabase implements IDatabase {
                     DBUtil.closeQuietly(stmt5);
                     DBUtil.closeQuietly(stmt6);
                     DBUtil.closeQuietly(stmt7);
+                    DBUtil.closeQuietly(stmt8);
                 }
             }
         } );
@@ -1105,6 +1165,7 @@ public class DerbyDatabase implements IDatabase {
         stmt.setString(index++, drink.getDrinkName());
         stmt.setString(index++, drink.getDescription());
         stmt.setFloat(index++, drink.getRating());
+        stmt.setInt(index++, drink.getNumRatings());
     }
 
     protected void storeBeerNoId(Beer beer, PreparedStatement stmt, int index) throws SQLException {
@@ -1204,6 +1265,7 @@ public class DerbyDatabase implements IDatabase {
         drink.setDrinkName(resultSet.getString(index++));
         drink.setDescription(resultSet.getString(index++));
         drink.setRating(resultSet.getFloat(index++));
+        drink.setNumRatings(resultSet.getInt(index++));
     }
 
     protected void loadLiquor(Liquor liquor, ResultSet resultSet, int index) throws SQLException {
