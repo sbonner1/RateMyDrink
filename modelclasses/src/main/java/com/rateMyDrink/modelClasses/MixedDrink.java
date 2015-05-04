@@ -13,6 +13,7 @@ public class MixedDrink extends Drink {
     private ArrayList<Ingredient> ingredients;
    // private ArrayList<Double> ingrAmount;
   //  public String[][] recipe;
+   public static final int NUM_FIELDS = 2;
 
     public MixedDrink(){
 
