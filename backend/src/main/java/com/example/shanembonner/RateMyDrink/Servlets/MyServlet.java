@@ -167,14 +167,6 @@ public class MyServlet extends HttpServlet {
                 setBadHttpResponse(resp, "drinkList is null.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-//            String[] drinkNameList = new String[drinkList.size()]; //return the list of drink names for the scoreboard
-//                                                                   //as an array of strings to be displayed
-//            int count = 0;
-//            for(Drink drink: drinkList){
-//                String drinkName = drink.getDrinkName();
-//                drinkNameList[count] = drinkName;
-//                count++;
-//            }
 
             Drink[] drinkArr = drinkList.toArray(new Drink[drinkList.size()]);
             setOkJsonDrinkHttpResponse(resp, "getting drink list", drinkArr);
@@ -222,16 +214,6 @@ public class MyServlet extends HttpServlet {
                 return;
             }
 
-            //print drinkList to user's terminal
-//            String[] liquorNameList = new String[liquorList.size()]; //return the list of liquor names for the scoreboard
-//            //as an array of strings to be displayed
-//            int count = 0;
-//            for(Liquor liquor: liquorList){
-//                String liquorName = liquor.getDrinkName();
-//                liquorNameList[count] = liquorName;
-//                count++;
-//            }
-
             Drink[] drinkArr = liquorList.toArray(new Drink[liquorList.size()]);
             setOkJsonDrinkHttpResponse(resp, "getting liquor list", drinkArr);
 
@@ -274,20 +256,10 @@ public class MyServlet extends HttpServlet {
             }
 
 
-            if(mixedDrinkList == null){
+            if(mixedDrinkList == null) {
                 setBadHttpResponse(resp, "mixedDrinkList is null.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-
-//            //print drinkList to user's terminal
-//            String[] mixedDrinkNameList = new String[mixedDrinkList.size()]; //return the list of mixedDrinkNames for the scoreboard
-//            //as an array of strings to be displayed
-//            int count = 0;
-//            for(MixedDrink mixedDrink: mixedDrinkList){
-//                String mixedDrinkName = mixedDrink.getDrinkName();
-//                mixedDrinkNameList[count] = mixedDrinkName;
-//                count++;
-//            }
 
             Drink[] drinkArr = mixedDrinkList.toArray(new Drink[mixedDrinkList.size()]);
             setOkJsonDrinkHttpResponse(resp, "getting mixedDrink list", drinkArr);
@@ -562,7 +534,7 @@ public class MyServlet extends HttpServlet {
                 e.printStackTrace();
             }
             if(success){
-                setOkJsonDrinkHttpResponse(resp, "sucess updating drink rating", drink);
+                setOkJsonDrinkHttpResponse(resp, "success updating drink rating", drink);
                 return;
             }else{
                 setBadHttpResponse(resp, "failed to update drink rating", "text/plain", HttpServletResponse.SC_NOT_FOUND);
