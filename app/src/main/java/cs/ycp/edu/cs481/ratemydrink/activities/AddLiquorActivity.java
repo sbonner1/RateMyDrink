@@ -124,6 +124,18 @@ public class AddLiquorActivity extends ActionBarActivity {
             startActivity(newMenuIntent);
             return true;
         }
+        //This would go to the profile page
+        if(position == 5) {
+            if(TypeActivity.loginStatus == true) {
+                Intent newProfile = new Intent(this, ProfileActivity.class);
+                startActivity(newProfile);
+            }
+            else{
+                Toast.makeText(this, "You need to login to view a profile!", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+
+        }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(navTitles[position]);

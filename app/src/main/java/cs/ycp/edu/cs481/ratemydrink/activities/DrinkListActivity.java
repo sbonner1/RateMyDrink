@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.fragements.DrinkDetailFragment;
@@ -67,12 +68,12 @@ public class DrinkListActivity extends ActionBarActivity implements DrinkListFra
         }
 
         // TODO: If exposing deep links into your app, handle intents here.
-        navTitles = getResources().getStringArray(R.array.navItems);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+       // navTitles = getResources().getStringArray(R.array.navItems);
+       // mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+       // mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, navTitles));
-        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+       // mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, navTitles));
+       // mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 
 //        mDrawerToggle = new ActionBarDrawerToggle(
@@ -175,6 +176,18 @@ public class DrinkListActivity extends ActionBarActivity implements DrinkListFra
         //Main menu screen, but you are already here
         if(position == 4) {
             NavUtils.navigateUpTo(this, new Intent(this, TypeActivity.class));
+        }
+        //This would go to the profile page
+        if(position == 5) {
+            if(TypeActivity.loginStatus == true) {
+                Intent newProfile = new Intent(this, ProfileActivity.class);
+                startActivity(newProfile);
+            }
+            else{
+                Toast.makeText(this, "You need to login to view a profile!", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+
         }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);

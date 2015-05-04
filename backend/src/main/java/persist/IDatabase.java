@@ -3,6 +3,7 @@ package persist;
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Comment;
 import com.rateMyDrink.modelClasses.Drink;
+import com.rateMyDrink.modelClasses.Favorite;
 import com.rateMyDrink.modelClasses.Liquor;
 import com.rateMyDrink.modelClasses.MixedDrink;
 import com.rateMyDrink.modelClasses.User;
@@ -20,6 +21,8 @@ public interface IDatabase {
     boolean addNewComment(Comment comment) throws SQLException;
 
     boolean addNewDrink(Drink drink) throws SQLException;
+
+    boolean addNewFavorite(Favorite fav) throws SQLException;
 
     boolean addNewLiquor(Liquor liquor) throws SQLException;
 
@@ -55,6 +58,8 @@ public interface IDatabase {
     User getUser(String userName, String password) throws SQLException;
 
     List<User> getUserList() throws SQLException;
+
+    boolean updateRating(Drink drink, float rating) throws SQLException;
 
     void replaceUserList(List<User> newUserList);
 

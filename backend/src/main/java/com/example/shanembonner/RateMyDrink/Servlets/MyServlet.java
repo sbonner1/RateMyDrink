@@ -41,6 +41,7 @@ import controllers.GetMixedDrink;
 import controllers.GetMixedDrinkList;
 import controllers.GetUser;
 import controllers.GetUserList;
+import controllers.UpdateRating;
 
 public class MyServlet extends HttpServlet {
     @Override
@@ -539,6 +540,34 @@ public class MyServlet extends HttpServlet {
 
         if(action.equals("loginUser")){
             return;
+        }
+
+        if(action.equals("updateRating")){
+            System.out.println("action is 'updateRating'");
+
+            Drink drink = JSON.getObjectMapper().readValue(req.getReader(), Drink.class);
+
+            String ratingString = req.getParameter("rating");
+
+            float rating = Float.parseFloat(ratingString);
+            boolean success = false;
+
+            UpdateRating controller = new UpdateRating();
+
+            System.out.println("attempting to update rating for drink");
+
+            try{
+                success = controller.updateRating(drink, rating);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            if(success){
+                setOkJsonDrinkHttpResponse(resp, "sucess updating drink rating", drink);
+                return;
+            }else{
+                setBadHttpResponse(resp, "failed to update drink rating", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+            }
+
         }
 
     }

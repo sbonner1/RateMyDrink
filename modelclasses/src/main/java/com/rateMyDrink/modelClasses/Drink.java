@@ -14,6 +14,8 @@ public class Drink {
     protected String description;
     protected float rating;
     protected int id;
+    protected int numRatings;
+
     public static final int NUM_FIELDS = 4;
 
     protected ArrayList<Comment> comments;
@@ -81,6 +83,14 @@ public class Drink {
     //getter for drink rating
     public float getRating(){
         return this.rating;
+    }
+
+    public int getNumRatings() {
+        return numRatings;
+    }
+
+    public void setNumRatings(int numRatings) {
+        this.numRatings = numRatings;
     }
 /*
     public void setComments(ArrayList<Comment> commentList){

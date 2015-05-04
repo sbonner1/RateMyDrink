@@ -42,7 +42,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ABV: "
         android:id="@+id/beer_abv"
-        android:layout_below="@+id/beer_type"
+        android:layout_below="@+id/beer_cal"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
@@ -114,9 +114,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Cal:"
         android:id="@+id/beer_cal"
-        android:layout_above="@+id/beer_abv"
-        android:layout_toRightOf="@+id/beer_comments"
-        android:layout_toEndOf="@+id/beer_comments" />
+        android:layout_below="@+id/beer_type"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -125,5 +125,30 @@
         android:layout_above="@+id/button"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/beer_comments" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/beer_desc"
+        android:layout_alignBottom="@+id/beer_name"
+        android:layout_toRightOf="@+id/beer_desc">
+
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/favButton"
+            android:background="@mipmap/star"
+            android:height="5dp"
+            android:focusable="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="right|top"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp" />
+    </FrameLayout>
 
 </RelativeLayout>

@@ -25,6 +25,7 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
     private ActionBarDrawerToggle mDrawerToggle;
+    public static boolean loginStatus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +175,17 @@ public class TypeActivity extends ActionBarActivity implements TypeListFragment.
         //Main menu screen, but you are already here
         if(position == 4) {
             Toast.makeText(this, "You already are on the main menu", Toast.LENGTH_SHORT).show();
+        }
+        //This would go to the profile page
+        if(position == 5) {
+            if(TypeActivity.loginStatus == true) {
+                Intent newProfile = new Intent(this, ProfileActivity.class);
+                startActivity(newProfile);
+            }
+            else{
+                Toast.makeText(this, "You need to login to view a profile!", Toast.LENGTH_SHORT).show();
+            }
+            return true;
         }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);

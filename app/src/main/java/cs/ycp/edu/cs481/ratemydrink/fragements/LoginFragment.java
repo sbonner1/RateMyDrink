@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.activities.RegisterActivity;
+import cs.ycp.edu.cs481.ratemydrink.activities.TypeActivity;
 
 
 /**
@@ -48,6 +49,7 @@ public class LoginFragment extends Fragment {
 
                 //Get Login here
                 Toast.makeText(getActivity(), "This would log me in!", Toast.LENGTH_SHORT).show();
+                TypeActivity.loginStatus = true;
             }
         });
 
