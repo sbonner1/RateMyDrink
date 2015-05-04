@@ -24,13 +24,4 @@ public interface IGetDrinksList {
     @GET("/backend/?action=getMixedDrinkList")
     MixedDrink[] getMixedDrinkList();
 
-    @GET("/backend/?action=getBeerList")
-    Beer[] getBeerList();
-
-    @GET("/backend/?action=getLiquorList")
-    Liquor[] getLiquorList();
-
-    @GET("/backend/?action=getMixedDrinkList")
-    MixedDrink[] getMixedDrinkList();
-
 }
