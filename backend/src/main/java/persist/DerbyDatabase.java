@@ -761,8 +761,7 @@ public class DerbyDatabase implements IDatabase {
                         // will be loaded from (i.e., the index)
                         loadDrink(drink, resultSet, 1);
                         loadMixedDrink(mixedDrink, resultSet, Drink.NUM_FIELDS+1);
-
-                        //TODO:need ALL ingredients with that drink ID. how?
+                        mixedDrink.setIngredients(getIngredientsForMixedDrink(conn, mixedDrink));
 
                         mixedDrink.setDescription(drink.getDescription());
                         mixedDrink.setDrinkName(drink.getDrinkName());
@@ -778,6 +777,30 @@ public class DerbyDatabase implements IDatabase {
                 }
             }
         });
+    }
+
+    private ArrayList<Ingredient> getIngredientsForMixedDrink(Connection conn, MixedDrink mixedDrink) throws SQLException{
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        try {
+            stmt = conn.prepareStatement("select * from ingredientsTable where drinkId = ?");
+            stmt.setInt(1, mixedDrink.getId());
+            resultSet = stmt.executeQuery();
+
+            ArrayList<Ingredient> result = new ArrayList<Ingredient>();
+
+            while(resultSet.next()){
+                Ingredient ingr = new Ingredient();
+                loadMixedDrinkIngredient(ingr, resultSet, 1);
+                result.add(ingr);
+
+            }
+
+            return result;
+        } finally {
+            DBUtil.closeQuietly(stmt);
+            DBUtil.closeQuietly(resultSet);
+        }
     }
 
 
@@ -1182,12 +1205,6 @@ public class DerbyDatabase implements IDatabase {
         drink.setDrinkName(resultSet.getString(index++));
         drink.setDescription(resultSet.getString(index++));
         drink.setRating(resultSet.getFloat(index++));
-    }
-
-    protected void loadIngredient(Ingredient ingr, ResultSet resultSet, int index) throws SQLException {
-        ingr.setDrinkId(resultSet.getInt(index++));
-        ingr.setIngredientName(resultSet.getString(index++));
-        ingr.setAmount(resultSet.getDouble(index++));
     }
 
     protected void loadLiquor(Liquor liquor, ResultSet resultSet, int index) throws SQLException {
