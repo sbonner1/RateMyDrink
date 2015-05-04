@@ -473,43 +473,42 @@ public class DerbyDatabase implements IDatabase {
             @Override
             public List<Beer> execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
-                PreparedStatement stmt2 = null;
+                //PreparedStatement stmt2 = null;
                 ResultSet resultSet = null;
-                ResultSet resultSet2 = null;
+                //ResultSet resultSet2 = null;
 
                 try{
-                    stmt = conn.prepareStatement("select * from " + DB_BEER_TABLENAME);
-                    resultSet = stmt.executeQuery();
+
+                    stmt = conn.prepareStatement("select d.*, b.* " +
+                            " from mainDrinkTable as d, beerTable as b " +
+                            "  where d.id = b.drinkId");
 
                     List<Beer> result = new ArrayList<Beer>();
 
-                    while(resultSet.next()){
+                    resultSet = stmt.executeQuery();
+                    while(resultSet.next()) {
+                        Drink drink = new Drink();
                         Beer beer = new Beer();
-                        loadBeer(beer, resultSet, 1);
+                        // the third parameter of loadDrink and loadBeer is
+                        // the offset in the ResultSet where the field values
+                        // will be loaded from (i.e., the index)
+                        loadDrink(drink, resultSet, 1);
+                        loadBeer(beer, resultSet, Drink.NUM_FIELDS+1);
+
+                        beer.setDescription(drink.getDescription());
+                        beer.setDrinkName(drink.getDrinkName());
+
                         result.add(beer);
                     }
 
-                    //for each beer item, get the name and description from the main drink database
-                    for(Beer item: result){
-                        stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
-                        stmt2.setInt(1, item.getId());
-
-                        resultSet2 = stmt2.executeQuery();
-                        Drink newDrink = new Drink();
-                        loadDrink(newDrink, resultSet2, 1);
-
-                        item.setDescription(newDrink.getDescription());
-                        item.setDrinkName(newDrink.getDrinkName());
-
-                    }
 
                     return result;
 
                 }finally{
                     DBUtil.closeQuietly(stmt);
-                    DBUtil.closeQuietly(stmt2);
+                 //   DBUtil.closeQuietly(stmt2);
                     DBUtil.closeQuietly(resultSet);
-                    DBUtil.closeQuietly(resultSet2);
+                 // DBUtil.closeQuietly(resultSet2);
                 }
             }
         });
@@ -636,31 +635,32 @@ public class DerbyDatabase implements IDatabase {
                 ResultSet resultSet2 = null;
 
                 try{
-                    stmt = conn.prepareStatement("select * from " + DB_LIQUOR_TABLENAME);
-                    resultSet = stmt.executeQuery();
+                    stmt = conn.prepareStatement("select d.*, l.* " +
+                            " from mainDrinkTable as d, liquorTable as l " +
+                            "  where d.id = l.drinkId");
 
                     List<Liquor> result = new ArrayList<Liquor>();
-                    while(resultSet.next()){
-                        Liquor liquor = new Liquor();
-                        loadLiquor(liquor, resultSet, 1);
-                        result.add(liquor);
-                    }
 
-                    for(Liquor item : result){
-                        stmt2 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
-                        stmt2.setInt(1, item.getId());
-
-                        resultSet2 = stmt2.executeQuery();
+                    resultSet = stmt.executeQuery();
+                    while(resultSet.next()) {
                         Drink drink = new Drink();
-                        loadDrink(drink, resultSet2, 1);
+                        Liquor liquor = new Liquor();
+                        // the third parameter of loadDrink and loadBeer is
+                        // the offset in the ResultSet where the field values
+                        // will be loaded from (i.e., the index)
+                        loadDrink(drink, resultSet, 1);
+                        loadLiquor(liquor, resultSet, Drink.NUM_FIELDS+1);
 
-                        item.setDrinkName(drink.getDrinkName());
-                        item.setDescription(drink.getDescription());
+                        liquor.setDescription(drink.getDescription());
+                        liquor.setDrinkName(drink.getDrinkName());
+
+                        result.add(liquor);
                     }
 
                     return result;
                 }finally{
-
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(resultSet);
                 }
             }
         });
@@ -740,67 +740,67 @@ public class DerbyDatabase implements IDatabase {
             @Override
             public List<MixedDrink> execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
-                PreparedStatement stmt2 = null;
-                PreparedStatement stmt3 = null;
                 ResultSet resultSet = null; //get the mixedDrink object
-                ResultSet resultSet2 = null; //get the list of ingredient objects
-                ResultSet resultSet3 = null; //get the Drink object and take the name and description from it
 
                 try{
-                    //retrieve all mixedDrink items
-                    stmt = conn.prepareStatement("select * from " + DB_MIXED_DRINK_TABLENAME);
-                    resultSet = stmt.executeQuery();
+                    stmt = conn.prepareStatement("select d.*, m.*, i.* " +
+                            " from mainDrinkTable as d, mixedDrinkTable as m, ingredientsTable as i " +
+                            " where d.id = m.drinkId " +
+                            " and d.id = i.id "
+                    );
+
 
                     List<MixedDrink> result = new ArrayList<MixedDrink>();
+
+                    resultSet = stmt.executeQuery();
                     while(resultSet.next()) {
+                        Drink drink = new Drink();
                         MixedDrink mixedDrink = new MixedDrink();
-                        loadMixedDrink(mixedDrink, resultSet, 1);
+                        // the third parameter of loadDrink and loadMixedDrink is
+                        // the offset in the ResultSet where the field values
+                        // will be loaded from (i.e., the index)
+                        loadDrink(drink, resultSet, 1);
+                        loadMixedDrink(mixedDrink, resultSet, Drink.NUM_FIELDS+1);
+                        mixedDrink.setIngredients(getIngredientsForMixedDrink(conn, mixedDrink));
+
+                        mixedDrink.setDescription(drink.getDescription());
+                        mixedDrink.setDrinkName(drink.getDrinkName());
+
                         result.add(mixedDrink);
-                    }
-
-                    //for each mixedDrink item, you must retrieve the ingredients list as well
-                    for(MixedDrink item : result){
-                        stmt2 = conn.prepareStatement("select * from " + DB_INGREDIENTS_TABLENAME + " where drinkId = ?");
-                        stmt2.setInt(1, item.getId());
-
-                        resultSet2 = stmt2.executeQuery();
-
-                        ArrayList<Ingredient> ingrList = new ArrayList<Ingredient>();
-                        while(resultSet2.next()){
-                            Ingredient ingr = new Ingredient();
-                            loadMixedDrinkIngredient(ingr, resultSet2, 1);
-                            ingrList.add(ingr);
-                        }
-
-                        item.setIngredients(ingrList);
-                    }
-
-                    //now retrieve the name and description from the corresponding drink object
-                    for(MixedDrink item: result){
-                        stmt3 = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
-                        stmt3.setInt(1, item.getId());
-
-                        resultSet3 = stmt3.executeQuery();
-                        Drink newDrink = new Drink();
-                        loadDrink(newDrink, resultSet3, 1);
-
-                        item.setDescription(newDrink.getDescription());
-                        item.setDrinkName(newDrink.getDrinkName());
-
                     }
 
                     return result;
                 }finally{
                     DBUtil.closeQuietly(stmt);
-                    DBUtil.closeQuietly(stmt2);
-                    DBUtil.closeQuietly(stmt3);
                     DBUtil.closeQuietly(resultSet);
-                    DBUtil.closeQuietly(resultSet2);
-                    DBUtil.closeQuietly(resultSet3);
 
                 }
             }
         });
+    }
+
+    private ArrayList<Ingredient> getIngredientsForMixedDrink(Connection conn, MixedDrink mixedDrink) throws SQLException{
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        try {
+            stmt = conn.prepareStatement("select * from ingredientsTable where drinkId = ?");
+            stmt.setInt(1, mixedDrink.getId());
+            resultSet = stmt.executeQuery();
+
+            ArrayList<Ingredient> result = new ArrayList<Ingredient>();
+
+            while(resultSet.next()){
+                Ingredient ingr = new Ingredient();
+                loadMixedDrinkIngredient(ingr, resultSet, 1);
+                result.add(ingr);
+
+            }
+
+            return result;
+        } finally {
+            DBUtil.closeQuietly(stmt);
+            DBUtil.closeQuietly(resultSet);
+        }
     }
 
 

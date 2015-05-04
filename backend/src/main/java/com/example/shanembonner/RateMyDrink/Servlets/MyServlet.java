@@ -166,14 +166,14 @@ public class MyServlet extends HttpServlet {
                 setBadHttpResponse(resp, "drinkList is null.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-            String[] drinkNameList = new String[drinkList.size()]; //return the list of drink names for the scoreboard
-                                                                   //as an array of strings to be displayed
-            int count = 0;
-            for(Drink drink: drinkList){
-                String drinkName = drink.getDrinkName();
-                drinkNameList[count] = drinkName;
-                count++;
-            }
+//            String[] drinkNameList = new String[drinkList.size()]; //return the list of drink names for the scoreboard
+//                                                                   //as an array of strings to be displayed
+//            int count = 0;
+//            for(Drink drink: drinkList){
+//                String drinkName = drink.getDrinkName();
+//                drinkNameList[count] = drinkName;
+//                count++;
+//            }
 
             Drink[] drinkArr = drinkList.toArray(new Drink[drinkList.size()]);
             setOkJsonDrinkHttpResponse(resp, "getting drink list", drinkArr);
@@ -222,14 +222,14 @@ public class MyServlet extends HttpServlet {
             }
 
             //print drinkList to user's terminal
-            String[] liquorNameList = new String[liquorList.size()]; //return the list of liquor names for the scoreboard
-            //as an array of strings to be displayed
-            int count = 0;
-            for(Liquor liquor: liquorList){
-                String liquorName = liquor.getDrinkName();
-                liquorNameList[count] = liquorName;
-                count++;
-            }
+//            String[] liquorNameList = new String[liquorList.size()]; //return the list of liquor names for the scoreboard
+//            //as an array of strings to be displayed
+//            int count = 0;
+//            for(Liquor liquor: liquorList){
+//                String liquorName = liquor.getDrinkName();
+//                liquorNameList[count] = liquorName;
+//                count++;
+//            }
 
             Drink[] drinkArr = liquorList.toArray(new Drink[liquorList.size()]);
             setOkJsonDrinkHttpResponse(resp, "getting liquor list", drinkArr);
@@ -278,15 +278,15 @@ public class MyServlet extends HttpServlet {
                 return;
             }
 
-            //print drinkList to user's terminal
-            String[] mixedDrinkNameList = new String[mixedDrinkList.size()]; //return the list of mixedDrinkNames for the scoreboard
-            //as an array of strings to be displayed
-            int count = 0;
-            for(MixedDrink mixedDrink: mixedDrinkList){
-                String mixedDrinkName = mixedDrink.getDrinkName();
-                mixedDrinkNameList[count] = mixedDrinkName;
-                count++;
-            }
+//            //print drinkList to user's terminal
+//            String[] mixedDrinkNameList = new String[mixedDrinkList.size()]; //return the list of mixedDrinkNames for the scoreboard
+//            //as an array of strings to be displayed
+//            int count = 0;
+//            for(MixedDrink mixedDrink: mixedDrinkList){
+//                String mixedDrinkName = mixedDrink.getDrinkName();
+//                mixedDrinkNameList[count] = mixedDrinkName;
+//                count++;
+//            }
 
             Drink[] drinkArr = mixedDrinkList.toArray(new Drink[mixedDrinkList.size()]);
             setOkJsonDrinkHttpResponse(resp, "getting mixedDrink list", drinkArr);
