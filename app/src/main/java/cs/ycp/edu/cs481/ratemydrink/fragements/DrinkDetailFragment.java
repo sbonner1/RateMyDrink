@@ -65,7 +65,7 @@ public class DrinkDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            id = Integer.valueOf(getArguments().getString(ARG_ITEM_ID));
+            //id = Integer.valueOf(getArguments().getString(ARG_ITEM_ID));
         }
 
         if(id > 0){
