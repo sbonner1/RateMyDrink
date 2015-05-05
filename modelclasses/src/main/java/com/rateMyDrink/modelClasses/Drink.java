@@ -15,6 +15,7 @@ public class Drink {
     protected float rating;
     protected int id;
     protected int numRatings;
+    protected DrinkType drinkType;
 
     public static final int NUM_FIELDS = 4;
 
@@ -92,15 +93,45 @@ public class Drink {
     public void setNumRatings(int numRatings) {
         this.numRatings = numRatings;
     }
-/*
-    public void setComments(ArrayList<Comment> commentList){
-        this.comments.addAll(commentList);
+
+    public DrinkType getDrinkType()
+    {
+        return drinkType;
     }
 
-    public ArrayList<Comment> getComments(){
-        return this.comments;
+    //Set drinkType
+    public void setDrinkType(DrinkType SDrinkType) { this.drinkType = SDrinkType; }
+
+    /**
+     * @return the specified beer type
+     */
+    public String getDrinkTypeReadableName()
+    {
+        switch(this.drinkType)
+        {
+            case BEER:             return "BEER";
+            case LIQUOR:           return "LIQUOR";
+            case MIXEDDRINK:       return "MIXEDDRINK";
+
+            default:                return null;
+        }
     }
-*/
+
+
+    /**
+     * sets a Beer's beerType via the string name of the BeerType.
+     *
+     * @param type the type of beer as a string
+     */
+    public void setDrinkTypewithString(String type) {
+        switch(type) {
+            case "BEER":             this.drinkType = DrinkType.BEER;          return;
+            case "LIQUOR":           this.drinkType = DrinkType.LIQUOR;            return;
+            case "MIXEDDRINK":       this.drinkType = DrinkType.MIXEDDRINK;         return;
+
+            default:                  this.drinkType = null;
+        }
+    }
 }
 
 
