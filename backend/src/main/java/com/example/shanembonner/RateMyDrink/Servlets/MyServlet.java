@@ -9,6 +9,7 @@ package com.example.shanembonner.RateMyDrink.Servlets;
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Comment;
 import com.rateMyDrink.modelClasses.Drink;
+import com.rateMyDrink.modelClasses.Favorite;
 import com.rateMyDrink.modelClasses.Liquor;
 import com.rateMyDrink.modelClasses.MixedDrink;
 import com.rateMyDrink.modelClasses.User;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import controllers.AddBeer;
 import controllers.AddComment;
 import controllers.AddDrink;
+import controllers.AddFavorite;
 import controllers.AddLiquor;
 import controllers.AddMixedDrink;
 import controllers.AddUser;
@@ -35,6 +37,7 @@ import controllers.GetBeer;
 import controllers.GetBeerList;
 import controllers.GetComments;
 import controllers.GetDrinkList;
+import controllers.GetFavoritesList;
 import controllers.GetLiquor;
 import controllers.GetLiquorList;
 import controllers.GetMixedDrink;
@@ -314,6 +317,29 @@ public class MyServlet extends HttpServlet {
             return;
         }
 
+        if(action.equals("getFavoritesList")){
+            if(id_param == null){
+                setBadHttpResponse(resp, "id parameter not found.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+
+            GetFavoritesList controller = new GetFavoritesList();
+            List<Drink> drinkList = null;
+            int id = Integer.parseInt(id_param);
+            try{
+                drinkList = controller.getFavoritesList(id);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if(drinkList == null){
+                setBadHttpResponse(resp, "favorites list is null.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+            }
+
+            Drink[] drinkArr = drinkList.toArray(new Drink[drinkList.size()]);
+            setOkJsonDrinkHttpResponse(resp, "getting favorites list", drinkArr);
+        }
+
         if(action.equals("getDrinkList")){
             GetDrinkList getController = new GetDrinkList();
             List<Drink> drinkList = null;
@@ -457,6 +483,31 @@ public class MyServlet extends HttpServlet {
             }
         }
 
+        /**
+         * to add a favorite object to the database
+         */
+        if(action.equals("addFavorite")){
+            System.out.println("action: addFavorite");
+
+            Favorite newFavorite = JSON.getObjectMapper().readValue(req.getReader(), Favorite.class);
+
+            AddFavorite controller = new AddFavorite();
+            boolean success = false;
+
+            try{
+                success = controller.addFavorite(newFavorite);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if(success){
+                setOkFavoriteHttpResponse(resp, "favorite successfully added to database.", newFavorite);
+                return;
+            }else{
+                setBadHttpResponse(resp, "failed to add favorite to database.", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+        }
         /**
          * to add a mixedDrink object to the database
          */
@@ -637,6 +688,13 @@ public class MyServlet extends HttpServlet {
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("application/json");
         JSON.getObjectMapper().writeValue(resp.getWriter(), drink);
+    }
+
+    private void setOkFavoriteHttpResponse(HttpServletResponse resp, String msg, Favorite fav) throws IOException {
+        System.out.println(msg);
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        JSON.getObjectMapper().writeValue(resp.getWriter(), fav);
     }
 
     /**

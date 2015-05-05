@@ -47,6 +47,8 @@ public interface IDatabase {
 
     List<Drink> getDrinkList() throws SQLException;
 
+    List<Drink> getFavoritesForUser(int userId) throws SQLException;
+
     Liquor getLiquor(int id) throws SQLException;
 
     List<Liquor> getLiquorList() throws SQLException;
