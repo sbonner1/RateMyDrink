@@ -224,10 +224,10 @@ public class MyServlet extends HttpServlet {
 
         if(action.equals("getMixedDrink")){
             System.out.println("action is getMixedDrink.");
-            if(pathInfo.startsWith("/")){
-                pathInfo = pathInfo.substring(1);
-            }
-            int id = Integer.parseInt(pathInfo, 10);
+//            if(pathInfo.startsWith("/")){
+//                pathInfo = pathInfo.substring(1);
+//            }
+            int id = Integer.parseInt(id_param, 10);
             MixedDrink mixedDrink = null;
 
             GetMixedDrink controller = new GetMixedDrink();

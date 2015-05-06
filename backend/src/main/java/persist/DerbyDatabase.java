@@ -829,7 +829,7 @@ public class DerbyDatabase implements IDatabase {
                     ArrayList<Ingredient> result = new ArrayList<Ingredient>();
                     while(resultSet.next()){
                         Ingredient ingr = new Ingredient();
-                        loadMixedDrinkIngredient(ingr, resultSet, 1);
+                        loadMixedDrinkIngredient(ingr, resultSet2, 1);
                         result.add(ingr);
                     }
 
@@ -846,7 +846,7 @@ public class DerbyDatabase implements IDatabase {
                     }
 
                     Drink drink = new Drink();
-                    loadDrink(drink, resultSet2, 1);
+                    loadDrink(drink, resultSet3, 1);
 
                     mixedDrink.setDrinkName(drink.getDrinkName());
                     mixedDrink.setDescription(drink.getDescription());
@@ -1049,39 +1049,26 @@ public class DerbyDatabase implements IDatabase {
             public Boolean execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
                 PreparedStatement stmt2 = null;
-                PreparedStatement stmt3 = null;
                 ResultSet resultSet = null;
 
+             //   Drink newDrink = new Drink();
+
                 try{
-                    stmt = conn.prepareStatement("select * where drinkId = ?");
-                    stmt.setInt(1, drink.getId());
-                    stmt.executeUpdate();
-
-                    Drink newDrink = new Drink();
-                    loadDrink(newDrink, resultSet, 1);
-
-                    int numRatings = newDrink.getNumRatings();
-                    float newRating = newDrink.getRating();
+                    int numRatings = drink.getNumRatings();
+                    float newRating = drink.getRating();
 
                     numRatings++;
                     newRating = (newRating + rating) / numRatings;
 
-                    stmt2 = conn.prepareStatement("update " + DB_MAIN_DRINK_TABLENAME + " set rating = ?, numRatings = ?  where drinkId = ?");
+                    stmt2 = conn.prepareStatement("update " + DB_MAIN_DRINK_TABLENAME + " set rating = ?, numRatings = ?  where id = ?");
                     stmt2.setFloat(1, newRating);
                     stmt2.setInt(2, numRatings);
-                    stmt2.setInt(3, newDrink.getId());
+                    stmt2.setInt(3, drink.getId());
 
                     stmt2.executeUpdate();
-
-                    //stmt3 = conn.prepareStatement("update " + DB_MAIN_DRINK_TABLENAME + " set numRatings = ? where drinkId = ?");
-                  //  stmt3.setInt(1, numRatings);
-                    //stmt3.setInt(1, newDrink.getId());
                     return true;
-                } finally{
-                    DBUtil.closeQuietly(stmt);
+                }finally{
                     DBUtil.closeQuietly(stmt2);
-                  // DBUtil.closeQuietly(stmt3);
-                    DBUtil.closeQuietly(resultSet);
                 }
             }
         });
@@ -1192,7 +1179,7 @@ public class DerbyDatabase implements IDatabase {
                             " drinkName varchar(200) unique," +
                             " description varchar(1500)," +
                             " rating float(1)," +
-                            " numRatings integer" +
+                            " numRatings integer," +
                             " drinkType integer" +
                             ")"
                      );
@@ -1348,13 +1335,13 @@ public class DerbyDatabase implements IDatabase {
                     stmt.addBatch();
                     stmt.executeBatch();
 
-                    stmt2 = conn.prepareStatement("insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)");
-                    Drink drink = new Drink();
-                    drink.setDrinkName("testDrink");
-                    drink.setRating(5);
-                    storeDrinkNoId(drink, stmt2, 1);
-                    stmt2.addBatch();
-                    stmt2.executeBatch();
+           //         stmt2 = conn.prepareStatement("insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)");
+                //    Drink drink = new Drink();
+                //    drink.setDrinkName("testDrink");
+                //    drink.setRating(5);
+                //    storeDrinkNoId(drink, stmt2, 1);
+                //    stmt2.addBatch();
+                //    stmt2.executeBatch();
 
                     stmt3 = conn.prepareStatement("insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)");
                     Beer beer = new Beer();
