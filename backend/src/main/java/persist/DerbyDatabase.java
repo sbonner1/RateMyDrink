@@ -1066,20 +1066,21 @@ public class DerbyDatabase implements IDatabase {
                     numRatings++;
                     newRating = (newRating + rating) / numRatings;
 
-                    stmt2 = conn.prepareStatement("update " + DB_MAIN_DRINK_TABLENAME + " set rating = ? where drinkId = ?");
+                    stmt2 = conn.prepareStatement("update " + DB_MAIN_DRINK_TABLENAME + " set rating = ?, numRatings = ?  where drinkId = ?");
                     stmt2.setFloat(1, newRating);
-                    stmt2.setInt(2, newDrink.getId());
+                    stmt2.setInt(2, numRatings);
+                    stmt2.setInt(3, newDrink.getId());
 
                     stmt2.executeUpdate();
 
-                    stmt3 = conn.prepareStatement("update " + DB_MAIN_DRINK_TABLENAME + " set numRatings ? where drinkId = ?");
-                    stmt3.setInt(1, numRatings);
-                    stmt3.setInt(1, newDrink.getId());
+                    //stmt3 = conn.prepareStatement("update " + DB_MAIN_DRINK_TABLENAME + " set numRatings = ? where drinkId = ?");
+                  //  stmt3.setInt(1, numRatings);
+                    //stmt3.setInt(1, newDrink.getId());
                     return true;
                 } finally{
                     DBUtil.closeQuietly(stmt);
                     DBUtil.closeQuietly(stmt2);
-                    DBUtil.closeQuietly(stmt3);
+                  // DBUtil.closeQuietly(stmt3);
                     DBUtil.closeQuietly(resultSet);
                 }
             }
