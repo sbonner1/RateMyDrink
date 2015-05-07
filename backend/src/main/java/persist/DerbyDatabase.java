@@ -611,7 +611,7 @@ public class DerbyDatabase implements IDatabase {
 
                 try {
                     stmt = conn.prepareStatement("select f.*, d.* " +
-                            " from favoritesTable as f, mainDrinkTable as m " +
+                            " from favoritesTable as f, mainDrinkTable as d " +
                             " where f.userId = ?" +
                             " and f.drinkId = d.id");
 
@@ -1050,10 +1050,15 @@ public class DerbyDatabase implements IDatabase {
                 PreparedStatement stmt = null;
                 PreparedStatement stmt2 = null;
                 ResultSet resultSet = null;
-
-             //   Drink newDrink = new Drink();
-
+                
                 try{
+                    stmt = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + "where id = ?");
+                    stmt.setInt(1, drink.getId());
+                    resultSet = stmt.executeQuery();
+
+                    Drink newDrink = new Drink();
+                    loadDrink(newDrink, resultSet, 1);
+
                     int numRatings = drink.getNumRatings();
                     float newRating = drink.getRating();
 
