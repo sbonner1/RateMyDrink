@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.rateMyDrink.modelClasses.Drink;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.dummy.DummyBeers;
 
 /**
  * An extended adapter so that the drink list can be populated with custom item views
