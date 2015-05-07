@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Comment;
-import com.rateMyDrink.modelClasses.Drink;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -24,7 +23,6 @@ import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetBeerAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetCommentsAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewCommentAsync;
-import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.UpdateRatingAsync;
 
 /**
  * A fragment representing a single Drink detail screen.
@@ -38,6 +36,7 @@ public class DrinkDetailFragment extends Fragment {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
+    public static int DRINK_ID = 0;
 
     /**
      * The dummy content this fragment is presenting.
@@ -67,7 +66,7 @@ public class DrinkDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            //id = Integer.valueOf(getArguments().getString(ARG_ITEM_ID));
+            id = Integer.valueOf(getArguments().getString(ARG_ITEM_ID));
         }
 
         if(id > 0){
@@ -157,27 +156,27 @@ public class DrinkDetailFragment extends Fragment {
                 }
             });
 
-            RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.BeerRatingBar);
-            ratingBar.setRating(mBeer.getRating());
-            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                @Override
-                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                    UpdateRatingAsync updateAsync = new UpdateRatingAsync();
-                    Drink drink = mBeer;
-                    drink.setRating(rating);
-                    updateAsync.execute(drink);
-
-                    try {
-                        drink = updateAsync.get();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
-
-                    ratingBar.setRating(drink.getRating());
-                }
-            });
+//            RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.BeerRatingBar);
+//            ratingBar.setRating(mBeer.getRating());
+//            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//                @Override
+//                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//                    UpdateRatingAsync updateAsync = new UpdateRatingAsync();
+//                    Drink drink = mBeer;
+//                    drink.setRating(rating);
+//                    updateAsync.execute(drink);
+//
+//                    try {
+//                        drink = updateAsync.get();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    } catch (ExecutionException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    ratingBar.setRating(drink.getRating());
+//                }
+//            });
 
 
         }

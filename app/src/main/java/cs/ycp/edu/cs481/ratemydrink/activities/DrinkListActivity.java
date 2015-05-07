@@ -123,6 +123,7 @@ public class DrinkListActivity extends ActionBarActivity implements DrinkListFra
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, DrinkDetailActivity.class);
+            detailIntent.putExtra(DrinkDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }
