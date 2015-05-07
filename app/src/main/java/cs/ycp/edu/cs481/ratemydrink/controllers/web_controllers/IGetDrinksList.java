@@ -8,7 +8,7 @@ import com.rateMyDrink.modelClasses.MixedDrink;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
-import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * An interface using the Retrofit api to make RESTful request to the server-side database for a list of drinks
@@ -27,7 +27,7 @@ public interface IGetDrinksList {
     @GET("/backend/?action=getMixedDrinkList")
     MixedDrink[] getMixedDrinkList();
 
-    @POST("/backend/?action=updateRating&rating={rating}")
-    Drink updateRating(@Body Drink drink, @Path("rating") float rating);
+    @POST("/backend/?action=updateRating")
+    Drink updateRating(@Body Drink drink, @Query("rating") float rating);
 
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Comment;
+import com.rateMyDrink.modelClasses.Drink;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -23,6 +24,7 @@ import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetBeerAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetCommentsAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewCommentAsync;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.UpdateRatingAsync;
 
 /**
  * A fragment representing a single Drink detail screen.
@@ -156,16 +158,19 @@ public class DrinkDetailFragment extends Fragment {
                 }
             });
 
-//            RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.BeerRatingBar);
-//            ratingBar.setRating(mBeer.getRating());
-//            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//                @Override
-//                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//                    UpdateRatingAsync updateAsync = new UpdateRatingAsync();
-//                    Drink drink = mBeer;
-//                    drink.setRating(rating);
-//                    updateAsync.execute(drink);
-//
+            RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.BeerRatingBar);
+            ratingBar.setRating(mBeer.getRating());
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                    UpdateRatingAsync updateAsync = new UpdateRatingAsync();
+
+                    Drink drink = new Drink();
+                    drink.setRating(rating);
+                    drink.setId(mBeer.getId());
+
+                    updateAsync.execute(drink);
+
 //                    try {
 //                        drink = updateAsync.get();
 //                    } catch (InterruptedException e) {
@@ -173,10 +178,10 @@ public class DrinkDetailFragment extends Fragment {
 //                    } catch (ExecutionException e) {
 //                        e.printStackTrace();
 //                    }
-//
-//                    ratingBar.setRating(drink.getRating());
-//                }
-//            });
+
+                    ratingBar.setRating(drink.getRating());
+                }
+            });
 
 
         }
