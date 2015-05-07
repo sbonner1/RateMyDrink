@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Comment;
+import com.rateMyDrink.modelClasses.Drink;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -23,6 +24,7 @@ import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetBeerAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetCommentsAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewCommentAsync;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.UpdateRatingAsync;
 
 /**
  * A fragment representing a single Drink detail screen.
@@ -41,7 +43,7 @@ public class DrinkDetailFragment extends Fragment {
      * The dummy content this fragment is presenting.
      */
     private Beer mBeer;                 //beer object to be posted to the database
-    private RatingBar ratingBar;        //the rating bar
+    //private RatingBar ratingBar;        //the rating bar
     private TextView txtRatingValue;
     private EditText commentEditText;
     private Button addComment;
@@ -154,6 +156,29 @@ public class DrinkDetailFragment extends Fragment {
                     Toast.makeText(getActivity(), "Drink has been added to your favorites!", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.BeerRatingBar);
+            ratingBar.setRating(mBeer.getRating());
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                    UpdateRatingAsync updateAsync = new UpdateRatingAsync();
+                    Drink drink = mBeer;
+                    drink.setRating(rating);
+                    updateAsync.execute(drink);
+
+                    try {
+                        drink = updateAsync.get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
+                    ratingBar.setRating(drink.getRating());
+                }
+            });
+
 
         }
 
