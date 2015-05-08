@@ -9,12 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.rateMyDrink.modelClasses.Favorite;
-
-import java.util.concurrent.ExecutionException;
-
 import cs.ycp.edu.cs481.ratemydrink.R;
-import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetFavoritesListAsync;
+import cs.ycp.edu.cs481.ratemydrink.UserInfo;
 
 /**
  * Created by Aaron on 4/20/2015.
@@ -41,23 +37,9 @@ public class FavoritesFragment extends Fragment {
         list2 = getResources().getStringArray(R.array.tempFavs);
         favs = (ListView) rootView.findViewById(R.id.favoritesList);
 
-
-        GetFavoritesListAsync favoritesListAsync = new GetFavoritesListAsync();
-        favoritesListAsync.execute(101);
-
-        Favorite[] favorites = null;
-
-        try {
-            favorites = favoritesListAsync.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        String[] str = new String[favorites.length];
+        String[] str = new String[UserInfo.favorites.length];
         for(int i = 0; i < str.length; i++){
-            str[i] = String.valueOf(favorites[i].getDrinkId());
+            str[i] = String.valueOf(UserInfo.favorites[i].getDrinkId());
         }
 
         //Set ListView (temp for now)
