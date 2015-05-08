@@ -271,11 +271,12 @@ public class MyServlet extends HttpServlet {
 
         if(action.equals("getUser")){
             System.out.println("action is getUser.");
-            String password = JSON.getObjectMapper().readValue(req.getReader(), String.class);
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");//JSON.getObjectMapper().readValue(req.getReader(), String.class);
             User user = null;
             GetUser controller = new GetUser();
             try {
-                user = controller.getUser(pathInfo,password);
+                user = controller.getUser(username,password);
                 System.out.println("accessed database");
             } catch (SQLException e) {
                 e.printStackTrace();
