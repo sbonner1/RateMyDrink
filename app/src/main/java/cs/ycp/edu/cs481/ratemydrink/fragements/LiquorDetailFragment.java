@@ -70,7 +70,10 @@ public class LiquorDetailFragment extends Fragment {
         if(mLiquor != null) {
             ((TextView) v.findViewById(R.id.liquor_name)).setText(mLiquor.getDrinkName());
             ((TextView) v.findViewById(R.id.beer_desc)).setText(mLiquor.getDescription());
-            ((TextView) v.findViewById(R.id.beer_abv)).setText("ABV: " + mLiquor.getAlcoholContent());
+            Log.d("abv", String.valueOf(mLiquor.getAlcoholContent()));
+            TextView abvView = (TextView) v.findViewById(R.id.beer_abv);
+            abvView.setText("ABV: " + String.valueOf(mLiquor.getAlcoholContent()));
+            //((TextView) v.findViewById(R.id.beer_abv)).setText("ABV: " + mLiquor.getAlcoholContent());
             ((TextView) v.findViewById(R.id.liquor_type)).setText(mLiquor.getLiquorTypeReadableType());
             ((TextView) v.findViewById(R.id.beerAvgRate)).setText(mLiquor.getRating() + "");
         }
