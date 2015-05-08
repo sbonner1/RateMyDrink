@@ -610,7 +610,7 @@ public class DerbyDatabase implements IDatabase {
                // ResultSet resultSet2 = null;
 
                 try {
-                    stmt = conn.prepareStatement("select f.*, d.* " +
+                    stmt = conn.prepareStatement("select d.*, f.* " +
                             " from mainDrinkTable as d, favoritesTable as f " +
                             " where d.id = f.drinkId " +
                             " and f.userId = ?");
@@ -853,8 +853,8 @@ public class DerbyDatabase implements IDatabase {
 
                     mixedDrink.setDrinkName(drink.getDrinkName());
                     mixedDrink.setDescription(drink.getDescription());
-                    mixedDrink.setNumRatings(drink.getNumRatings());
                     mixedDrink.setRating(drink.getRating());
+                    mixedDrink.setNumRatings(drink.getNumRatings());
                     mixedDrink.setDrinkType(drink.getDrinkType());
                     return mixedDrink;
                 }finally{
@@ -893,13 +893,14 @@ public class DerbyDatabase implements IDatabase {
                         // the offset in the ResultSet where the field values
                         // will be loaded from (i.e., the index)
                         loadDrink(drink, resultSet, 1);
-                        loadMixedDrink(mixedDrink, resultSet, Drink.NUM_FIELDS+1);
+                        loadMixedDrink(mixedDrink, resultSet, Drink.NUM_FIELDS + 1);
+
                         mixedDrink.setIngredients(getIngredientsForMixedDrink(conn, mixedDrink)); //method below
 
                         mixedDrink.setDrinkName(drink.getDrinkName());
                         mixedDrink.setDescription(drink.getDescription());
-                        mixedDrink.setNumRatings(drink.getNumRatings());
                         mixedDrink.setRating(drink.getRating());
+                        mixedDrink.setNumRatings(drink.getNumRatings());
                         mixedDrink.setDrinkType(drink.getDrinkType());
 
                         result.add(mixedDrink);
