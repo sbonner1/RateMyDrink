@@ -6,29 +6,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.rateMyDrink.modelClasses.MixedDrink;
+
+import java.util.concurrent.ExecutionException;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetMixedDrinkAsync;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.
- * Use the {@link MixedDrinkFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class MixedDrinkFragment extends Fragment {
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment MixedDrinkFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MixedDrinkFragment newInstance() {
-        return new MixedDrinkFragment();
-    }
-
+    MixedDrink mMixedDrink;
+    
     public MixedDrinkFragment() {
         // Required empty public constructor
     }
@@ -36,13 +31,44 @@ public class MixedDrinkFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int id = -1;
+
+        if (getArguments().containsKey(BeerDetailFragment.ARG_ITEM_ID)) {
+            // Load the dummy content specified by the fragment
+            // arguments. In a real-world scenario, use a Loader
+            // to load content from a content provider.
+            id = Integer.valueOf(getArguments().getString(BeerDetailFragment.ARG_ITEM_ID));
+        }
+
+        if(id > 0){
+            GetMixedDrinkAsync getBeer = new GetMixedDrinkAsync();
+            getBeer.execute(id);
+            try {
+                try {
+                    mMixedDrink = getBeer.get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mixed_drink, container, false);
+        View v = inflater.inflate(R.layout.fragment_mixed_drink, container, false);
+
+        ((TextView) container.findViewById(R.id.beer_name)).setText(mMixedDrink.getDrinkName());
+        ((TextView) container.findViewById(R.id.beer_desc)).setText(mMixedDrink.getDescription());
+        ((TextView) container.findViewById(R.id.beer_type)).setText(mMixedDrink.getMaxIngredientReadableType());
+        ((TextView) container.findViewById(R.id.beerAvgRate)).setText(mMixedDrink.getRating() + "");
+
+        return v;
+
     }
 
     @Override

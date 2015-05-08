@@ -3,32 +3,27 @@ package cs.ycp.edu.cs481.ratemydrink.fragements;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.rateMyDrink.modelClasses.Liquor;
+
+import java.util.concurrent.ExecutionException;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.getLiquorAsync;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.
- * Use the {@link LiquorDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class LiquorDetailFragment extends Fragment {
 
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment LiquorDetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LiquorDetailFragment newInstance() {
-        return new LiquorDetailFragment();
-    }
+    private Liquor mLiquor;
 
     public LiquorDetailFragment() {
         // Required empty public constructor
@@ -37,13 +32,48 @@ public class LiquorDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int id = -1;
+
+        if (getArguments().containsKey(BeerDetailFragment.ARG_ITEM_ID)) {
+            // Load the dummy content specified by the fragment
+            // arguments. In a real-world scenario, use a Loader
+            // to load content from a content provider.
+            id = Integer.valueOf(getArguments().getString(BeerDetailFragment.ARG_ITEM_ID));
+        }
+
+        if(id > 0){
+            getLiquorAsync getBeer = new getLiquorAsync();
+            getBeer.execute(id);
+            try {
+                try {
+                    mLiquor = getBeer.get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_liquor_detail, container, false);
+        View v = inflater.inflate(R.layout.fragment_liquor_detail, container, false);
+
+        if(mLiquor == null){
+            Log.d("NULL", "mLiquor is null");
+        }
+
+        ((TextView) container.findViewById(R.id.beer_name)).setText(mLiquor.getDrinkName());
+        ((TextView) container.findViewById(R.id.beer_desc)).setText(mLiquor.getDescription());
+        ((TextView) container.findViewById(R.id.beer_abv)).setText("ABV: " + mLiquor.getAlcoholContent());
+        ((TextView) container.findViewById(R.id.beer_type)).setText(mLiquor.getLiquorTypeReadableType());
+        ((TextView) container.findViewById(R.id.beerAvgRate)).setText(mLiquor.getRating() + "");
+        
+        return v;
     }
 
 

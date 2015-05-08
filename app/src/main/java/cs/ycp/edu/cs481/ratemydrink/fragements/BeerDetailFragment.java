@@ -44,7 +44,6 @@ public class BeerDetailFragment extends Fragment {
      * The dummy content this fragment is presenting.
      */
     private Beer mBeer;                 //beer object to be posted to the database
-    //private RatingBar ratingBar;        //the rating bar
     private TextView txtRatingValue;
     private EditText commentEditText;
     private Button addComment;
@@ -83,8 +82,6 @@ public class BeerDetailFragment extends Fragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }else{
-            //error
         }
 
     }
@@ -102,9 +99,6 @@ public class BeerDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.beer_cal)).setText("Cal: " + mBeer.getCalories());
             ((TextView) rootView.findViewById(R.id.beer_type)).setText(mBeer.getBeerTypeReadableName());
             ((TextView) rootView.findViewById(R.id.beerAvgRate)).setText(mBeer.getRating() + "");
-            //Pre-fills the star with avg user rating
-            ((RatingBar) rootView.findViewById(R.id.BeerRatingBar)).setRating(mBeer.getRating());
-
 
             final ListView commentsList = (ListView) rootView.findViewById(R.id.comments_listview);
 
