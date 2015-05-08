@@ -96,7 +96,6 @@ public class BeerDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.beer_name)).setText(mBeer.getDrinkName());
             ((TextView) rootView.findViewById(R.id.beer_desc)).setText(mBeer.getDescription());
             ((TextView) rootView.findViewById(R.id.beer_abv)).setText("ABV: " + mBeer.getABV());
-            ((TextView) rootView.findViewById(R.id.beer_cal)).setText("Cal: " + mBeer.getCalories());
             ((TextView) rootView.findViewById(R.id.beer_type)).setText(mBeer.getBeerTypeReadableName());
             ((TextView) rootView.findViewById(R.id.beerAvgRate)).setText(mBeer.getRating() + "");
 
