@@ -1,7 +1,6 @@
 package cs.ycp.edu.cs481.ratemydrink.fragements;
 
 import android.app.Activity;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.rateMyDrink.modelClasses.Favorite;
+
+import java.util.concurrent.ExecutionException;
+
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetFavoritesListAsync;
 
 /**
  * Created by Aaron on 4/20/2015.
@@ -38,10 +42,28 @@ public class FavoritesFragment extends Fragment {
         favs = (ListView) rootView.findViewById(R.id.favoritesList);
 
 
+        GetFavoritesListAsync favoritesListAsync = new GetFavoritesListAsync();
+        favoritesListAsync.execute(101);
 
+        Favorite[] favorites = null;
+
+        try {
+            favorites = favoritesListAsync.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        String[] str = new String[favorites.length];
+        for(int i = 0; i < str.length; i++){
+            str[i] = String.valueOf(favorites[i].getDrinkId());
+        }
 
         //Set ListView (temp for now)
-        adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list2);
+        adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, str);
+        favs.setAdapter(adapter2);
+
         return rootView;
     }
     @Override
