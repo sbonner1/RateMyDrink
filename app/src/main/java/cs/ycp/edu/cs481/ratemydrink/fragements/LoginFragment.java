@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.concurrent.ExecutionException;
+
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.UserInfo;
 import cs.ycp.edu.cs481.ratemydrink.activities.RegisterActivity;
 import cs.ycp.edu.cs481.ratemydrink.activities.TypeActivity;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.LoginUserAsync;
 
 
 /**
@@ -46,10 +51,29 @@ public class LoginFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "logged in!", Toast.LENGTH_SHORT).show();
-                TypeActivity.loginStatus = true;
-                Intent typeIntent = new Intent(getActivity().getBaseContext(), TypeActivity.class);
-                startActivity(typeIntent);
+
+                UserInfo.user = null;
+
+                LoginUserAsync loginUser = new LoginUserAsync();
+                loginUser.execute(username.getText().toString(), password.getText().toString());
+
+                try {
+                    UserInfo.user = loginUser.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                if(UserInfo.user != null){
+                    Toast.makeText(getActivity(), "logged in!", Toast.LENGTH_SHORT).show();
+                    TypeActivity.loginStatus = true;
+                    Intent typeIntent = new Intent(getActivity().getBaseContext(), TypeActivity.class);
+                    startActivity(typeIntent);
+                }else{
+                    Log.d("NULL USER", "login failed.");
+                }
+
             }
         });
 
