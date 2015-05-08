@@ -37,6 +37,9 @@ public class FavoritesFragment extends Fragment {
         list2 = getResources().getStringArray(R.array.tempFavs);
         favs = (ListView) rootView.findViewById(R.id.favoritesList);
 
+
+
+
         //Set ListView (temp for now)
         adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list2);
         return rootView;
