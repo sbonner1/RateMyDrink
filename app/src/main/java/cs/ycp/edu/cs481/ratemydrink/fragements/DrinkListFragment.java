@@ -18,7 +18,7 @@ import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetDrinkListAsyn
  * A list fragment representing a list of Drinks. This fragment
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link cs.ycp.edu.cs481.ratemydrink.fragements.DrinkDetailFragment}.
+ * currently being viewed in a {@link BeerDetailFragment}.
  * <p/>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
