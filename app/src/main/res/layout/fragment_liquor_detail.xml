@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cs.ycp.edu.cs481.ratemydrink.fragements.LiquorDetailFragment">
@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Beer Name"
-        android:id="@+id/beer_name"
+        android:text="Liquor Name"
+        android:id="@+id/liquor_name"
         android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp" />
@@ -27,9 +27,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Beer Type"
-        android:id="@+id/beer_type"
-        android:layout_below="@+id/beer_name"
+        android:text="Liquor Type"
+        android:id="@+id/liquor_type"
+        android:layout_below="@+id/liquor_name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
@@ -39,7 +39,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ABV: "
         android:id="@+id/beer_abv"
-        android:layout_below="@+id/beer_cal"
+        android:layout_below="@+id/liquor_type"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
@@ -105,16 +105,6 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Cal:"
-        android:id="@+id/beer_cal"
-        android:layout_below="@+id/beer_type"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
-
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -148,4 +138,4 @@
             android:layout_marginRight="5dp" />
     </FrameLayout>
 
-</FrameLayout>
+</RelativeLayout>

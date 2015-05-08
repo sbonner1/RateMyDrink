@@ -67,11 +67,13 @@ public class LiquorDetailFragment extends Fragment {
             Log.d("NULL", "mLiquor is null");
         }
 
-        ((TextView) container.findViewById(R.id.beer_name)).setText(mLiquor.getDrinkName());
-        ((TextView) container.findViewById(R.id.beer_desc)).setText(mLiquor.getDescription());
-        ((TextView) container.findViewById(R.id.beer_abv)).setText("ABV: " + mLiquor.getAlcoholContent());
-        ((TextView) container.findViewById(R.id.beer_type)).setText(mLiquor.getLiquorTypeReadableType());
-        ((TextView) container.findViewById(R.id.beerAvgRate)).setText(mLiquor.getRating() + "");
+        if(mLiquor != null) {
+            ((TextView) v.findViewById(R.id.liquor_name)).setText(mLiquor.getDrinkName());
+            ((TextView) v.findViewById(R.id.beer_desc)).setText(mLiquor.getDescription());
+            ((TextView) v.findViewById(R.id.beer_abv)).setText("ABV: " + mLiquor.getAlcoholContent());
+            ((TextView) v.findViewById(R.id.liquor_type)).setText(mLiquor.getLiquorTypeReadableType());
+            ((TextView) v.findViewById(R.id.beerAvgRate)).setText(mLiquor.getRating() + "");
+        }
         
         return v;
     }

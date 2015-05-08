@@ -62,10 +62,12 @@ public class MixedDrinkFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_mixed_drink, container, false);
 
-        ((TextView) container.findViewById(R.id.beer_name)).setText(mMixedDrink.getDrinkName());
-        ((TextView) container.findViewById(R.id.beer_desc)).setText(mMixedDrink.getDescription());
-        ((TextView) container.findViewById(R.id.beer_type)).setText(mMixedDrink.getMaxIngredientReadableType());
-        ((TextView) container.findViewById(R.id.beerAvgRate)).setText(mMixedDrink.getRating() + "");
+        if(mMixedDrink != null) {
+            ((TextView) v.findViewById(R.id.beer_name)).setText(mMixedDrink.getDrinkName());
+            ((TextView) v.findViewById(R.id.beer_desc)).setText(mMixedDrink.getDescription());
+            //((TextView) v.findViewById(R.id.beer_type)).setText(mMixedDrink.getMaxIngredientReadableType());
+            ((TextView) v.findViewById(R.id.beerAvgRate)).setText(mMixedDrink.getRating() + "");
+        }
 
         return v;
 
