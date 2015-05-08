@@ -952,7 +952,7 @@ public class DerbyDatabase implements IDatabase {
                 try{
                     stmt = conn.prepareStatement("select * from " + DB_USER_TABLENAME + " where userName = ?");
                     stmt.setString(1, userName);
-                    stmt.setString(2, password);
+                   // stmt.setString(2, password);
 
                     resultSet = stmt.executeQuery();
 
