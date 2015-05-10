@@ -16,14 +16,17 @@ import android.widget.Toast;
 import com.rateMyDrink.modelClasses.Beer;
 import com.rateMyDrink.modelClasses.Comment;
 import com.rateMyDrink.modelClasses.Drink;
+import com.rateMyDrink.modelClasses.Favorite;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
+import cs.ycp.edu.cs481.ratemydrink.UserInfo;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetBeerAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetCommentsAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewCommentAsync;
+import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewFavoriteAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.UpdateRatingAsync;
 
 /**
@@ -38,16 +41,12 @@ public class BeerDetailFragment extends Fragment {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
-    public static int DRINK_ID = 0;
 
     /**
      * The dummy content this fragment is presenting.
      */
     private Beer mBeer;                 //beer object to be posted to the database
     private TextView txtRatingValue;
-    private EditText commentEditText;
-    private Button addComment;
-    private Button favorites;
     private ArrayList<String> comments;
 
     /**
@@ -126,9 +125,9 @@ public class BeerDetailFragment extends Fragment {
 
             commentsList.setAdapter(commentAdapter);
 
-            commentEditText = (EditText) rootView.findViewById(R.id.comments);
+            final EditText commentEditText = (EditText) rootView.findViewById(R.id.comments);
 
-            addComment = (Button) rootView.findViewById(R.id.button);
+            final Button addComment = (Button) rootView.findViewById(R.id.button);
             addComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -142,11 +141,13 @@ public class BeerDetailFragment extends Fragment {
                     }
                 }
             });
-            favorites = (Button) rootView.findViewById(R.id.favButton);
+            final Button favorites = (Button) rootView.findViewById(R.id.favButton);
             favorites.setOnClickListener(new View.OnClickListener() {
                 @Override
             public void onClick(View v) {
-                    //Post drink as a favorites for the user
+                    Favorite newFavorite = new Favorite(mBeer.getId(), UserInfo.user.getId());
+                    PostNewFavoriteAsync postFavorite = new PostNewFavoriteAsync();
+                    postFavorite.execute(newFavorite);
                     Toast.makeText(getActivity(), "Drink has been added to your favorites!", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -175,8 +176,6 @@ public class BeerDetailFragment extends Fragment {
                     ratingBar.setRating(drink.getRating());
                 }
             });
-
-
         }
 
         return rootView;
