@@ -267,7 +267,7 @@ public class MyServlet extends HttpServlet {
             if(drink == null){
                 setBadHttpResponse(resp, "No such rink", "text/plain", HttpServletResponse.SC_NOT_FOUND);
             }
-            
+
             setOkJsonDrinkHttpResponse(resp, drink.getDrinkName() + " was found.", drink);
         }
 

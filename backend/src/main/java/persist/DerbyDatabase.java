@@ -1085,7 +1085,6 @@ public class DerbyDatabase implements IDatabase {
 
                     Drink newDrink = getDrink(drink.getId());
 
-
                     int numRatings = newDrink.getNumRatings();
                     float newRating = newDrink.getRating();
 
@@ -1363,7 +1362,7 @@ public class DerbyDatabase implements IDatabase {
             @Override
             public Boolean execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
-                PreparedStatement stmt2 = null;
+             //   PreparedStatement stmt2 = null;
                 PreparedStatement stmt3 = null;
                 PreparedStatement stmt4 = null;
 
@@ -1373,13 +1372,13 @@ public class DerbyDatabase implements IDatabase {
                     stmt.addBatch();
                     stmt.executeBatch();
 
-                    stmt2 = conn.prepareStatement("insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)");
-                    Drink drink = new Drink();
-                    drink.setDrinkName("testDrink");
-                    drink.setRating(5);
-                    storeDrinkNoId(drink, stmt2, 1);
-                    stmt2.addBatch();
-                    stmt2.executeBatch();
+                //    stmt2 = conn.prepareStatement("insert into " + DB_MAIN_DRINK_TABLENAME + " (drinkName, description, rating) values (?,?,?)");
+                  //  Drink drink = new Drink();
+                    //drink.setDrinkName("testDrink");
+                    //drink.setRating(5);
+                    //storeDrinkNoId(drink, stmt2, 1);
+                    //stmt2.addBatch();
+                    //stmt2.executeBatch();
 
                     stmt3 = conn.prepareStatement("insert into " + DB_BEER_TABLENAME + "(drinkId, cals, beerType) values (?,?,?)");
                     Beer beer = new Beer();
@@ -1398,7 +1397,7 @@ public class DerbyDatabase implements IDatabase {
                     return true;
                 } finally {
                     DBUtil.closeQuietly(stmt);
-                    DBUtil.closeQuietly(stmt2);
+                  //  DBUtil.closeQuietly(stmt2);
                     DBUtil.closeQuietly(stmt3);
                     DBUtil.closeQuietly(stmt4);
                 }
