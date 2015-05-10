@@ -39,7 +39,7 @@ public class FavoritesFragment extends Fragment {
 
         String[] str = new String[UserInfo.favorites.length];
         for(int i = 0; i < str.length; i++){
-            str[i] = String.valueOf(UserInfo.favorites[i].getDrinkId());
+            str[i] = UserInfo.favorites[i].getDrinkName(); //String.valueOf(UserInfo.favorites[i]);
         }
 
         //Set ListView (temp for now)

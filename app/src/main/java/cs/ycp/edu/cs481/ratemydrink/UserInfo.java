@@ -1,6 +1,6 @@
 package cs.ycp.edu.cs481.ratemydrink;
 
-import com.rateMyDrink.modelClasses.Favorite;
+import com.rateMyDrink.modelClasses.Drink;
 import com.rateMyDrink.modelClasses.User;
 
 /**
@@ -9,6 +9,6 @@ import com.rateMyDrink.modelClasses.User;
 public class UserInfo {
 
     public static User user;
-    public static Favorite[] favorites;
+    public static Drink[] favorites;
 
 }

@@ -3,7 +3,7 @@ package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.rateMyDrink.modelClasses.Favorite;
+import com.rateMyDrink.modelClasses.Drink;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;
@@ -12,9 +12,9 @@ import retrofit.RestAdapter;
 /**
  * Created by Josh on 5/8/2015.
  */
-public class GetFavoritesListAsync extends AsyncTask<Integer, Void, Favorite[]> {
+public class GetFavoritesListAsync extends AsyncTask<Integer, Void, Drink[]> {
     @Override
-    protected Favorite[] doInBackground(Integer... params) {
+    protected Drink[] doInBackground(Integer... params) {
 
         IFavoriteRequests getFavoritesList = RETROFIT.getRestAdapterBuilder()
                 .setEndpoint(URLInfo.DOMAIN_URL)
@@ -27,7 +27,6 @@ public class GetFavoritesListAsync extends AsyncTask<Integer, Void, Favorite[]> 
                 })
                 .build()
                 .create(IFavoriteRequests.class);
-
 
         return getFavoritesList.getFavoritesList(params[0]);
     }

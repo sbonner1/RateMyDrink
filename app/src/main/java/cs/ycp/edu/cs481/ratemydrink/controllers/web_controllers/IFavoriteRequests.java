@@ -1,7 +1,6 @@
 package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 
 import com.rateMyDrink.modelClasses.Drink;
-import com.rateMyDrink.modelClasses.Favorite;
 
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -12,7 +11,7 @@ import retrofit.http.Query;
 public interface IFavoriteRequests {
 
     @GET("/backend/?action=getFavoritesList")
-    Favorite[] getFavoritesList(@Query("id") int userId);
+    Drink[] getFavoritesList(@Query("id") int userId);
 
     @GET("/backend/?action=getDrink")
     Drink getFavoriteDrink(@Query("id") int id);
