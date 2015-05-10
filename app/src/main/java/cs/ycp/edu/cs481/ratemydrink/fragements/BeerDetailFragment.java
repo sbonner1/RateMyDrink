@@ -134,11 +134,11 @@ public class BeerDetailFragment extends Fragment {
                 public void onClick(View v) {
                     String commentStr = commentEditText.getText().toString();
                     if (!commentStr.equals("")) {
-                        Comment comment = new Comment(mBeer.getId(), "user", commentStr);
-                        comments.add(commentEditText.getText().toString());
-                        commentAdapter.notifyDataSetChanged();
+                        comments.add(commentStr);
+                        commentEditText.setText("");
                         PostNewCommentAsync postComment = new PostNewCommentAsync();
-                        postComment.execute(comment);
+                        postComment.execute(new Comment(mBeer.getId(), "user", commentStr));
+                        //commentAdapter.notifyDataSetChanged();
                     }
                 }
             });
@@ -147,20 +147,17 @@ public class BeerDetailFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (TypeActivity.loginStatus) {
-                        Favorite newFavorite = new Favorite(mBeer.getId(), UserInfo.user.getId());
                         PostNewFavoriteAsync postFavorite = new PostNewFavoriteAsync();
-                        postFavorite.execute(newFavorite);
+                        postFavorite.execute(new Favorite(mBeer.getId(), UserInfo.user.getId()));
                         Toast.makeText(getActivity(), "Drink has been added to your favorites!", Toast.LENGTH_SHORT).show();
                     }
                     }
                 }
                 );
 
-                RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.BeerRatingBar);
+                final RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.BeerRatingBar);
                 ratingBar.setRating(mBeer.getRating());
-                ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener()
-
-               {
+                ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                    @Override
                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                        UpdateRatingAsync updateAsync = new UpdateRatingAsync();
@@ -170,16 +167,6 @@ public class BeerDetailFragment extends Fragment {
                        drink.setId(mBeer.getId());
 
                        updateAsync.execute(drink);
-
-//                    try {
-//                        drink = updateAsync.get();
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    } catch (ExecutionException e) {
-//                        e.printStackTrace();
-//                    }
-
-                       ratingBar.setRating(drink.getRating());
                    }
                }
 
