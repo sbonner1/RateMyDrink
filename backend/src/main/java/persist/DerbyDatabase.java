@@ -1056,7 +1056,7 @@ public class DerbyDatabase implements IDatabase {
                 ResultSet resultSet = null;
                 
                 try{
-                    stmt = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + "where id = ?");
+                    stmt = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
                     stmt.setInt(1, drink.getId());
                     resultSet = stmt.executeQuery();
 
@@ -1069,7 +1069,9 @@ public class DerbyDatabase implements IDatabase {
                     numRatings++;
                     newRating = (newRating + rating) / numRatings;
 
-                    stmt2 = conn.prepareStatement("update " + DB_MAIN_DRINK_TABLENAME + " set rating = ?, numRatings = ?  where id = ?");
+                    stmt2 = conn.prepareStatement("update " + DB_MAIN_DRINK_TABLENAME +
+                                                  "set rating = ?, numRatings = ? where id = ?"
+                    );
                     stmt2.setFloat(1, newRating);
                     stmt2.setInt(2, numRatings);
                     stmt2.setInt(3, drink.getId());
