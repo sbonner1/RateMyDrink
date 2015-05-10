@@ -8,6 +8,9 @@ public class Favorite {
     private int drinkId;
     private int userId;
 
+    /**
+     * default constructor
+     */
     public Favorite(){
 
     }
@@ -22,7 +25,6 @@ public class Favorite {
         this.drinkId = drinkId;
         this.userId = userId;
     }
-
 
     public int getDrinkId() {
         return drinkId;

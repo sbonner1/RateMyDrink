@@ -25,6 +25,7 @@ import java.util.concurrent.ExecutionException;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.UserInfo;
+import cs.ycp.edu.cs481.ratemydrink.activities.TypeActivity;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetCommentsAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewCommentAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewFavoriteAsync;
@@ -141,10 +142,12 @@ public class LiquorDetailFragment extends Fragment {
         favorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Favorite newFavorite = new Favorite(mLiquor.getId(), UserInfo.user.getId());
-                PostNewFavoriteAsync postFavorite = new PostNewFavoriteAsync();
-                postFavorite.execute(newFavorite);
-                Toast.makeText(getActivity(), "Drink has been added to your favorites!", Toast.LENGTH_SHORT).show();
+                if(TypeActivity.loginStatus) {
+                    Favorite newFavorite = new Favorite(mLiquor.getId(), UserInfo.user.getId());
+                    PostNewFavoriteAsync postFavorite = new PostNewFavoriteAsync();
+                    postFavorite.execute(newFavorite);
+                    Toast.makeText(getActivity(), "Drink has been added to your favorites!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

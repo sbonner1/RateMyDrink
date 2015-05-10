@@ -23,6 +23,7 @@ import java.util.concurrent.ExecutionException;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
 import cs.ycp.edu.cs481.ratemydrink.UserInfo;
+import cs.ycp.edu.cs481.ratemydrink.activities.TypeActivity;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetBeerAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.GetCommentsAsync;
 import cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers.PostNewCommentAsync;
@@ -103,7 +104,7 @@ public class BeerDetailFragment extends Fragment {
             comments = new ArrayList<String>();
 
             GetCommentsAsync getComments = new GetCommentsAsync();
-            getComments.execute(mBeer.getId(),0, 10);
+            getComments.execute(mBeer.getId(), 0, 10);
 
             try {
                 try{
@@ -132,7 +133,7 @@ public class BeerDetailFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     String commentStr = commentEditText.getText().toString();
-                    if(!commentStr.equals("")){
+                    if (!commentStr.equals("")) {
                         Comment comment = new Comment(mBeer.getId(), "user", commentStr);
                         comments.add(commentEditText.getText().toString());
                         commentAdapter.notifyDataSetChanged();
@@ -144,26 +145,31 @@ public class BeerDetailFragment extends Fragment {
             final Button favorites = (Button) rootView.findViewById(R.id.favButton);
             favorites.setOnClickListener(new View.OnClickListener() {
                 @Override
-            public void onClick(View v) {
-                    Favorite newFavorite = new Favorite(mBeer.getId(), UserInfo.user.getId());
-                    PostNewFavoriteAsync postFavorite = new PostNewFavoriteAsync();
-                    postFavorite.execute(newFavorite);
-                    Toast.makeText(getActivity(), "Drink has been added to your favorites!", Toast.LENGTH_SHORT).show();
+                public void onClick(View v) {
+                    if (TypeActivity.loginStatus) {
+                        Favorite newFavorite = new Favorite(mBeer.getId(), UserInfo.user.getId());
+                        PostNewFavoriteAsync postFavorite = new PostNewFavoriteAsync();
+                        postFavorite.execute(newFavorite);
+                        Toast.makeText(getActivity(), "Drink has been added to your favorites!", Toast.LENGTH_SHORT).show();
+                    }
+                    }
                 }
-            });
+                );
 
-            RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.BeerRatingBar);
-            ratingBar.setRating(mBeer.getRating());
-            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                @Override
-                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                    UpdateRatingAsync updateAsync = new UpdateRatingAsync();
+                RatingBar ratingBar = (RatingBar) rootView.findViewById(R.id.BeerRatingBar);
+                ratingBar.setRating(mBeer.getRating());
+                ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener()
 
-                    Drink drink = new Drink();
-                    drink.setRating(rating);
-                    drink.setId(mBeer.getId());
+               {
+                   @Override
+                   public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                       UpdateRatingAsync updateAsync = new UpdateRatingAsync();
 
-                    updateAsync.execute(drink);
+                       Drink drink = new Drink();
+                       drink.setRating(rating);
+                       drink.setId(mBeer.getId());
+
+                       updateAsync.execute(drink);
 
 //                    try {
 //                        drink = updateAsync.get();
@@ -173,11 +179,13 @@ public class BeerDetailFragment extends Fragment {
 //                        e.printStackTrace();
 //                    }
 
-                    ratingBar.setRating(drink.getRating());
-                }
-            });
-        }
+                       ratingBar.setRating(drink.getRating());
+                   }
+               }
 
-        return rootView;
+                );
+            }
+
+            return rootView;
     }
 }
