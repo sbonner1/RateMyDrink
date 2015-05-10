@@ -36,6 +36,7 @@ import controllers.DeleteUserList;
 import controllers.GetBeer;
 import controllers.GetBeerList;
 import controllers.GetComments;
+import controllers.GetDrink;
 import controllers.GetDrinkList;
 import controllers.GetFavoritesList;
 import controllers.GetLiquor;
@@ -247,6 +248,27 @@ public class MyServlet extends HttpServlet {
 
             setOkJsonDrinkHttpResponse(resp, mixedDrink.getDrinkName() + " was found.", mixedDrink);
             return;
+        }
+
+        if(action.equals("getDrink")){
+            System.out.println("action is getDrink");
+
+            int id = Integer.parseInt(id_param, 10);
+            Drink drink = null;
+
+            GetDrink controller = new GetDrink();
+
+            try{
+                drink = controller.getDrink(id);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            if(drink == null){
+                setBadHttpResponse(resp, "No such rink", "text/plain", HttpServletResponse.SC_NOT_FOUND);
+            }
+            
+            setOkJsonDrinkHttpResponse(resp, drink.getDrinkName() + " was found.", drink);
         }
 
         if(action.equals("getMixedDrinkList")){
