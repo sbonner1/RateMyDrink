@@ -1047,24 +1047,52 @@ public class DerbyDatabase implements IDatabase {
     }
 
     @Override
-    public boolean updateRating(final Drink drink, final float rating) throws SQLException{
-       return executeTransaction(new Transaction<Boolean>() {
+    public Drink getDrink(final int id) throws SQLException {
+        return executeTransaction(new Transaction<Drink>() {
             @Override
-            public Boolean execute(Connection conn) throws SQLException {
+            public Drink execute(Connection conn) throws SQLException {
                 PreparedStatement stmt = null;
                 PreparedStatement stmt2 = null;
+
                 ResultSet resultSet = null;
                 
                 try{
                     stmt = conn.prepareStatement("select * from " + DB_MAIN_DRINK_TABLENAME + " where id = ?");
-                    stmt.setInt(1, drink.getId());
+                    stmt.setInt(1, id);
                     resultSet = stmt.executeQuery();
 
                     Drink newDrink = new Drink();
                     loadDrink(newDrink, resultSet, 1);
 
-                    int numRatings = drink.getNumRatings();
-                    float newRating = drink.getRating();
+                    int numRatings = newDrink.getNumRatings();
+                    float newRating = newDrink.getRating();
+
+                    return newDrink;
+                }finally{
+                    DBUtil.closeQuietly(stmt);
+                    DBUtil.closeQuietly(resultSet);
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean updateRating(final Drink drink, final float rating) throws SQLException{
+       return executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+              //  PreparedStatement stmt = null;
+                PreparedStatement stmt2 = null;
+               // PreparedStatement stmt3 = null;
+                ResultSet resultSet = null;
+
+                try{
+
+                    Drink newDrink = getDrink(drink.getId());
+
+
+                    int numRatings = newDrink.getNumRatings();
+                    float newRating = newDrink.getRating();
 
                     numRatings++;
                     newRating = (newRating + rating) / numRatings;
@@ -1077,8 +1105,10 @@ public class DerbyDatabase implements IDatabase {
                     stmt2.setInt(3, drink.getId());
 
                     stmt2.executeUpdate();
+
                     return true;
-                }finally{
+                } finally{
+                    //DBUtil.closeQuietly(stmt);
                     DBUtil.closeQuietly(stmt2);
                 }
             }
