@@ -3,11 +3,15 @@ package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rateMyDrink.modelClasses.Drink;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;
+import cs.ycp.edu.cs481.ratemydrink.controllers.DrinkAdapter;
 import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
 
 /**
  * AsyncTask to send a new rating to the backend so a new average rating can be computed.
