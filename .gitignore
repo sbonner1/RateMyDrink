@@ -5,6 +5,8 @@
 .DS_Store
 /build
 app/src/main/gen/
+.idea/misc.xml
+*.iml
 
 #backend
 /backend/backend.iml
