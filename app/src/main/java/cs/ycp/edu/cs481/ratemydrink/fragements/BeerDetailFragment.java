@@ -13,10 +13,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rateMyDrink.modelClasses.Beer;
-import com.rateMyDrink.modelClasses.Comment;
-import com.rateMyDrink.modelClasses.Drink;
-import com.rateMyDrink.modelClasses.Favorite;
+import Model.Beer;
+import Model.Comment;
+import Model.Drink;
+import Model.Favorite;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;

@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.rateMyDrink.modelClasses.Drink;
+import Model.Drink;
 
 import cs.ycp.edu.cs481.ratemydrink.R;
 

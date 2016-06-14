@@ -4,9 +4,10 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.rateMyDrink.modelClasses.Drink;
 
 import java.io.IOException;
+
+import Model.Drink;
 
 /**
  * A GSON TypeAdapter extension to serialize and deserialize Drink objects.

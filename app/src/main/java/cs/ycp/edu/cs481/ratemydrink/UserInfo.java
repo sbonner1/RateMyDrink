@@ -1,7 +1,7 @@
 package cs.ycp.edu.cs481.ratemydrink;
 
-import com.rateMyDrink.modelClasses.Drink;
-import com.rateMyDrink.modelClasses.User;
+import Model.Drink;
+import Model.User;
 
 /**
  * Created by Josh on 5/8/2015.

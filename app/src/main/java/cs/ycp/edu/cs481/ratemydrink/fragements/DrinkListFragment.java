@@ -6,7 +6,7 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.rateMyDrink.modelClasses.Drink;
+import Model.Drink;
 
 import java.util.concurrent.ExecutionException;
 

@@ -1,11 +1,11 @@
-package controllers;
+package Controllers;
 
-import com.rateMyDrink.modelClasses.User;
+import Model.User;
 
 import java.sql.SQLException;
 
-import persist.DatabaseProvider;
-import persist.IDatabase;
+import DatabaseManagers.DatabaseProvider;
+import DatabaseManagers.IDatabase;
 
 /**
  * Created by shanembonner on 2/15/15.

@@ -1,9 +1,9 @@
 package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 
-import com.rateMyDrink.modelClasses.Beer;
-import com.rateMyDrink.modelClasses.Drink;
-import com.rateMyDrink.modelClasses.Liquor;
-import com.rateMyDrink.modelClasses.MixedDrink;
+import Model.Beer;
+import Model.Drink;
+import Model.Liquor;
+import Model.MixedDrink;
 
 import retrofit.http.Body;
 import retrofit.http.GET;

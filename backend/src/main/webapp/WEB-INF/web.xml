@@ -2,7 +2,7 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
     <servlet>
         <servlet-name>MyServlet</servlet-name>
-        <servlet-class>com.example.shanembonner.RateMyDrink.Servlets.MyServlet</servlet-class>
+        <servlet-class>Servlet.MyServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MyServlet</servlet-name>
@@ -10,7 +10,7 @@
     </servlet-mapping>
     <!-- Servlet context listeners -->
     <listener>
-        <listener-class>com.example.shanembonner.RateMyDrink.Servlets.DatabaseInitListener</listener-class>
+        <listener-class>Servlet.DatabaseInitListener</listener-class>
     </listener>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

@@ -4,9 +4,9 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.rateMyDrink.modelClasses.Ingredient;
-import com.rateMyDrink.modelClasses.LiquorType;
-import com.rateMyDrink.modelClasses.MixedDrink;
+import Model.Ingredient;
+import Model.LiquorType;
+import Model.MixedDrink;
 
 import java.io.IOException;
 import java.util.ArrayList;

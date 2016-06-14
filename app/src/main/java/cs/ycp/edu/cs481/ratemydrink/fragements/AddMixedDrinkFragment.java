@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.rateMyDrink.modelClasses.Ingredient;
-import com.rateMyDrink.modelClasses.LiquorType;
-import com.rateMyDrink.modelClasses.MixedDrink;
+import Model.Ingredient;
+import Model.LiquorType;
+import Model.MixedDrink;
 
 import java.util.ArrayList;
 

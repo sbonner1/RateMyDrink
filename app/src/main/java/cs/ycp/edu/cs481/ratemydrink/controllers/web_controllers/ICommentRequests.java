@@ -1,6 +1,6 @@
 package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 
-import com.rateMyDrink.modelClasses.Comment;
+import Model.Comment;
 
 import retrofit.http.Body;
 import retrofit.http.GET;

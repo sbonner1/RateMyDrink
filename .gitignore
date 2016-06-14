@@ -1,24 +1,9 @@
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
-app/src/main/gen/
-.idea/misc.xml
-*.iml
-
-#backend
-/backend/backend.iml
-
-#modelclasses
-/modelclasses/modelclasses.iml
-
-#database files
-/rateMyDrinkDB
+rateMyDrinkDB
 derby.log
-
-RateMyDrink.iml
-
-*/build
+libs
+*.iml
+.idea*
+gradle*
+settings.gradle
+local.properties
 

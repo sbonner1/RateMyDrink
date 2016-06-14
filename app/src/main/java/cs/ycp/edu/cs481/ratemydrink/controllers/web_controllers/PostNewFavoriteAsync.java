@@ -4,8 +4,8 @@ import android.os.AsyncTask;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.rateMyDrink.modelClasses.Comment;
-import com.rateMyDrink.modelClasses.Favorite;
+import Model.Comment;
+import Model.Favorite;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;

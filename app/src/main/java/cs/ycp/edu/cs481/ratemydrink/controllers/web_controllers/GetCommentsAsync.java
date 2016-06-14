@@ -2,7 +2,7 @@ package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 
 import android.os.AsyncTask;
 
-import com.rateMyDrink.modelClasses.Comment;
+import Model.Comment;
 
 import java.security.InvalidParameterException;
 

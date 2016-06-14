@@ -4,9 +4,10 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.rateMyDrink.modelClasses.Comment;
 
 import java.io.IOException;
+
+import Model.Comment;
 
 /**
  * An adapter to convert JSON objects into Comment objects as well as to convert Comment objects to JSON objects

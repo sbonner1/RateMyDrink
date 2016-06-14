@@ -2,7 +2,7 @@ package cs.ycp.edu.cs481.ratemydrink.controllers.web_controllers;
 
 import android.os.AsyncTask;
 
-import com.rateMyDrink.modelClasses.Comment;
+import Model.Comment;
 
 import cs.ycp.edu.cs481.ratemydrink.RETROFIT;
 import cs.ycp.edu.cs481.ratemydrink.URLInfo;

@@ -1,6 +1,0 @@
-<root>
-    <item name='org.codehaus.jackson.map.JsonMappingException'>
-        <annotation name='org.jetbrains.annotations.Nullable' />
-        <annotation name='java.lang.annotation.Deprecated' />
-    </item>
-</root>

@@ -4,7 +4,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.rateMyDrink.modelClasses.Beer;
+import Model.Beer;
 
 import java.io.IOException;
 
